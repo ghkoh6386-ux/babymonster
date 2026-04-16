@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { images, videos } from '../../assets/media';
+import { setPlayerPlaying } from '../../features/feature/featureSlice';
 import '../../styles/home/home-closing.scss';
 
 const closingVideos = [
@@ -28,6 +30,7 @@ const closingVideos = [
 ];
 
 export default function HomeClosingSection() {
+  const dispatch = useDispatch();
   const [activeVideo, setActiveVideo] = useState(null);
 
   useEffect(() => {
@@ -112,6 +115,7 @@ export default function HomeClosingSection() {
               controls
               autoPlay
               playsInline
+              onPlay={() => dispatch(setPlayerPlaying(false))}
             />
           </div>
         </div>

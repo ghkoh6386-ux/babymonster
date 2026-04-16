@@ -97,14 +97,14 @@ export default function MainLayout() {
 
   return (
     <div className="main-layout">
-      <Header />
-      <SidebarPanel />
+      {!isNowPlayingOpen ? <Header /> : null}
+      {!isNowPlayingOpen ? <SidebarPanel /> : null}
       <main className="main-layout__content">
         <div className="main-layout__canvas">
           <Outlet />
         </div>
       </main>
-      <PlayerBar />
+      {!isNowPlayingOpen ? <PlayerBar /> : null}
       {shouldRenderPlaylistPanel ? (
         <SidebarCollectionPage
           kind="playlists"
