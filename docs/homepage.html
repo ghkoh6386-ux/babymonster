@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Inter:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- GSAP for smooth parallax and scroll-triggered animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#9acfde",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "on-primary-fixed": "#40000b",
+                        "on-secondary": "#571c22",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "surface-bright": "#3a3939",
+                        "on-background": "#e5e2e1",
+                        "background": "#131313",
+                        "inverse-primary": "#af2b3e",
+                        "on-primary": "#680018",
+                        "inverse-on-surface": "#313030",
+                        "outline": "#a78a8a",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#b6ebfb",
+                        "tertiary-container": "#004451",
+                        "on-tertiary-container": "#7cb0c0",
+                        "tertiary": "#9acfde",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-primary-container": "#ff828a",
+                        "surface-container-highest": "#353534",
+                        "primary-container": "#800020",
+                        "on-primary-fixed-variant": "#8e0f28",
+                        "on-secondary-fixed": "#3b070e",
+                        "primary-fixed-dim": "#ffb3b5",
+                        "surface": "#131313",
+                        "primary": "#ffb3b5",
+                        "on-secondary-container": "#f69da0",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed": "#ffdada",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-fixed": "#ffdada",
+                        "secondary-container": "#743237",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#e0bfbf",
+                        "on-tertiary": "#003640",
+                        "surface-variant": "#353534",
+                        "secondary": "#ffb3b5",
+                        "on-surface": "#e5e2e1",
+                        "surface-tint": "#ffb3b5",
+                        "surface-container": "#201f1f",
+                        "on-secondary-fixed-variant": "#743237",
+                        "surface-dim": "#131313",
+                        "outline-variant": "#584141",
+                        "on-tertiary-fixed-variant": "#114d5b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #0e0e0e; color: #e5e2e1; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Custom styles for immersive layout */
+        .immersive-canvas {
+            position: relative;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .bleed-text {
+            white-space: nowrap;
+        }
+        /* Continuous flow visual connector */
+        .vertical-connector {
+            position: absolute;
+            left: 50%;
+            width: 1px;
+            height: 150px;
+            background: linear-gradient(to bottom, rgba(255, 179, 181, 0.2), transparent);
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-primary overflow-x-hidden">
+<header class="fixed top-0 w-full z-50 bg-[#131313]/80 backdrop-blur-xl flex justify-between items-center px-12 py-6">
+<nav class="flex space-x-12">
+<a class="text-[#e0bfbf] hover:text-[#ffb3b5] transition-colors font-serif italic tracking-widest text-sm uppercase" href="#">ABOUT</a>
+<a class="text-[#ffb3b5] border-b border-[#800020] pb-1 font-serif italic tracking-widest text-sm uppercase" href="#">DETAIL</a>
+<a class="text-[#e0bfbf] hover:text-[#ffb3b5] transition-colors font-serif italic tracking-widest text-sm uppercase" href="#">STORIES</a>
+</nav>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#ffb3b5] cursor-pointer hover:bg-[#800020]/10 transition-all duration-300 p-2" data-icon="search">search</span>
+</div>
+</header>
+<aside class="fixed left-0 top-0 h-full w-20 z-40 bg-[#0E0E0E] flex flex-col items-center py-24 space-y-12 border-r border-outline-variant/10">
+<div class="flex flex-col items-center mb-12">
+<div class="text-[#ffb3b5] font-sans text-[10px] tracking-widest uppercase mb-1">CURATOR</div>
+<div class="text-[#584141] font-sans text-[8px] tracking-[0.3em] uppercase">MASTERING</div>
+</div>
+<nav class="flex flex-col space-y-8">
+<button class="text-[#ffb3b5] bg-[#800020]/20 p-3 flex flex-col items-center group transition-all ease-in-out">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="text-[8px] tracking-tighter">HOME</span>
+</button>
+<button class="text-[#584141] hover:text-[#e0bfbf] p-3 flex flex-col items-center group transition-all ease-in-out">
+<span class="material-symbols-outlined mb-1" data-icon="explore">explore</span>
+<span class="text-[8px] tracking-tighter">EXPLORE</span>
+</button>
+<button class="text-[#584141] hover:text-[#e0bfbf] p-3 flex flex-col items-center group transition-all ease-in-out">
+<span class="material-symbols-outlined mb-1" data-icon="library_music">library_music</span>
+<span class="text-[8px] tracking-tighter">LIBRARY</span>
+</button>
+<button class="text-[#584141] hover:text-[#e0bfbf] p-3 flex flex-col items-center group transition-all ease-in-out">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="text-[8px] tracking-tighter">SETTINGS</span>
+</button>
+</nav>
+</aside>
+<!-- Main Immersive Canvas -->
+<main class="immersive-canvas ml-20 pt-28 pb-48 px-12 min-h-screen">
+<!-- Hero Section -->
+<section class="editorial-grid mb-48 relative">
+<div class="col-span-12 md:col-span-8 relative h-[80vh] overflow-hidden group parallax-layer" data-speed="0.05">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<img class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 transition-all duration-1000 scale-110 img-reveal" data-alt="Moody cinematic wide shot of a concert stage with deep red backlighting and atmospheric smoke silhouettes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOmlV4wfqXxIS2xHlbIyDFPwRWybz91kk7ELSyv2awJ_w4rJPYcsIjxJlcdxh0OSGqYVvMPa05eXcmLqU4BDHwljR9SVsEig0uGwku6RedZDEa2ZCyGUze4CqKYn4ISan02AlQBxr9XxgZ2SlpadqaAjo5ssvJsd7N00flhSEjX_EkoE7oAnaNuNhHcIm0Y_d8BZlFaF-yTHa7KUGykFZ6TelNYeKiz5XHS4d-_D_lvu-KXgA4G6CRaOMRXyOvMi4h53UuEYk6pPKI"/>
+<div class="absolute bottom-12 -left-8 z-20 parallax-layer" data-speed="0.15">
+<h1 class="reveal-text font-headline italic text-8xl md:text-[12rem] text-primary leading-none tracking-tighter drop-shadow-2xl">Nocturne</h1>
+<p class="reveal-text font-label text-xs tracking-[0.5em] text-on-surface-variant mt-4 ml-12 opacity-0" style="transition-delay: 200ms">SESSION_001 // EXPERIMENTAL SOUL</p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 flex flex-col justify-center space-y-12 px-8 parallax-layer" data-speed="-0.05">
+<div class="space-y-6 reveal-text">
+<h2 class="font-headline text-4xl text-on-surface leading-tight">The Velvet Underground Reimagined</h2>
+<p class="text-on-surface-variant font-body text-base leading-relaxed max-w-sm">
+                    A sonic exploration into the depths of late-night frequency. Curated for those who find clarity in the dark.
+                </p>
+</div>
+<button class="reveal-text w-fit bg-primary-container text-on-surface px-12 py-5 text-xs font-label tracking-widest border-0 flex items-center group hover:bg-primary hover:text-on-primary transition-all duration-500">
+                LISTEN NOW 
+                <span class="material-symbols-outlined ml-4 group-hover:translate-x-2 transition-transform" data-icon="arrow_right_alt">arrow_right_alt</span>
+</button>
+</div>
+</section>
+<!-- Visual Connector -->
+<div class="relative w-full h-32 -mt-24 mb-12">
+<div class="vertical-connector"></div>
+</div>
+<!-- Bento Grid Tracks -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-48 relative px-12">
+<div class="absolute -right-24 top-0 w-96 h-96 bg-primary-container/5 rounded-full blur-[120px] -z-10 parallax-layer" data-speed="0.2"></div>
+<div class="md:col-span-2 md:row-span-2 bg-surface-container-low p-12 flex flex-col justify-between border-l-4 border-primary-container shadow-2xl parallax-layer reveal-text" data-speed="0.08">
+<div class="flex justify-between items-start">
+<span class="text-[10px] font-label tracking-[0.4em] text-outline-variant">FEATURED_RELEASE</span>
+<span class="material-symbols-outlined text-primary animate-pulse" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="mt-24">
+<h3 class="font-headline text-6xl mb-6 italic tracking-tight">Shadow Work</h3>
+<p class="font-body text-on-surface-variant text-lg mb-8">Produced by Aris Thorne &amp; The Collective.</p>
+<div class="flex items-center space-x-6">
+<span class="text-xs font-label text-primary font-bold">04:42</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+<span class="text-xs font-label text-on-surface">44.1kHz / 24bit</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container h-80 relative group overflow-hidden md:-mt-12 parallax-layer reveal-text" data-speed="0.12" style="transition-delay: 100ms">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale group-hover:opacity-80 group-hover:scale-110 transition-all duration-1000" data-alt="Close up of vintage microphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-UC40PvxkVcDzV8ygADtaqTjGTy9GWLw0kdq0t3waQLpHmgY6EHDhzN-t4ObwaHiXVRDs4Ok_1ebafDaBXvKtoDK87aTOx5VI1txQ7SaaJgQlnnNUTOTQ8lL5hUvsbXsYuij0YzCCwPI4yDeJqhIbG4V3YH2CPNSAnXMPDR0f0Ia4u2WRetQ55ZnDu1dhVdvfLdlBQxRxe7Kb1ccpiMwVI2Y7OWnrDInUesw2S9Ct_W-bHtNBzMQlxgvIcgEdVbQedudEI4EBPIIg"/>
+<div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent">
+<h4 class="font-headline text-2xl">Analog Grain</h4>
+<p class="text-[9px] font-label tracking-widest text-primary mt-2">S_TAPE_REEL</p>
+</div>
+</div>
+<div class="bg-surface-container-high h-80 p-8 flex flex-col justify-between hover:border-primary border border-transparent transition-all duration-500 parallax-layer reveal-text" data-speed="0.05" style="transition-delay: 200ms">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="equalizer">equalizer</span>
+<div>
+<h4 class="font-headline text-2xl">Sub-Basics</h4>
+<p class="text-sm text-on-surface-variant mt-3 leading-relaxed">Pure sine waves and heavy low-pass filtering. Engineered for physical resonance.</p>
+</div>
+</div>
+<div class="md:col-span-2 bg-[#800020]/5 backdrop-blur-sm p-12 flex items-center justify-between group cursor-pointer border border-primary-container/20 hover:bg-[#800020]/20 transition-all duration-700 parallax-layer reveal-text" data-speed="0.1">
+<div class="flex items-center space-x-12">
+<span class="text-5xl font-headline italic text-primary/50 group-hover:text-primary transition-colors">04</span>
+<div>
+<h4 class="font-headline text-3xl">Echo Chamber</h4>
+<p class="text-sm text-on-surface-variant tracking-wide mt-1">Live recording at St. Jude Cathedral</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary scale-[2] group-hover:scale-[2.2] transition-transform duration-500" data-icon="play_circle" data-weight="fill">play_circle</span>
+</div>
+</section>
+<!-- Experimental Mood Collage Section -->
+<section class="relative min-h-[160vh] py-32 flex flex-col overflow-visible select-none pointer-events-none">
+<div class="absolute top-0 left-0 w-full flex justify-center py-12 parallax-layer" data-speed="0.05">
+<h5 class="reveal-text font-label text-[10px] tracking-[1.5em] text-outline-variant/40 uppercase">SONIC MANIFESTO // v.002</h5>
+</div>
+<div class="relative w-full h-full max-w-[1400px] mx-auto">
+<!-- Typography Fragment: feeling -->
+<div class="absolute top-[20%] left-[10%] font-headline text-[25vw] text-white/[0.04] italic tracking-tighter parallax-layer mix-blend-overlay pointer-events-none z-0 select-none uppercase" data-speed="0.12">
+                FEELING
+            </div>
+<!-- Image 15: Signal Path -->
+<div class="absolute top-[5%] left-[5%] w-[55%] opacity-30 z-10 parallax-layer pointer-events-none" data-speed="0.07">
+<img alt="Signal Path Component" class="w-full h-auto filter grayscale blur-[1px] hover:blur-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvCalCCKBFcKvi9txRSYWIR9ljodXJy-LX-mTAUjA-MvvEPJb5eEGSbONsnrSE4TwVPnFo0AYd8SLloA628h3JbZwUC00RqeYkNWWyyIRYZ19LE-lNbCmgjdICh77wsYLDu68maDvYBVbTRK3AXImexoOflXngLcbWkTjMW4M7hWecS8xyJFm8wEQNFogywfPEicJ3L0PotOlq4Gh743baKviIM2pUGOqtSQCazAJB1Fq4GUqbW8Ri8knZGF2eq_lyJ52S4zCG5ZLi"/>
+<span class="absolute bottom-12 left-12 font-label text-[8px] tracking-[0.4em] text-primary/40 uppercase">SIGNAL_PATH</span>
+</div>
+<!-- Image 16: Live Environment -->
+<div class="absolute top-[28%] right-[8%] w-[48%] z-30 parallax-layer pointer-events-auto" data-speed="0.14">
+<div class="relative group">
+<img alt="Live Recording Environment" class="w-full h-auto border border-white/5 shadow-[0_0_60px_rgba(0,0,0,0.8)] group-hover:border-primary/20 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB05pt5YgyS4Io7vVNH4fGX_COz4hnAO2RGiracKvZydi65qIzauEVk-hIvMpBQeB3LwxhVEZqZZeW7YLtu6fmPaAqXbaHazaE6QiEffE4xj2eirhSCgziyQYbZMOaChfMOPvXlii8C3aJkN1feQDlkf7Cb_BbKzsRAsxInCldCuCNpqLTuahzx2OhPrVddnbi4AS8BvjduKbz-9R7zxMqmFCKr_lh84haNZ_9Se5U02k9qQkrnUggnQyNHgcj6PphU98jLbK9T3FkP"/>
+<span class="absolute top-6 right-6 font-label text-[8px] tracking-[0.4em] text-on-surface/60">LIVE RECORDING</span>
+</div>
+</div>
+<!-- Image 17: Tonal Texture -->
+<div class="absolute top-[18%] left-[32%] w-[28%] z-40 mix-blend-screen parallax-layer pointer-events-none" data-speed="0.18">
+<img alt="Tonal Texture" class="w-full h-auto opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiGnG0GBhPg-fEBkqYfWu6l5PlcxxyGh7MYC-4reuBzlA_TH7OC70U-vxyP6_dDv_M4fEEntE3M6udzvBIxOAo38lcsIjpES-JIPJBpdJAJqaRPbYcGSuI31kMMlVLFYRkvolWfavQCnFm-eVcIRNtAICxu1sOrZ__Cjd8m2bN81NF6wWfxNNJ5wdZmk_cTQYdp8mzcozKv13MBHiCFh5AJOuZToTsHPMde59KwGu6Ipo6q6SN4uRusYxiP7ODB6v6_QB4aKLGDf6k"/>
+<span class="absolute -bottom-10 left-0 font-label text-[8px] tracking-[0.4em] text-primary">V.002 // FRAGMENT</span>
+</div>
+<!-- Image 10: Tape Hiss -->
+<div class="absolute bottom-[22%] left-[18%] w-[22%] z-50 parallax-layer pointer-events-auto" data-speed="0.09">
+<div class="relative p-3 border border-primary/20 bg-background/90 backdrop-blur-md shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
+<img alt="Atmospheric Grain" class="w-full h-auto opacity-90" src="https://lh3.googleusercontent.com/aida/ADBb0ujW7-31_UOOpHCdae9ThMeLptkriCnrfqFQcOZHvS3aaW3xeFTSWLp_Sh4c4nUpDBUeHrLEYEg6P77drwWXMjIvVuXjkyRvP0RDVDsmbYP7iYuF9TgJxXP3y5HHdo2HAfSCdOwf327l1B_0ifiZGMTqcq8QmL3TG2FtGqKSYChSPQJTqfZGpEUtYlrU7IjeF0yWqsmDzQ4rF8ethcEo-nTxgTUx1g4sMBRJwLMm7bGmMMpen8ZVUgwP0vWm"/>
+<span class="block mt-3 font-label text-[7px] tracking-[0.2em] text-on-surface-variant uppercase">TAPE_HISS // ANALOG_ARTIFACT</span>
+</div>
+</div>
+<!-- Decorative Typography: artifact -->
+<div class="absolute bottom-[15%] right-[15%] font-headline text-[7vw] text-primary/10 tracking-widest parallax-layer italic z-0" data-speed="0.03">
+                ARTIFACT
+            </div>
+</div>
+<div class="mt-auto flex justify-center items-center space-x-12 reveal-text opacity-30 pb-24">
+<div class="w-24 h-[1px] bg-primary-container/40"></div>
+<span class="text-[10px] font-label tracking-[0.8em] uppercase text-on-surface-variant">THE CURATOR // NOCTURNE SESSIONS</span>
+<div class="w-24 h-[1px] bg-primary-container/40"></div>
+</div>
+</section>
+<!-- Curated Track List Section -->
+<section class="max-w-5xl mx-auto mt-24 px-12 pb-24 relative overflow-hidden">
+<div class="flex justify-between items-end mb-16 reveal-text">
+<div>
+<span class="font-label text-[10px] tracking-[0.5em] text-primary uppercase block mb-4">ARCHIVE_INDEX</span>
+<h3 class="font-headline italic text-6xl text-on-surface">Nocturne Anthology</h3>
+</div>
+<div class="text-right">
+<span class="font-label text-[9px] tracking-widest text-on-surface-variant uppercase">VOL. 01 / ED. 2024</span>
+</div>
+</div>
+<div class="flex flex-col border-t border-outline-variant/10">
+<!-- Track 01 -->
+<div class="group flex items-center py-10 border-b border-outline-variant/10 transition-all duration-500 hover:bg-primary-container/5 px-6 -mx-6 cursor-pointer reveal-text">
+<div class="w-16 font-label text-xs text-outline-variant group-hover:text-primary transition-colors">01</div>
+<div class="flex-grow">
+<h4 class="font-headline italic text-3xl text-on-surface group-hover:translate-x-2 transition-transform duration-500">Wine Dark Sea</h4>
+<p class="font-label text-[10px] tracking-[0.2em] text-on-surface-variant mt-2 uppercase">Aris Thorne ft. Elena V.</p>
+</div>
+<div class="flex items-center space-x-12">
+<span class="material-symbols-outlined text-primary/0 group-hover:text-primary transition-all duration-300 transform scale-75 group-hover:scale-100" data-icon="waveform">graphic_eq</span>
+<span class="font-label text-[10px] tracking-widest text-outline-variant w-12 text-right">06:14</span>
+</div>
+</div>
+<!-- Track 02 (Active Track) -->
+<div class="group flex items-center py-10 border-b border-outline-variant/10 bg-primary-container/10 px-6 -mx-6 cursor-pointer relative reveal-text">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="w-16 font-label text-xs text-primary">02</div>
+<div class="flex-grow">
+<div class="flex items-center">
+<h4 class="font-headline italic text-3xl text-primary">Deep Wine Nocturne</h4>
+<span class="ml-6 font-label text-[8px] border border-primary/30 text-primary px-2 py-0.5 tracking-[0.2em] uppercase">PLAYING</span>
+</div>
+<p class="font-label text-[10px] tracking-[0.2em] text-on-surface-variant mt-2 uppercase">The Collective</p>
+</div>
+<div class="flex items-center space-x-12">
+<span class="material-symbols-outlined text-primary animate-pulse" data-icon="equalizer">equalizer</span>
+<span class="font-label text-[10px] tracking-widest text-primary w-12 text-right font-bold">04:42</span>
+</div>
+</div>
+<!-- Track 03 -->
+<div class="group flex items-center py-10 border-b border-outline-variant/10 transition-all duration-500 hover:bg-primary-container/5 px-6 -mx-6 cursor-pointer reveal-text">
+<div class="w-16 font-label text-xs text-outline-variant group-hover:text-primary transition-colors">03</div>
+<div class="flex-grow">
+<h4 class="font-headline italic text-3xl text-on-surface group-hover:translate-x-2 transition-transform duration-500">Liminal Space</h4>
+<p class="font-label text-[10px] tracking-[0.2em] text-on-surface-variant mt-2 uppercase">Void Echoes</p>
+</div>
+<div class="flex items-center space-x-12">
+<span class="material-symbols-outlined text-primary/0 group-hover:text-primary transition-all duration-300 transform scale-75" data-icon="play_arrow">play_arrow</span>
+<span class="font-label text-[10px] tracking-widest text-outline-variant w-12 text-right">08:29</span>
+</div>
+</div>
+<!-- Track 04 -->
+<div class="group flex items-center py-10 border-b border-outline-variant/10 transition-all duration-500 hover:bg-primary-container/5 px-6 -mx-6 cursor-pointer reveal-text">
+<div class="w-16 font-label text-xs text-outline-variant group-hover:text-primary transition-colors">04</div>
+<div class="flex-grow">
+<h4 class="font-headline italic text-3xl text-on-surface group-hover:translate-x-2 transition-transform duration-500">Static Bloom</h4>
+<p class="font-label text-[10px] tracking-[0.2em] text-on-surface-variant mt-2 uppercase">Thorne Architecture</p>
+</div>
+<div class="flex items-center space-x-12">
+<span class="material-symbols-outlined text-primary/0 group-hover:text-primary transition-all duration-300 transform scale-75" data-icon="play_arrow">play_arrow</span>
+<span class="font-label text-[10px] tracking-widest text-outline-variant w-12 text-right">05:11</span>
+</div>
+</div>
+</div>
+<div class="mt-20 flex justify-center reveal-text">
+<button class="font-label text-[9px] tracking-[0.5em] text-on-surface-variant hover:text-primary transition-colors flex items-center group">
+                LOAD COMPLETE ARCHIVE
+                <span class="material-symbols-outlined ml-3 text-xs group-hover:rotate-90 transition-transform" data-icon="add">add</span>
+</button>
+</div>
+</section>
+</main>
+<footer class="fixed bottom-0 w-full z-50 h-24 bg-[#0E0E0E] flex justify-between items-center px-12 md:px-24 border-t border-primary-container/30 shadow-[0_-15px_50px_rgba(0,0,0,0.8)]">
+<div class="hidden md:flex items-center space-x-6 w-1/4">
+<div class="w-14 h-14 bg-surface-container-highest overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Abstract vibrant sound waves visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDopp74JK3HrjdJbvi9XSRL3ewOmX5Dy-jZn_aXG--EFJGcdYSKmxuLWDFbfGucZx9weD-6HJNAMpj-ZedLE0hSD-zEBChXgGDpmbkDA1VARSClnNwMuBAVWWZUqp3OWKbKHNO6ibwrXRReLEcmzoRRDStzWz4ysTsINJzG1fO_hHhaE5pvSgb8M2KbDiBtH6sGxPQU5OZc38pDFS2iVYq4HWrVjTxUtLpsaW6HlxX-TYNdscdCnZ5zjQAhKq71ByefCnN2kZk_LQ9m"/>
+</div>
+<div>
+<div class="text-[9px] font-label text-primary tracking-[0.2em] uppercase mb-0.5">CURRENT_TRACK</div>
+<div class="text-xs font-bold text-white tracking-wide">DEEP_WINE_NOCTURNE.FLAC</div>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center space-y-3 w-1/2">
+<div class="flex items-center space-x-4">
+<button class="text-[#e0bfbf] p-2 hover:text-primary transition-colors scale-100 active:scale-90">
+<span class="material-symbols-outlined text-xl" data-icon="skip_previous">skip_previous</span>
+</button>
+<button class="text-white bg-primary-container p-4 rounded-full shadow-[0_0_20px_rgba(128,0,32,0.4)] hover:shadow-[0_0_30px_rgba(128,0,32,0.6)] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button class="text-[#e0bfbf] p-2 hover:text-primary transition-colors scale-100 active:scale-90">
+<span class="material-symbols-outlined text-xl" data-icon="skip_next">skip_next</span>
+</button>
+</div>
+<div class="w-full max-w-md h-[4px] bg-surface-container-highest relative rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-[62%] bg-primary shadow-[0_0_8px_rgba(255,179,181,0.6)]"></div>
+</div>
+</div>
+<div class="flex items-center space-x-8 w-1/4 justify-end">
+<div class="hidden lg:flex items-center space-x-3 group cursor-pointer">
+<span class="material-symbols-outlined text-[#e0bfbf] group-hover:text-primary transition-colors" data-icon="volume_up">volume_up</span>
+<div class="w-20 h-[2px] bg-outline-variant/20 relative">
+<div class="absolute left-0 top-0 h-full w-2/3 bg-primary"></div>
+</div>
+</div>
+<button class="text-[#e0bfbf] hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="open_in_full">open_in_full</span>
+</button>
+</div>
+</footer>
+<script>
+    // Register ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Initial load animations
+    window.addEventListener('DOMContentLoaded', () => {
+        // Subtle entrance for header and sidebar
+        gsap.from('header', { y: -50, opacity: 0, duration: 1, ease: 'power3.out' });
+        gsap.from('aside', { x: -50, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.2 });
+        gsap.from('footer', { y: 50, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.4 });
+
+        // Parallax Layers
+        document.querySelectorAll('.parallax-layer').forEach(layer => {
+            const speed = parseFloat(layer.dataset.speed) || 0.1;
+            gsap.to(layer, {
+                y: (i, target) => -ScrollTrigger.maxScroll(window) * speed,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: layer,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+
+        // Scroll Reveal Transitions
+        document.querySelectorAll('.reveal-text').forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%",
+                    toggleActions: "play none none reverse",
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+        });
+
+        // Image scaling on scroll
+        document.querySelectorAll('.img-reveal').forEach(img => {
+            gsap.to(img, {
+                scale: 1,
+                scrollTrigger: {
+                    trigger: img,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1
+                }
+            });
+        });
+    });
+</script>
+</body></html>

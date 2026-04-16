@@ -1,0 +1,222 @@
+.home-closing {
+  width: min(100%, 1536px);
+  margin: 0 auto;
+  padding: 8px 48px 44px;
+}
+
+.home-closing__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.home-closing__eyebrow {
+  color: #6af05a;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.home-closing__title {
+  margin: 0;
+  max-width: 520px;
+  color: rgba(229, 226, 225, 0.72);
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.home-closing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.home-closing__card {
+  position: relative;
+  overflow: hidden;
+  height: 228px;
+  padding: 0;
+  border: 0;
+  background: #111;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.home-closing__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.home-closing__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 8, 8, 0.08) 0%, rgba(8, 8, 8, 0.72) 100%),
+    linear-gradient(135deg, rgba(106, 240, 90, 0.12) 0%, rgba(106, 240, 90, 0) 52%);
+}
+
+.home-closing__play {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 50%;
+  background: rgba(9, 9, 9, 0.42);
+  color: #f5f5f5;
+  backdrop-filter: blur(10px);
+}
+
+.home-closing__play .material-symbols-outlined {
+  font-size: 28px;
+}
+
+.home-closing__card-copy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px;
+}
+
+.home-closing__card-label {
+  color: rgba(229, 226, 225, 0.64);
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.home-closing__card-title {
+  color: #f8f8f8;
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.home-closing__card:hover .home-closing__poster {
+  transform: scale(1.05);
+  filter: saturate(1.08);
+}
+
+.home-closing__card:hover .home-closing__play {
+  border-color: rgba(106, 240, 90, 0.72);
+  color: #6af05a;
+}
+
+.home-closing__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(16px);
+}
+
+.home-closing__modal-panel {
+  position: relative;
+  width: min(100%, 980px);
+  padding: 28px 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.98) 0%, rgba(9, 9, 9, 0.98) 100%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.home-closing__modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f2f2f2;
+  cursor: pointer;
+}
+
+.home-closing__modal-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding-right: 52px;
+}
+
+.home-closing__modal-copy span {
+  color: rgba(229, 226, 225, 0.6);
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.home-closing__modal-copy strong {
+  color: #f8f8f8;
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.home-closing__modal-video {
+  width: 100%;
+  max-height: 76vh;
+  background: #000;
+}
+
+@media (max-width: 960px) {
+  .home-closing {
+    padding: 0 24px 28px;
+  }
+
+  .home-closing__header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .home-closing__title {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .home-closing__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-closing__card {
+    height: 240px;
+  }
+
+  .home-closing__modal {
+    padding: 16px;
+  }
+
+  .home-closing__modal-panel {
+    padding: 22px 22px 18px;
+  }
+
+  .home-closing__modal-copy strong {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,203 @@
+.home-mood-collage {
+  position: relative;
+  display: flex;
+  min-height: 1480px;
+  flex-direction: column;
+  overflow: visible;
+  padding: 104px 0 24px;
+  user-select: none;
+}
+
+.home-mood-collage__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 48px 0;
+  text-align: center;
+}
+
+.home-mood-collage__header h5 {
+  margin: 0;
+  color: rgba(88, 65, 65, 0.4);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1.5em;
+  text-transform: uppercase;
+}
+
+.home-mood-collage__stage {
+  position: relative;
+  width: 100%;
+  max-width: 1360px;
+  min-height: 1180px;
+  margin: 0 auto;
+}
+
+.home-mood-collage__feeling {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  z-index: 0;
+  color: rgba(255, 255, 255, 0.04);
+  font-family: 'Oswald', sans-serif;
+  font-size: 25vw;
+  font-style: normal;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  mix-blend-mode: overlay;
+  white-space: nowrap;
+}
+
+.home-mood-collage__signal,
+.home-mood-collage__environment,
+.home-mood-collage__texture,
+.home-mood-collage__tape {
+  position: absolute;
+  margin: 0;
+}
+
+.home-mood-collage__signal {
+  top: 5%;
+  left: 5%;
+  z-index: 10;
+  width: 55%;
+  opacity: 0.3;
+}
+
+.home-mood-collage__signal img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-mood-collage__signal figcaption {
+  position: absolute;
+  left: 48px;
+  bottom: 48px;
+  color: rgba(192, 192, 192, 0.4);
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+.home-mood-collage__environment {
+  top: 28%;
+  right: 8%;
+  z-index: 30;
+  width: 48%;
+}
+
+.home-mood-collage__environment-frame {
+  position: relative;
+}
+
+.home-mood-collage__environment img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+.home-mood-collage__environment span {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: rgba(229, 226, 225, 0.6);
+  font-size: 14px;
+  letter-spacing: 0.4em;
+}
+
+.home-mood-collage__texture {
+  top: 18%;
+  left: 32%;
+  z-index: 40;
+  width: 28%;
+  mix-blend-mode: screen;
+}
+
+.home-mood-collage__texture img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-mood-collage__texture figcaption {
+  position: absolute;
+  left: 0;
+  bottom: -40px;
+  color: #c62828;
+  font-size: 14px;
+  letter-spacing: 0.4em;
+}
+
+.home-mood-collage__tape {
+  bottom: 22%;
+  left: 18%;
+  z-index: 50;
+  width: 22%;
+}
+
+.home-mood-collage__tape-card {
+  padding: 12px;
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  background: rgba(19, 19, 19, 0.9);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  transform: rotate(-2deg);
+  backdrop-filter: blur(16px);
+}
+
+.home-mood-collage__tape-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-mood-collage__tape-card figcaption {
+  display: block;
+  margin-top: 12px;
+  color: #d0d0d0;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.home-mood-collage__artifact {
+  position: absolute;
+  right: 15%;
+  bottom: 15%;
+  z-index: 0;
+  color: rgba(192, 192, 192, 0.1);
+  font-family: 'Oswald', sans-serif;
+  font-size: 7vw;
+  font-style: normal;
+  letter-spacing: 0.1em;
+}
+
+.home-mood-collage__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  margin-top: auto;
+  padding-bottom: 32px;
+  opacity: 0.3;
+}
+
+.home-mood-collage__footer-line {
+  width: 96px;
+  height: 1px;
+  background: rgba(128, 0, 32, 0.4);
+}
+
+.home-mood-collage__footer-text {
+  color: #d0d0d0;
+  font-size: 14px;
+  letter-spacing: 0.8em;
+  text-transform: uppercase;
+}
+
+
+

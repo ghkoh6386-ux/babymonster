@@ -1,0 +1,110 @@
+.heroSection {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  gap: 24px;
+  margin-bottom: 192px;
+}
+
+.mediaColumn {
+  position: relative;
+  height: 80vh;
+  min-height: 720px;
+  overflow: hidden;
+  background: #131313;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(0deg, #131313 0%, rgba(19, 19, 19, 0.08) 42%, rgba(19, 19, 19, 0) 100%);
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.titleBlock {
+  position: absolute;
+  bottom: 48px;
+  left: -32px;
+  z-index: 3;
+}
+
+.titleBlock h1 {
+  margin: 0;
+  color: #c62828;
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(7rem, 12vw, 12rem);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  text-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+}
+
+.titleBlock p {
+  margin: 16px 0 0 48px;
+  color: #d0d0d0;
+  font-size: 14px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+}
+
+.copyColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 48px;
+  padding: 0 32px;
+}
+
+.copyBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.copyBlock h2 {
+  margin: 0;
+  color: #e5e2e1;
+  font-family: 'Oswald', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.copyBlock p {
+  max-width: 360px;
+  margin: 0;
+  color: #d0d0d0;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.cta {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 20px 48px;
+  border: 0;
+  background: #c62828;
+  color: #e5e2e1;
+  font-size: 14px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.ctaArrow {
+  margin-left: 16px;
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+
+

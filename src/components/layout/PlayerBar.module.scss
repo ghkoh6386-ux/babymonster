@@ -1,0 +1,273 @@
+.playerBar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: var(--layout-sidebar-width, 188px);
+  z-index: 95;
+  display: flex;
+  height: 120px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 88px;
+  background: rgba(14, 14, 14, 0.94);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(192, 192, 192, 0.24);
+  box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.8);
+}
+
+.trackMeta {
+  display: flex;
+  width: 25%;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 10px;
+  border-radius: 18px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.trackMeta:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.artwork {
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border: 1px solid rgba(192, 192, 192, 0.24);
+  background: #353534;
+}
+
+.artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.eyebrow {
+  margin-bottom: 2px;
+  color: #c62828;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.filename {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.trackText {
+  min-width: 0;
+}
+
+.center {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.controls button,
+.controls a,
+.expandButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #c0c0c0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.controlButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+}
+
+.controlButton:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.repeatButton {
+  position: relative;
+  border: 1px solid rgba(57, 255, 20, 0.3) !important;
+  background: rgba(57, 255, 20, 0.08) !important;
+  color: #8bff72 !important;
+  box-shadow: inset 0 0 0 1px rgba(57, 255, 20, 0.04);
+}
+
+.repeatButtonActive {
+  color: #39ff14;
+  background: rgba(57, 255, 20, 0.14) !important;
+  border-color: rgba(57, 255, 20, 0.56) !important;
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.14);
+}
+
+.repeatButtonAccent::after {
+  position: absolute;
+  right: 2px;
+  bottom: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #39ff14;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.6);
+  content: '';
+}
+
+.repeatButton:hover {
+  background: rgba(57, 255, 20, 0.18) !important;
+  color: #39ff14 !important;
+}
+
+.controlIcon {
+  font-size: 22px;
+}
+
+.playButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: #c62828;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(198, 40, 40, 0.35);
+}
+
+.playIcon {
+  font-size: 28px;
+}
+
+.progressMeta {
+  display: flex;
+  width: 100%;
+  max-width: 448px;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(229, 226, 225, 0.54);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  transform: translateY(-1px);
+}
+
+.progressHitbox {
+  display: flex;
+  width: 100%;
+  max-width: 468px;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.progressTrack {
+  width: 100%;
+  max-width: 468px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #353534;
+  cursor: pointer;
+}
+
+.progressFill {
+  width: 0;
+  height: 100%;
+  background: #c62828;
+  box-shadow: 0 0 8px rgba(198, 40, 40, 0.45);
+}
+
+.actions {
+  display: flex;
+  width: 25%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.volumeIcon,
+.expandIcon {
+  font-size: 20px;
+}
+
+.volumeHitbox {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.volumeTrack {
+  width: 96px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(192, 192, 192, 0.24);
+  cursor: pointer;
+}
+
+.volumeFill {
+  width: 0;
+  height: 100%;
+  background: #c0c0c0;
+}
+
+.controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.controls button:hover,
+.controls a:hover,
+.expandButton:hover,
+.volumeIcon:hover,
+.expandIcon:hover {
+  color: #39ff14;
+}
+
+.controls button:disabled:hover {
+  color: #c0c0c0;
+  background: transparent;
+}
+
+.playButton:hover {
+  background: #39ff14;
+  color: #131313;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.28);
+}
+
+.expandButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+}
+
+.expandButtonActive {
+  background: rgba(57, 255, 20, 0.12);
+  color: #39ff14;
+}
+
+.expandButton:hover,
+.volume:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.expandButtonActive:hover {
+  background: rgba(57, 255, 20, 0.18);
+}

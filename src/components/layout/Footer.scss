@@ -1,0 +1,128 @@
+.home-footer {
+  width: min(100%, 1536px);
+  margin: 0 auto;
+  padding: 64px 48px 84px;
+  background: #131313;
+}
+
+.home-footer__divider {
+  width: 100%;
+  max-width: 896px;
+  height: 1px;
+  margin: 0 auto 44px;
+  background: rgba(192, 192, 192, 0.24);
+}
+
+.home-footer__content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 56px;
+}
+
+.home-footer__left {
+  display: flex;
+  max-width: 400px;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.home-footer__copy {
+  margin: 0;
+  color: rgba(208, 208, 208, 0.86);
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.home-footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-footer__nav a,
+.home-footer__legal {
+  color: #737373;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.home-footer__nav a {
+  width: fit-content;
+  transition: color 0.2s ease;
+}
+
+.home-footer__nav a:hover {
+  color: #39ff14;
+}
+
+.home-footer__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.home-footer__brand {
+  margin: 0;
+  color: rgba(250, 5, 5, 0.22);
+  font-family: 'Oswald', sans-serif;
+  font-size: 144px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.home-footer__legal {
+  margin: 16px 0 0;
+  text-align: right;
+}
+
+@media (max-width: 1024px) {
+  .home-footer {
+    padding: 56px 32px 72px;
+  }
+
+  .home-footer__content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .home-footer__right {
+    align-items: flex-start;
+  }
+
+  .home-footer__brand {
+    font-size: 96px;
+  }
+
+  .home-footer__legal {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-footer {
+    padding: 42px 20px 56px;
+  }
+
+  .home-footer__copy {
+    font-size: 18px;
+  }
+
+  .home-footer__brand {
+    font-size: 64px;
+  }
+
+  .home-footer__nav a,
+  .home-footer__legal {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+  }
+}
+

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#571c22",
+                    "on-primary-fixed": "#40000b",
+                    "tertiary": "#9acfde",
+                    "tertiary-container": "#004451",
+                    "tertiary-fixed": "#b6ebfb",
+                    "surface-bright": "#3a3939",
+                    "surface-container-highest": "#353534",
+                    "secondary-fixed-dim": "#ffb3b5",
+                    "on-surface-variant": "#e0bfbf",
+                    "on-primary-fixed-variant": "#8e0f28",
+                    "primary": "#ffb3b5",
+                    "on-primary": "#680018",
+                    "outline": "#a78a8a",
+                    "surface-container-low": "#1c1b1b",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#9acfde",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-surface": "#e5e2e1",
+                    "primary-fixed": "#ffdada",
+                    "on-tertiary": "#003640",
+                    "on-error-container": "#ffdad6",
+                    "outline-variant": "#584141",
+                    "secondary": "#ffb3b5",
+                    "on-secondary-fixed-variant": "#743237",
+                    "on-secondary-fixed": "#3b070e",
+                    "on-primary-container": "#ff828a",
+                    "surface-dim": "#131313",
+                    "on-secondary-container": "#f69da0",
+                    "primary-container": "#800020",
+                    "on-tertiary-fixed-variant": "#114d5b",
+                    "on-background": "#e5e2e1",
+                    "surface-container": "#201f1f",
+                    "surface-tint": "#ffb3b5",
+                    "surface-variant": "#353534",
+                    "secondary-container": "#743237",
+                    "on-tertiary-fixed": "#001f26",
+                    "on-tertiary-container": "#7cb0c0",
+                    "secondary-fixed": "#ffdada",
+                    "error": "#ffb4ab",
+                    "surface": "#131313",
+                    "on-error": "#690005",
+                    "primary-fixed-dim": "#ffb3b5",
+                    "inverse-surface": "#e5e2e1",
+                    "background": "#131313",
+                    "inverse-on-surface": "#313030",
+                    "inverse-primary": "#af2b3e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body { background-color: #131313; color: #e5e2e1; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+      .hanging-title { margin-left: -2rem; }
+      @media (min-width: 768px) { .hanging-title { margin-left: -5rem; } }
+    </style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-primary overflow-x-hidden">
+<!-- Top Navigation -->
+<nav class="bg-[#131313]/80 backdrop-blur-xl docked full-width top-0 z-50 fixed flex justify-between items-center w-full px-6 md:px-12 py-6">
+<div class="text-3xl font-headline font-black tracking-tighter text-[#ffb3b5] uppercase">NOCTURNE</div>
+<div class="hidden md:flex space-x-12">
+<a class="font-headline italic tracking-tight text-[#ffb3b5] border-b-0 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[1px] after:bg-[#800020] transition-all duration-500 ease-in-out" href="#">Stories</a>
+<a class="font-headline italic tracking-tight text-[#e0bfbf] opacity-60 hover:text-[#ffb3b5] hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Editorial</a>
+<a class="font-headline italic tracking-tight text-[#e0bfbf] opacity-60 hover:text-[#ffb3b5] hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Archive</a>
+</div>
+<div class="flex items-center space-x-6">
+<span class="material-symbols-outlined text-[#ffb3b5] cursor-pointer" data-icon="tune">tune</span>
+<span class="material-symbols-outlined text-[#ffb3b5] cursor-pointer" data-icon="person">person</span>
+</div>
+</nav>
+<!-- Side Navigation (Web) -->
+<aside class="hidden lg:flex flex-col items-center py-24 space-y-12 bg-[#0E0E0E] fixed left-0 top-0 h-full w-24 z-40 border-r-0 tonal-shift surface-container-low">
+<div class="text-[#ffb3b5] font-black font-headline mb-8">STAGE</div>
+<nav class="flex flex-col items-center space-y-10">
+<div class="group flex flex-col items-center cursor-pointer text-[#584141] hover:text-[#e0bfbf] transition-all duration-700">
+<span class="material-symbols-outlined text-2xl" data-icon="filter_vintage">filter_vintage</span>
+</div>
+<div class="group flex flex-col items-center cursor-pointer text-[#ffb3b5] scale-110 translate-x-2 transition-all duration-700">
+<span class="material-symbols-outlined text-2xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="group flex flex-col items-center cursor-pointer text-[#584141] hover:text-[#e0bfbf] transition-all duration-700">
+<span class="material-symbols-outlined text-2xl" data-icon="cloud">cloud</span>
+</div>
+<div class="group flex flex-col items-center cursor-pointer text-[#584141] hover:text-[#e0bfbf] transition-all duration-700">
+<span class="material-symbols-outlined text-2xl" data-icon="movie">movie</span>
+</div>
+<div class="group flex flex-col items-center cursor-pointer text-[#584141] hover:text-[#e0bfbf] transition-all duration-700">
+<span class="material-symbols-outlined text-2xl" data-icon="psychology">psychology</span>
+</div>
+</nav>
+</aside>
+<main class="pt-24 pb-32 md:pl-24 lg:pl-32 min-h-screen">
+<!-- Hero Section: The Chronicles -->
+<section class="relative px-6 md:px-12 pt-12 mb-32">
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-container/10 to-transparent pointer-events-none"></div>
+<header class="relative z-10 mb-20">
+<p class="font-label text-[10px] uppercase tracking-[0.4em] text-outline-variant mb-4">VOLUME 01 — THE INAUGURAL ISSUE</p>
+<h1 class="font-headline font-black text-7xl md:text-[11rem] leading-[0.8] tracking-tighter text-on-surface opacity-90 hanging-title italic select-none">
+                    SONIC<br/>STORIES
+                </h1>
+<div class="max-w-md mt-8 md:ml-24">
+<p class="text-on-surface-variant font-light text-lg leading-relaxed italic border-l border-primary-container pl-6">
+                        An exploration of frequency, shadow, and the tactile nature of sound in the modern nocturne.
+                    </p>
+</div>
+</header>
+<!-- Featured Editorial Feature -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-0 items-end">
+<div class="md:col-span-8 relative z-0">
+<div class="aspect-[16/10] bg-surface-container-low overflow-hidden">
+<img alt="Featured Story" class="w-full h-full object-cover grayscale brightness-50" data-alt="Moody cinematic shot of a silhouetted pianist in a dark, atmospheric concert hall with a single dramatic spotlight and dust motes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdt-4rcSCJ76jHE14Up-19KFUMiYTPP1w08pn-KYXc1gnOPGp47TphI08qINhFHVwgcm63HX-lY2y_vJSTJUWU5na3tqjmmnbdB4ovvNF8USPe4KtC1BxWHzv3jxs936cW_-Y7OjqPCEhsC-oRwghjIoCNpMYTsrD7Chkt_0W6YBSlMxJMsBiF5OvGjDCfsMeX7MkvWiwiqOH1ykL3V-iwWjN-Rx66X9m-qiYsiCBEhFkQN_Srk_-6Anlcbw7SH6Ir4JwRomJYcFo3"/>
+</div>
+<!-- Overlapping Label -->
+<div class="absolute -bottom-6 -right-6 md:-right-12 bg-primary-container p-8 md:p-12 max-w-xs md:max-w-sm z-20">
+<span class="font-label text-[10px] uppercase tracking-[0.3em] text-primary mb-4 block">LEAD EDITORIAL</span>
+<h2 class="font-headline text-3xl md:text-5xl font-bold leading-tight mb-4">THE VELVET RESONANCE</h2>
+<p class="text-on-surface-variant text-sm font-light leading-relaxed mb-6">How dark jazz is reclaiming the subterranean spaces of London's East End.</p>
+<button class="font-label text-xs uppercase tracking-widest text-primary hover:text-on-primary transition-colors flex items-center">
+                            READ FEATURE <span class="material-symbols-outlined ml-2 text-sm" data-icon="arrow_right_alt">arrow_right_alt</span>
+</button>
+</div>
+</div>
+<div class="md:col-span-4 hidden md:block pl-12 pb-12">
+<div class="border-t border-outline-variant pt-8">
+<span class="font-label text-[10px] text-outline-variant block mb-2">AUTHORED BY</span>
+<span class="font-headline italic text-xl">Julian Vane</span>
+<p class="mt-8 text-on-surface-variant/60 text-xs leading-loose uppercase tracking-widest">
+                            London / 02:44 AM<br/>
+                            45.5 BPM / AMBIENT<br/>
+                            12.04.24
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Asymmetric Mid-Page Spread -->
+<section class="px-6 md:px-12 mb-40">
+<div class="flex flex-col md:flex-row gap-24 items-start">
+<!-- Left: Smaller cinematic card -->
+<div class="w-full md:w-1/3 flex flex-col">
+<div class="aspect-[4/5] bg-surface-container-lowest relative mb-8">
+<img alt="DJ gear" class="w-full h-full object-cover mix-blend-luminosity opacity-70" data-alt="Close-up of vintage analog synthesizer knobs and patch cables in a dimly lit studio with deep red ambient glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXi-FM-c2SjP8rYrXRuwZJirL3hMq_Ng0-Fo_94NsaSVNtGNGBp9p8qqKgeA337t-wKO3Vo8i7AI4MgVYHaos_IdibO5CEEwD8GmhM9YLzbvYgiZTecjhM7PqYaIl6Ft9ePJsbUWzUn_Mt6LM1OhyosaTg_SBcCrCdjZfFbS5gVLZ_vTVH_Tu7KmPtu7nxxMSyppGh1ahsWz32bCcM_81QUPv3_sA_1blvks8tPUaB4PuHbjnOdXRCOX4-sKEe3b7BVhyx_nrjFIb1"/>
+<div class="absolute top-4 left-4 border border-primary/20 p-2">
+<span class="font-label text-[9px] uppercase tracking-tighter text-primary">SOUNDSCAPES</span>
+</div>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-3">ANALOG GHOSTS</h3>
+<p class="text-on-surface-variant text-sm font-light mb-4">The haunting of digital production by the artifacts of tape saturation.</p>
+<span class="text-outline-variant font-label text-[10px] tracking-widest">BY ELARA FINCH</span>
+</div>
+<!-- Center/Right: Larger overlapping grid -->
+<div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-12 pt-0 md:pt-32">
+<div class="relative group cursor-pointer translate-y-12">
+<div class="absolute -top-8 -left-4 font-headline text-8xl text-outline-variant/10 select-none">01</div>
+<div class="aspect-square bg-surface-container mb-6 overflow-hidden">
+<img alt="City silhouette" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0" data-alt="Abstract silhouettes of urban skyscrapers at night with blurred traffic lights creating a moody bokeh effect." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM_AV2ysjO6Az2FSVX4mOwJd0yW2WkEZ-mIM6BLiizmbW32Yue4Z9FnftGx7JpaxGjHL5JAXYo-x_6UgW00TQVTRPnCVSWc9Mt5agv6H2NDO8p_JepuGlE0pHHz0etMnWjW-bt8qGDAB-n5uyxSRduGGHQ1BXza_yJuT7rmTZL83eXlh2UDkPqY-HubnWA24IFob25gvi17NtKsTtqfx-sYB2k5_WZBNgbt2oPGu0uVMzU-RyDRoB_E11CmP3C4NpXTFrjQuZHSnhI"/>
+</div>
+<span class="font-label text-[10px] text-primary-container bg-primary px-2 py-0.5 inline-block mb-3">EXPERIMENTAL</span>
+<h4 class="font-headline text-xl font-bold italic">BRUTALIST BEATS</h4>
+<p class="text-on-surface-variant text-xs mt-2 leading-relaxed max-w-xs">How the architecture of concrete structures influences the reverb of modern techno.</p>
+</div>
+<div class="relative group cursor-pointer">
+<div class="absolute -top-8 -left-4 font-headline text-8xl text-outline-variant/10 select-none">02</div>
+<div class="aspect-[3/4] bg-surface-container mb-6 overflow-hidden">
+<img alt="Microphone" class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105" data-alt="Extreme close-up of a vintage microphone diaphragm in soft focus with dark shadows and metallic highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdWMrkLUOqffVaEVjBXga38R9-0Jvwd_lGt9Hs148zMKrcJpd3DqiQMpAvqBPdtIqbI6Vr0OxbVJXWtoNSVFctFFoyvucg5gXluJWHFTD7s3jGbanIXJXi9tMTccY53eflc0_PZTN1TBGkuUVFHg7ItyQMwYTNfrixsmxrFb_zVz8j9AXRSRbg_6DPouyYPnEa-PAOxFhzzl3eQmZweuUKbk-d6_oTPmEQCDG3l1JUcdPidMbX5N-U__x35NMgg2fWD_kzXzLEt0mq"/>
+</div>
+<span class="font-label text-[10px] text-primary-container bg-primary px-2 py-0.5 inline-block mb-3">INTERVIEW</span>
+<h4 class="font-headline text-xl font-bold italic">THE SILENCE OF ECHO</h4>
+<p class="text-on-surface-variant text-xs mt-2 leading-relaxed max-w-xs">An afternoon with M-001 on why the best notes are the ones left unplayed.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Long Read Spread -->
+<section class="mb-40 px-6 md:px-0">
+<div class="bg-surface-container-low w-full md:w-11/12 ml-auto py-24 md:pl-24 pr-6 md:pr-24 relative overflow-hidden">
+<div class="absolute top-0 right-0 text-[20rem] font-headline font-black text-surface-container-highest/20 leading-none pointer-events-none select-none translate-x-1/4">SONIC</div>
+<div class="max-w-2xl relative z-10">
+<p class="font-label text-[10px] tracking-[0.5em] text-primary mb-8">LONGFORM FEATURE</p>
+<h2 class="font-headline text-4xl md:text-7xl font-black mb-12 tracking-tighter leading-none italic">CURATING THE<br/>MIDNIGHT<br/>ANTHOLOGY</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<p class="text-on-surface font-light leading-loose">
+                            In the depths of the digital age, we find ourselves yearning for the visceral. The Nocturne was born from this desire—not just to listen, but to dwell within a frequency. In this special report, we map the history of late-night broadcasting from pirate radio to curated sensory streams.
+                        </p>
+<div class="flex flex-col justify-end">
+<div class="h-px bg-outline-variant w-full mb-6"></div>
+<button class="bg-primary-container text-primary font-label text-xs tracking-widest py-4 px-8 self-start hover:bg-on-primary transition-colors duration-500">
+                                ACCESS THE ARCHIVE
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final Scattered Previews -->
+<section class="px-6 md:px-12 mb-20 grid grid-cols-1 md:grid-cols-12 gap-12">
+<div class="md:col-span-5 md:translate-y-24">
+<div class="aspect-video bg-surface-container overflow-hidden mb-8">
+<img alt="Vinyl spinning" class="w-full h-full object-cover grayscale opacity-60" data-alt="Motion blur shot of a vinyl record spinning on a turntable in a dark room with a single red light reflecting off the surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq2ilOtw74UN0QHByqBC526Ty7g2hO5-6ltOTUh8gcPwFOuIwRC8QJyGY5CL4It4gUY5-efHfqzhLEc0qzJrUSelu6lLREykSitRBXRO3RMPheSKRwy0wG0R46BlffvIz92s3LL0AEdrECJZU7eMbXw3teFl4bx48H7xy2xYjzEGlb3piZaNQo_mdevP9KlD4DRQahuDJn1x6rvO4qL1B4sW_zjF_HL0XPKOb_iKcMF6UAkYWd8bE5bGRw_UUBZhlQSIe5jaclw_Ks"/>
+</div>
+<span class="font-label text-[9px] text-outline-variant uppercase mb-2 block">DISCOGRAPHY / 04</span>
+<h3 class="font-headline text-2xl font-bold mb-4">THE LAST PRESSED RECORD</h3>
+<p class="text-on-surface-variant text-sm font-light leading-relaxed">A visual essay on the final factory in Eastern Europe still producing hand-poured red wax.</p>
+</div>
+<div class="md:col-span-3"></div>
+<div class="md:col-span-4">
+<div class="border-l-4 border-primary-container pl-12 py-12">
+<span class="font-label text-[9px] text-primary uppercase mb-8 block tracking-widest">BRIEFINGS</span>
+<div class="space-y-16">
+<div class="group cursor-pointer">
+<span class="font-label text-[10px] text-outline-variant">MAY 12</span>
+<h5 class="font-headline text-lg group-hover:text-primary transition-colors italic">Frequency as Medicine</h5>
+</div>
+<div class="group cursor-pointer">
+<span class="font-label text-[10px] text-outline-variant">MAY 09</span>
+<h5 class="font-headline text-lg group-hover:text-primary transition-colors italic">The Dark Side of Synthesis</h5>
+</div>
+<div class="group cursor-pointer">
+<span class="font-label text-[10px] text-outline-variant">MAY 04</span>
+<h5 class="font-headline text-lg group-hover:text-primary transition-colors italic">Nocturnal Landscapes</h5>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile only focus) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full bg-gradient-to-r from-[#131313] via-[#800020]/20 to-[#131313] backdrop-blur-2xl z-[60] h-20 flex justify-between items-center px-8 border-t-[1px] border-[#584141]/15 shadow-[0_-10px_40px_rgba(64,0,11,0.06)]">
+<div class="flex flex-col items-center space-y-1 text-[#e0bfbf]/40">
+<span class="material-symbols-outlined text-xl" data-icon="play_arrow">play_arrow</span>
+<span class="font-label text-[8px] uppercase tracking-widest font-light">Now Playing</span>
+</div>
+<div class="flex flex-col items-center space-y-1 text-[#ffb3b5] drop-shadow-[0_0_8px_#800020]">
+<span class="material-symbols-outlined text-xl" data-icon="queue_music" style="font-variation-settings: 'FILL' 1;">queue_music</span>
+<span class="font-label text-[8px] uppercase tracking-widest font-light">Queue</span>
+</div>
+<div class="flex flex-col items-center space-y-1 text-[#e0bfbf]/40">
+<span class="material-symbols-outlined text-xl" data-icon="graphic_eq">graphic_eq</span>
+<span class="font-label text-[8px] uppercase tracking-widest font-light">Mixer</span>
+</div>
+<div class="flex flex-col items-center space-y-1 text-[#e0bfbf]/40">
+<span class="material-symbols-outlined text-xl" data-icon="fullscreen">fullscreen</span>
+<span class="font-label text-[8px] uppercase tracking-widest font-light">Full</span>
+</div>
+</footer>
+</body></html>
