@@ -244,6 +244,7 @@ export default function SidebarCollectionPage({
   };
 
   const handleOpenVideoItem = (item) => {
+    dispatch(setPlayerPlaying(false));
     setActiveVideoItem({
       ...item,
       image: item.image ?? item.poster,
