@@ -1,6 +1,7 @@
-import React from 'react';
+﻿import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
+import Icon from '../Icon';
 import {
   closeCollectionPanel,
   setNowPlayingOpen,
@@ -14,7 +15,13 @@ const navItems = [
   { label: 'INTRO', to: '/search' },
 ];
 
-export default function Header() {
+export default function Header({
+  isMobileNavOpen = false,
+  isMobileSidebarOpen = false,
+  onToggleMobileNav,
+  onToggleMobileSidebar,
+  onCloseMobileMenus,
+}) {
   const dispatch = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
@@ -23,21 +30,23 @@ export default function Header() {
     dispatch(setPlaylistPanelOpen(false));
     dispatch(closeCollectionPanel());
     dispatch(setNowPlayingOpen(false));
+    onCloseMobileMenus?.();
   };
-
-  let currentLabel = 'HOME';
-
-  if (pathname === '/') currentLabel = 'HOME';
-  else if (pathname.startsWith('/browse')) currentLabel = 'BROWSE';
-  else if (pathname.startsWith('/search')) currentLabel = 'INTRO';
-  else if (pathname.startsWith('/library')) currentLabel = 'ARCHIVE';
-  else if (pathname.startsWith('/detail')) currentLabel = 'DETAIL';
-  else if (pathname.startsWith('/playing')) currentLabel = 'PLAYER';
 
   return (
     <header className="app-header">
       <div className="app-header__inner">
         <div className="app-header__cluster">
+          <button
+            type="button"
+            className={`app-header__mobile-toggle${isMobileSidebarOpen ? ' app-header__mobile-toggle--active' : ''}`}
+            onClick={onToggleMobileSidebar}
+            aria-label="컬렉션 메뉴 열기"
+          >
+            <Icon name={isMobileSidebarOpen ? 'close' : 'dashboard'} className="app-header__mobile-icon" />
+            <span>COLLECTION</span>
+          </button>
+
           <NavLink
             to="/"
             end
@@ -48,7 +57,10 @@ export default function Header() {
             BABYMONSTER
           </NavLink>
 
-          <nav className="app-header__nav" aria-label="Primary navigation">
+          <nav
+            className={`app-header__nav${isMobileNavOpen ? ' app-header__nav--mobile-open' : ''}`}
+            aria-label="Primary navigation"
+          >
             {navItems.map((item) => (
               <NavLink
                 key={item.label}
@@ -66,7 +78,15 @@ export default function Header() {
         </div>
 
         <div className="app-header__utilities" aria-label="Utility">
-          
+          <button
+            type="button"
+            className={`app-header__mobile-toggle app-header__mobile-toggle--nav${isMobileNavOpen ? ' app-header__mobile-toggle--active' : ''}`}
+            onClick={onToggleMobileNav}
+            aria-label="네비게이션 열기"
+          >
+            <Icon name={isMobileNavOpen ? 'close' : 'menu'} className="app-header__mobile-icon" />
+            <span>MENU</span>
+          </button>
         </div>
       </div>
     </header>

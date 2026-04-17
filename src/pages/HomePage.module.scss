@@ -105,4 +105,53 @@
   color: #d8ffd0;
 }
 
+@media (max-width: 1024px) {
+  .canvas {
+    padding: 20px 24px 108px;
+  }
 
+  .overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 20px auto 72px;
+  }
+
+  .overviewCard:nth-child(3) {
+    display: none;
+  }
+
+  .overviewCard {
+    min-height: 0;
+    padding: 20px 20px 22px;
+  }
+
+  .overviewTitle {
+    white-space: normal;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 760px) {
+  .canvas {
+    padding: 14px 14px 102px;
+  }
+
+  .overview {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 44px;
+  }
+
+  .overviewCard {
+    padding: 18px 16px 20px;
+  }
+
+  .overviewMeta {
+    margin-bottom: 10px;
+  }
+
+  .overviewTitle {
+    font-size: 20px;
+    line-height: 1.15;
+  }
+}

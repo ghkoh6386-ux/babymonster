@@ -28,12 +28,16 @@ export default function MainLayout() {
   const [isCollectionPanelClosing, setIsCollectionPanelClosing] = useState(false);
   const [shouldRenderNowPlaying, setShouldRenderNowPlaying] = useState(isNowPlayingOpen);
   const [isNowPlayingClosing, setIsNowPlayingClosing] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const hasBlockingOverlay =
     shouldRenderNowPlaying || shouldRenderPlaylistPanel || Boolean(renderedCollectionPanel);
 
   useEffect(() => {
     dispatch(setPlaylistPanelOpen(false));
     dispatch(closeCollectionPanel());
+    setIsMobileNavOpen(false);
+    setIsMobileSidebarOpen(false);
   }, [dispatch, location.pathname]);
 
   useEffect(() => {
@@ -132,8 +136,26 @@ export default function MainLayout() {
 
   return (
     <div className="main-layout">
-      <Header />
-      <SidebarPanel />
+      <Header
+        isMobileNavOpen={isMobileNavOpen}
+        isMobileSidebarOpen={isMobileSidebarOpen}
+        onToggleMobileNav={() => {
+          setIsMobileNavOpen((prev) => !prev);
+          setIsMobileSidebarOpen(false);
+        }}
+        onToggleMobileSidebar={() => {
+          setIsMobileSidebarOpen((prev) => !prev);
+          setIsMobileNavOpen(false);
+        }}
+        onCloseMobileMenus={() => {
+          setIsMobileNavOpen(false);
+          setIsMobileSidebarOpen(false);
+        }}
+      />
+      <SidebarPanel
+        isMobileOpen={isMobileSidebarOpen}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
+      />
       <main className="main-layout__content">
         <div className="main-layout__canvas">
           <Outlet />
@@ -174,3 +196,4 @@ export default function MainLayout() {
     </div>
   );
 }
+

@@ -199,5 +199,108 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 1024px) {
+  .home-mood-collage {
+    min-height: 0;
+    padding: 44px 0 12px;
+  }
+
+  .home-mood-collage__header {
+    position: relative;
+    padding: 0 0 20px;
+  }
+
+  .home-mood-collage__stage {
+    min-height: 0;
+    display: grid;
+    gap: 18px;
+    padding: 0 24px;
+  }
+
+  .home-mood-collage__feeling,
+  .home-mood-collage__artifact {
+    display: none;
+  }
+
+  .home-mood-collage__signal,
+  .home-mood-collage__environment,
+  .home-mood-collage__texture,
+  .home-mood-collage__tape {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    opacity: 1;
+  }
+
+  .home-mood-collage__environment img,
+  .home-mood-collage__signal img,
+  .home-mood-collage__texture img,
+  .home-mood-collage__tape-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .home-mood-collage__environment img,
+  .home-mood-collage__signal img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .home-mood-collage__texture img,
+  .home-mood-collage__tape-card img {
+    aspect-ratio: 4 / 5;
+  }
+
+  .home-mood-collage__signal figcaption,
+  .home-mood-collage__texture figcaption {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    color: rgba(229, 226, 225, 0.7);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+  }
+
+  .home-mood-collage__environment span {
+    right: 16px;
+    top: 16px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+  }
+
+  .home-mood-collage__tape-card {
+    transform: none;
+  }
+
+  .home-mood-collage__footer {
+    gap: 20px;
+    padding: 18px 24px 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-mood-collage {
+    padding-top: 28px;
+  }
+
+  .home-mood-collage__stage {
+    gap: 14px;
+    padding: 0 14px;
+  }
+
+  .home-mood-collage__header h5,
+  .home-mood-collage__footer-text {
+    letter-spacing: 0.3em;
+    font-size: 11px;
+  }
+
+  .home-mood-collage__footer-line {
+    width: 36px;
+  }
+}
+
 
 

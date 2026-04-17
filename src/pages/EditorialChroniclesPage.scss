@@ -433,6 +433,10 @@
     padding: 20px 20px 148px;
   }
 
+  .chronicles-album-hero {
+    grid-template-columns: 1fr;
+  }
+
   .chronicles-album-hero__lede,
   .chronicles-album-hero__board,
   .chronicles-album-library {
@@ -449,6 +453,10 @@
   .chronicles-album-hero__meta,
   .chronicles-album-grid {
     grid-template-columns: 1fr;
+  }
+
+  .chronicles-album-hero__board {
+    display: none;
   }
 
   .chronicles-album-hero__stack-image,

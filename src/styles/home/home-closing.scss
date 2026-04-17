@@ -52,7 +52,7 @@
 .home-closing__poster {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   background: #0b0b0b;
   transform: scale(1);
@@ -234,11 +234,17 @@
   }
 
   .home-closing__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .home-closing__card:nth-child(3) {
+    display: none;
   }
 
   .home-closing__card {
     min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
   .home-closing__modal {
@@ -251,5 +257,39 @@
 
   .home-closing__modal-copy strong {
     font-size: 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-closing {
+    padding: 0 14px 18px;
+  }
+
+  .home-closing__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-closing__card-copy {
+    padding: 16px;
+  }
+
+  .home-closing__card-title {
+    font-size: 26px;
+    line-height: 1.05;
+  }
+
+  .home-closing__favorite,
+  .home-closing__play {
+    top: 12px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .home-closing__favorite {
+    left: 12px;
+  }
+
+  .home-closing__play {
+    right: 12px;
   }
 }

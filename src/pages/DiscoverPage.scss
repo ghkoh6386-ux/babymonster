@@ -470,10 +470,14 @@
   min-width: 100%;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
+  align-items: start;
   flex: 0 0 100%;
 }
 
 .browse-video-card {
+  display: grid;
+  grid-template-rows: auto auto;
+  align-self: start;
   overflow: hidden;
   border-radius: 0;
   background:
@@ -482,6 +486,11 @@
   cursor: pointer;
   text-align: left;
   transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.browse-video-card--placeholder {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .browse-video-card:hover {
@@ -523,6 +532,10 @@
 }
 
 .browse-video-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
   padding: 20px 20px 22px;
 }
 
@@ -684,6 +697,12 @@
     min-height: 760px;
   }
 
+  .browse-popular,
+  .browse-search,
+  .browse-carousel {
+    margin-top: 14px;
+  }
+
   .browse-hero__copy {
     padding: 0;
     max-width: 100%;
@@ -716,14 +735,89 @@
   }
 
   .browse-carousel__frame {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'viewport viewport'
+      'prev next';
+    gap: 12px;
   }
 
   .browse-carousel__nav {
-    min-height: 50px;
+    min-height: 0;
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
+    justify-self: center;
+  }
+
+  .browse-carousel__nav:first-of-type {
+    grid-area: prev;
+  }
+
+  .browse-carousel__nav:last-of-type {
+    grid-area: next;
+  }
+
+  .browse-carousel__viewport {
+    grid-area: viewport;
+  }
+
+  .browse-carousel__grid {
+    display: flex;
+    min-width: 100%;
+    flex-direction: column;
+    gap: 14px;
+    align-items: stretch;
   }
 
   .browse-video-card__media {
     height: 220px;
+  }
+
+  .browse-video-card--placeholder {
+    display: none;
+  }
+
+  .browse-video-card__body {
+    padding: 16px 16px 18px;
+  }
+
+  .browse-video-card__body h3 {
+    font-size: 22px;
+  }
+
+  .browse-video-card__body strong,
+  .browse-video-card__body p,
+  .browse-video-card__meta em {
+    font-size: 12px;
+  }
+
+  .browse-popular-card__media {
+    height: 220px;
+  }
+
+  .browse-popular-card__body h3,
+  .browse-video-card__body h3 {
+    font-size: 26px;
+    line-height: 1.04;
+  }
+
+  .browse-video-card__body p,
+  .browse-popular-card__body p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .browse-video-modal__copy strong {
+    margin-top: 8px;
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+  }
+
+  .browse-video-modal__copy p {
+    margin: 8px 0 14px;
+    font-size: 12px;
+    line-height: 1.6;
   }
 }

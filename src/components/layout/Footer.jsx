@@ -14,10 +14,9 @@ export default function Footer() {
           </p>
 
           <nav className="home-footer__nav" aria-label="Footer navigation">
-            <Link to="/browse">아카이브</Link>
-            <Link to="/library">보관함</Link>
-            <Link to="/search">검색</Link>
-            <Link to="/detail/sheesh-command">스포트라이트</Link>
+            <Link to="/browse">VIDEO</Link>
+            <Link to="/library">MUSIC</Link>
+            <Link to="/search">INTRO</Link>
           </nav>
         </div>
 

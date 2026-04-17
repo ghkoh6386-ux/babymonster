@@ -1988,6 +1988,298 @@ img {
   padding: 0 96px 144px;
 }
 
+@media (max-width: 1024px) {
+  .music-detail-hero {
+    height: 760px;
+  }
+
+  .music-detail-hero__content {
+    right: 24px;
+    bottom: 110px;
+    left: 24px;
+  }
+
+  .music-detail-hero__content h1 {
+    font-size: clamp(4.2rem, 13vw, 7rem);
+    line-height: 0.88;
+  }
+
+  .music-detail-hero__subtitle {
+    max-width: 520px;
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  .music-detail-hero__facts {
+    right: 24px;
+    bottom: 26px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .music-detail-story {
+    flex-direction: column;
+    gap: 34px;
+    padding: 64px 24px;
+  }
+
+  .music-detail-story__images,
+  .music-detail-story__text {
+    width: 100%;
+  }
+
+  .music-detail-story__secondary {
+    right: 0;
+    bottom: -28px;
+    width: 48%;
+  }
+
+  .music-detail-story__text {
+    padding-top: 0;
+  }
+
+  .music-detail-story h2 {
+    margin-bottom: 24px;
+    font-size: 38px;
+  }
+
+  .music-detail-story p {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .music-detail-notes,
+  .music-detail-tech {
+    flex-direction: column;
+    gap: 28px;
+    padding: 72px 24px 0;
+  }
+
+  .music-detail-tech {
+    padding-bottom: 72px;
+  }
+
+  .music-detail-notes__intro,
+  .music-detail-notes__grid,
+  .music-detail-tech__intro,
+  .music-detail-tech__grid {
+    width: 100%;
+  }
+
+  .music-detail-notes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .music-detail-notes__card:nth-child(3) {
+    display: none;
+  }
+
+  .music-detail-tech__grid div {
+    padding: 30px 24px;
+  }
+
+  .music-detail-tech strong {
+    font-size: 48px;
+  }
+
+  .music-detail-related {
+    flex-direction: column;
+    gap: 28px;
+    padding: 72px 24px 64px;
+  }
+
+  .music-detail-related__intro,
+  .music-detail-related__grid {
+    width: 100%;
+  }
+
+  .music-detail-related__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .music-detail-related__card:nth-child(3) {
+    display: none;
+  }
+
+  .music-detail-related__card-image {
+    aspect-ratio: 4 / 5;
+    height: auto;
+  }
+
+  .music-detail-pagination {
+    padding: 0 24px 108px;
+  }
+}
+
+@media (max-width: 760px) {
+  .music-detail-hero {
+    height: 640px;
+  }
+
+  .music-detail-hero__content {
+    right: 14px;
+    bottom: 132px;
+    left: 14px;
+  }
+
+  .music-detail-hero__content p,
+  .music-detail-hero__content .music-detail-hero__eyebrow {
+    margin-left: 0;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+
+  .music-detail-hero__content h1 {
+    font-size: clamp(3rem, 16vw, 4.8rem);
+    line-height: 0.9;
+    word-break: keep-all;
+  }
+
+  .music-detail-hero__subtitle {
+    max-width: none;
+    margin: 14px 0 0;
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .music-detail-hero__actions {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 0;
+  }
+
+  .music-detail-hero__action {
+    min-height: 42px;
+    padding: 0 14px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  .music-detail-hero__facts {
+    right: 14px;
+    bottom: 18px;
+    left: 14px;
+    gap: 10px;
+  }
+
+  .music-detail-hero__facts > div {
+    min-width: calc(50% - 5px);
+  }
+
+  .music-detail-hero__facts strong {
+    max-width: none;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .music-detail-story {
+    gap: 24px;
+    padding: 42px 14px;
+  }
+
+  .music-detail-story__primary {
+    aspect-ratio: 16 / 11;
+  }
+
+  .music-detail-story__secondary {
+    display: none;
+  }
+
+  .music-detail-story h2 {
+    margin-bottom: 18px;
+    font-size: 28px;
+  }
+
+  .music-detail-story p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .music-detail-story__aside {
+    padding: 16px 14px;
+  }
+
+  .music-detail-story__actions {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .music-detail-story__action {
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  .music-detail-notes,
+  .music-detail-tech {
+    gap: 18px;
+    padding: 44px 14px 0;
+  }
+
+  .music-detail-tech {
+    padding-bottom: 44px;
+  }
+
+  .music-detail-notes__intro h3 {
+    font-size: 34px;
+  }
+
+  .music-detail-notes__grid,
+  .music-detail-tech__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .music-detail-notes__card:nth-child(3) {
+    display: block;
+  }
+
+  .music-detail-notes__card {
+    min-height: 0;
+    padding: 18px 16px;
+  }
+
+  .music-detail-notes__card strong {
+    font-size: 24px;
+  }
+
+  .music-detail-tech__grid div {
+    padding: 20px 16px;
+  }
+
+  .music-detail-tech strong {
+    font-size: 38px;
+  }
+
+  .music-detail-related {
+    padding: 52px 14px 44px;
+    gap: 22px;
+  }
+
+  .music-detail-related__intro h3 {
+    font-size: 38px;
+  }
+
+  .music-detail-related__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .music-detail-related__card-copy {
+    padding: 18px 16px 20px;
+  }
+
+  .music-detail-related__card-copy strong {
+    font-size: 26px;
+  }
+
+  .music-detail-pagination {
+    padding: 0 14px 96px;
+  }
+}
+
 .music-detail-pagination__link {
   color: $primary;
   font-size: 13px;
@@ -2074,6 +2366,21 @@ img {
 .music-detail-video-modal__player {
   width: 100%;
   background: #000;
+}
+
+@media (max-width: 760px) {
+  .music-detail-video-modal__panel {
+    padding: 18px;
+  }
+
+  .music-detail-video-modal__copy strong {
+    font-size: 30px;
+  }
+
+  .music-detail-video-modal__copy p {
+    font-size: 12px;
+    line-height: 1.6;
+  }
 }
 
 .now-playing-main {
@@ -2471,6 +2778,170 @@ img {
 
   &--closing .now-playing-page__backdrop {
     animation: nowPlayingBackdropOut 320ms ease forwards;
+  }
+}
+
+@media (max-width: 1024px) {
+  .now-playing-main {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .now-playing-page--overlay .now-playing-main {
+    left: 0;
+    bottom: 108px;
+    max-height: calc(100vh - 92px - 108px);
+  }
+
+  .now-playing-main__content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 40px 24px 132px;
+  }
+
+  .now-playing-art {
+    max-width: 360px;
+  }
+
+  .now-playing-copy {
+    max-width: none;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .now-playing-copy__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .now-playing-data {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .now-playing-controls {
+    flex-wrap: wrap;
+    row-gap: 14px;
+  }
+
+  .now-playing-controls__extra {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .now-playing-bars,
+  .now-playing-ghost {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .now-playing-page--overlay .now-playing-main {
+    top: 92px;
+    right: 0;
+    bottom: 102px;
+    left: 0;
+    max-height: calc(100vh - 92px - 102px);
+  }
+
+  .now-playing-main__close {
+    top: 16px;
+    right: 16px;
+    z-index: 8;
+  }
+
+  .now-playing-main__content {
+    gap: 20px;
+    padding: 24px 14px 28px;
+  }
+
+  .now-playing-art {
+    width: 100%;
+    max-width: none;
+  }
+
+  .now-playing-art__frame {
+    inset: -10px auto auto -10px;
+  }
+
+  .now-playing-art__tag {
+    left: 14px;
+    bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+
+  .now-playing-copy h1 {
+    font-size: clamp(3rem, 16vw, 5.2rem);
+    line-height: 0.92;
+  }
+
+  .now-playing-copy__eyebrow {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .now-playing-copy__eyebrow p,
+  .now-playing-data span,
+  .now-playing-progress__time {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+
+  .now-playing-copy__meta h2 {
+    font-size: 32px;
+  }
+
+  .now-playing-copy__meta p {
+    max-width: none;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .now-playing-data {
+    margin: 24px 0 26px;
+    padding-top: 18px;
+  }
+
+  .now-playing-data strong {
+    font-size: 18px;
+  }
+
+  .now-playing-progress {
+    margin-bottom: 24px;
+  }
+
+  .now-playing-controls {
+    gap: 12px;
+  }
+
+  .now-playing-controls > button,
+  .now-playing-controls > a {
+    width: 44px;
+    height: 44px;
+  }
+
+  .now-playing-controls__main {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .now-playing-controls__extra {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .now-playing-controls__volume {
+    flex: 1;
+  }
+
+  .now-playing-controls__volume-track {
+    width: 100%;
+    max-width: 160px;
   }
 }
 
@@ -4512,6 +4983,10 @@ img {
 @media (max-width: 760px) {
   .intro-main--remix {
     gap: 28px;
+  }
+
+  .intro-remix-hero__visual {
+    order: -1;
   }
 
   .intro-remix-hero__copy,

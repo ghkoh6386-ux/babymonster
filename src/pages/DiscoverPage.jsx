@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { images } from '../assets/media';
@@ -24,6 +24,9 @@ export default function DiscoverPage() {
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeVideo, setActiveVideo] = useState(null);
+  const [isCompactCarousel, setIsCompactCarousel] = useState(false);
+  const slideRefs = useRef([]);
+  const [viewportHeight, setViewportHeight] = useState(null);
 
   useEffect(() => {
     if (!activeVideo) {
@@ -42,6 +45,24 @@ export default function DiscoverPage() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeVideo]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia('(max-width: 760px)');
+    const syncCompactCarousel = (event) => {
+      setIsCompactCarousel(event.matches);
+    };
+
+    syncCompactCarousel(mediaQuery);
+    mediaQuery.addEventListener('change', syncCompactCarousel);
+
+    return () => {
+      mediaQuery.removeEventListener('change', syncCompactCarousel);
+    };
+  }, []);
 
   const filteredVideos = useMemo(() => {
     const keyword = query.trim().toLowerCase();
@@ -91,6 +112,42 @@ export default function DiscoverPage() {
     }
   }, [activeSlide, slides.length]);
 
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      const activeNode = slideRefs.current[activeSlide];
+
+      if (!activeNode) {
+        setViewportHeight(null);
+        return;
+      }
+
+      setViewportHeight(activeNode.scrollHeight);
+    };
+
+    const frameId = window.requestAnimationFrame(() => {
+      updateViewportHeight();
+    });
+    const activeNode = slideRefs.current[activeSlide];
+    const resizeObserver =
+      activeNode && typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => {
+            updateViewportHeight();
+          })
+        : null;
+
+    if (resizeObserver && activeNode) {
+      resizeObserver.observe(activeNode);
+    }
+
+    window.addEventListener('resize', updateViewportHeight);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', updateViewportHeight);
+    };
+  }, [activeSlide, slides]);
+
   const currentSortLabel = sortOptions.find((item) => item.id === sortBy)?.label ?? '최신순';
   const openVideo = (item) => {
     dispatch(setPlayerPlaying(false));
@@ -102,6 +159,65 @@ export default function DiscoverPage() {
     event.stopPropagation();
     dispatch(toggleFavoriteVideoId(id));
   };
+
+  const renderSlideItems = (slideItems, slideIndex) =>
+    [...slideItems, ...Array.from({ length: Math.max(0, 4 - slideItems.length) }, (_, index) => ({
+      id: `placeholder-${slideIndex}-${index}`,
+      isPlaceholder: true,
+    }))].map((item) => {
+      if (item.isPlaceholder) {
+        return (
+          <div
+            key={item.id}
+            className="browse-video-card browse-video-card--placeholder"
+            aria-hidden="true"
+          />
+        );
+      }
+
+      const isFavorited = favoriteVideoIds.includes(item.id);
+
+      return (
+        <article
+          key={item.id}
+          className="browse-video-card"
+          onClick={() => openVideo(item)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              openVideo(item);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label={`${item.title} 영상 재생`}
+        >
+          <div className="browse-video-card__media">
+            <img src={item.poster} alt={`${item.title} poster`} />
+            <button
+              type="button"
+              className={`browse-card-favorite${isFavorited ? ' is-active' : ''}`}
+              aria-label={`${item.title} 좋아요`}
+              onClick={(event) => toggleVideoFavorite(event, item.id)}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">
+                favorite
+              </span>
+            </button>
+          </div>
+          <div className="browse-video-card__body">
+            <span>{item.accent}</span>
+            <h3>{item.title}</h3>
+            <strong>{item.subtitle}</strong>
+            <p>{item.description}</p>
+            <div className="browse-video-card__meta">
+              <em>{item.duration}</em>
+              <em>{item.popularity} POINTS</em>
+            </div>
+          </div>
+        </article>
+      );
+    });
 
   return (
     <>
@@ -275,60 +391,37 @@ export default function DiscoverPage() {
                     </span>
                   </button>
 
-                  <div className="browse-carousel__viewport">
-                    <div
-                      className="browse-carousel__track"
-                      style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-                    >
-                      {slides.map((slideItems, slideIndex) => (
-                        <div key={`slide-panel-${slideIndex}`} className="browse-carousel__grid">
-                          {slideItems.map((item) => {
-                            const isFavorited = favoriteVideoIds.includes(item.id);
-
-                            return (
-                              <article
-                                key={item.id}
-                                className="browse-video-card"
-                                onClick={() => openVideo(item)}
-                                onKeyDown={(event) => {
-                                  if (event.key === 'Enter' || event.key === ' ') {
-                                    event.preventDefault();
-                                    openVideo(item);
-                                  }
-                                }}
-                                role="button"
-                                tabIndex={0}
-                                aria-label={`${item.title} 영상 재생`}
-                              >
-                                <div className="browse-video-card__media">
-                                  <img src={item.poster} alt={`${item.title} poster`} />
-                                  <button
-                                    type="button"
-                                    className={`browse-card-favorite${isFavorited ? ' is-active' : ''}`}
-                                    aria-label={`${item.title} 좋아요`}
-                                    onClick={(event) => toggleVideoFavorite(event, item.id)}
-                                  >
-                                    <span className="material-symbols-outlined" aria-hidden="true">
-                                      favorite
-                                    </span>
-                                  </button>
-                                </div>
-                                <div className="browse-video-card__body">
-                                  <span>{item.accent}</span>
-                                  <h3>{item.title}</h3>
-                                  <strong>{item.subtitle}</strong>
-                                  <p>{item.description}</p>
-                                  <div className="browse-video-card__meta">
-                                    <em>{item.duration}</em>
-                                    <em>{item.popularity} POINTS</em>
-                                  </div>
-                                </div>
-                              </article>
-                            );
-                          })}
-                        </div>
-                      ))}
-                    </div>
+                  <div
+                    className="browse-carousel__viewport"
+                    style={!isCompactCarousel && viewportHeight ? { height: `${viewportHeight}px` } : undefined}
+                  >
+                    {isCompactCarousel ? (
+                      <div
+                        className="browse-carousel__grid"
+                        ref={(node) => {
+                          slideRefs.current[activeSlide] = node;
+                        }}
+                      >
+                        {renderSlideItems(slides[activeSlide] ?? [], activeSlide)}
+                      </div>
+                    ) : (
+                      <div
+                        className="browse-carousel__track"
+                        style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                      >
+                        {slides.map((slideItems, slideIndex) => (
+                          <div
+                            key={`slide-panel-${slideIndex}`}
+                            className="browse-carousel__grid"
+                            ref={(node) => {
+                              slideRefs.current[slideIndex] = node;
+                            }}
+                          >
+                            {renderSlideItems(slideItems, slideIndex)}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <button
@@ -416,3 +509,5 @@ export default function DiscoverPage() {
     </>
   );
 }
+
+

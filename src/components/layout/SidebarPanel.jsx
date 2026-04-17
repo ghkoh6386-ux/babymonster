@@ -16,7 +16,7 @@ const sidebarItems = [
   { label: 'VISUAL CUTS', panel: 'visual-cuts', icon: 'photo_library', tone: 'visual' },
 ];
 
-export default function SidebarPanel() {
+export default function SidebarPanel({ isMobileOpen = false, onCloseMobile }) {
   const dispatch = useDispatch();
   const isPlaylistPanelOpen = useSelector(selectPlaylistPanelOpen);
   const activeCollectionPanel = useSelector(selectActiveCollectionPanel);
@@ -28,6 +28,7 @@ export default function SidebarPanel() {
       }
 
       dispatch(togglePlaylistPanel());
+      onCloseMobile?.();
       return;
     }
 
@@ -37,15 +38,33 @@ export default function SidebarPanel() {
 
     if (activeCollectionPanel === panel) {
       dispatch(closeCollectionPanel());
+      onCloseMobile?.();
       return;
     }
 
     dispatch(setCollectionPanel(panel));
+    onCloseMobile?.();
   };
 
   return (
-    <aside className="app-sidebar">
+    <aside className={`app-sidebar${isMobileOpen ? ' app-sidebar--mobile-open' : ''}`}>
+      <button
+        type="button"
+        className="app-sidebar__backdrop"
+        aria-label="사이드 메뉴 닫기"
+        onClick={() => onCloseMobile?.()}
+      />
+
       <div className="app-sidebar__inner">
+        <button
+          type="button"
+          className="app-sidebar__close"
+          aria-label="사이드 메뉴 닫기"
+          onClick={() => onCloseMobile?.()}
+        >
+          <Icon name="close" className="app-sidebar__close-icon" />
+        </button>
+
         <div className="app-sidebar__group">
           <div className="app-sidebar__identity">
             <div className="app-sidebar__role">MONSTIEZ</div>
