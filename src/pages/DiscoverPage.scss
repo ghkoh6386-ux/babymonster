@@ -821,11 +821,20 @@
     padding: 20px 20px 148px;
   }
 
+  .browse-video-modal {
+    padding: 14px;
+  }
+
   .browse-hero,
   .browse-popular,
   .browse-video-modal__panel {
     padding: 22px;
     border-radius: 0;
+  }
+
+  .browse-video-modal__panel {
+    width: min(100%, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
   }
 
   .browse-search,

@@ -279,6 +279,16 @@
     padding: 0 14px 18px;
   }
 
+  .home-closing__modal {
+    padding: 14px;
+  }
+
+  .home-closing__modal-panel {
+    width: min(100%, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
+    padding: 22px 22px 18px;
+  }
+
   .home-closing__header {
     align-items: center;
   }

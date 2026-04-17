@@ -900,9 +900,19 @@
     grid-auto-rows: 140px;
   }
 
+  .sidebar-collection-page__modal {
+    padding: 14px;
+  }
+
   .sidebar-collection-page__modal-copy,
   .sidebar-collection-page__image-panel-copy {
     padding: 16px 16px 0;
+  }
+
+  .sidebar-collection-page__modal-panel,
+  .sidebar-collection-page__image-panel {
+    width: min(100%, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
   }
 
   .sidebar-collection-page__modal.sidebar-collection-page__modal--image {

@@ -2370,6 +2370,8 @@ img {
 
 @media (max-width: 760px) {
   .music-detail-video-modal__panel {
+    width: min(100%, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
     padding: 18px;
   }
 
