@@ -517,10 +517,11 @@ export default function DiscoverPage() {
                       />
                     ))}
                   </div>
-
-                  <span>
-                    {String(activeSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-                  </span>
+                  <div className="browse-carousel__page-count">
+                    <span>
+                      {String(activeSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+                    </span>
+                  </div>
 
                   <button
                     type="button"

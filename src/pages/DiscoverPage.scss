@@ -622,9 +622,27 @@
   display: none;
 }
 
+.browse-carousel__page-count {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
 .browse-carousel__dots {
   display: flex;
   gap: 10px;
+}
+
+.browse-carousel__dots[aria-label='슬라이드 페이지네이션'] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.browse-carousel__footer {
+  flex-wrap: wrap;
 }
 
 .browse-carousel__dot {
@@ -928,6 +946,10 @@
   }
 
   .browse-carousel__footer span {
+    display: none;
+  }
+
+  .browse-carousel__page-count {
     display: none;
   }
 
