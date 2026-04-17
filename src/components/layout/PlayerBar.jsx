@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 
 import Icon from '../Icon';
 import {
+  closeCollectionPanel,
   clearSeekTarget,
   cycleRepeatMode,
   seekPlayerTo,
+  selectActiveCollectionPanel,
   selectCurrentFeatureCard,
   selectNowPlayingOpen,
   selectPlaybackDuration,
@@ -14,13 +16,15 @@ import {
   selectPlayerPlaying,
   selectPlayerVolume,
   selectPlaylistCards,
+  selectPlaylistPanelOpen,
   selectRepeatMode,
   setCurrentFeatureCardId,
+  setNowPlayingOpen,
   setPlaybackDuration,
   setPlaybackTime,
   setPlayerPlaying,
   setPlayerVolume,
-  toggleNowPlaying,
+  setPlaylistPanelOpen,
 } from '../../features/feature/featureSlice';
 import styles from './PlayerBar.module.scss';
 
@@ -32,6 +36,8 @@ export default function PlayerBar() {
   const isPlaying = useSelector(selectPlayerPlaying);
   const repeatMode = useSelector(selectRepeatMode);
   const isNowPlayingOpen = useSelector(selectNowPlayingOpen);
+  const isPlaylistPanelOpen = useSelector(selectPlaylistPanelOpen);
+  const activeCollectionPanel = useSelector(selectActiveCollectionPanel);
   const currentTime = useSelector(selectPlaybackTime);
   const duration = useSelector(selectPlaybackDuration);
   const volume = useSelector(selectPlayerVolume);
@@ -242,6 +248,23 @@ export default function PlayerBar() {
     dispatch(setPlayerPlaying(true));
   };
 
+  const handleToggleNowPlaying = () => {
+    if (isNowPlayingOpen) {
+      dispatch(setNowPlayingOpen(false));
+      return;
+    }
+
+    if (isPlaylistPanelOpen) {
+      dispatch(setPlaylistPanelOpen(false));
+    }
+
+    if (activeCollectionPanel) {
+      dispatch(closeCollectionPanel());
+    }
+
+    dispatch(setNowPlayingOpen(true));
+  };
+
   return (
     <footer className={styles.playerBar}>
       <audio ref={audioRef} preload="metadata">
@@ -354,7 +377,7 @@ export default function PlayerBar() {
           type="button"
           aria-label={isNowPlayingOpen ? 'Close now playing' : 'Open now playing'}
           className={`${styles.expandButton}${isNowPlayingOpen ? ` ${styles.expandButtonActive}` : ''}`}
-          onClick={() => dispatch(toggleNowPlaying())}
+          onClick={handleToggleNowPlaying}
           disabled={!hasQueue}
         >
           <Icon
