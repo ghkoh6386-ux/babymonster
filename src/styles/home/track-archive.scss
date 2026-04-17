@@ -45,6 +45,7 @@
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .home-track-archive__carousel {
@@ -57,6 +58,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 18px;
+}
+
+.home-track-archive__footer-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .home-track-archive__frame {

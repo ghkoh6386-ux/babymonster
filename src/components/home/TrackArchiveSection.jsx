@@ -136,9 +136,6 @@ export default function TrackArchiveSection() {
           <h3 className="home-track-archive__title">뮤직</h3>
           <p className="home-track-archive__intro">베이비몬스터 플레이 리스트</p>
         </div>
-        <div className="home-track-archive__edition">
-          {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-        </div>
       </div>
 
       <div className="home-track-archive__carousel">
@@ -441,16 +438,22 @@ export default function TrackArchiveSection() {
             </span>
           </button>
 
-          <div className="home-track-archive__pagination">
-            {slides.map((_, index) => (
-              <button
-                key={`slide-dot-${index}`}
-                type="button"
-                className={`home-track-archive__dot${index === currentSlide ? ' home-track-archive__dot--active' : ''}`}
-                aria-label={`${index + 1}번 슬라이드로 이동`}
-                onClick={() => moveToSlide(index)}
-              />
-            ))}
+          <div className="home-track-archive__footer-center">
+            <div className="home-track-archive__pagination">
+              {slides.map((_, index) => (
+                <button
+                  key={`slide-dot-${index}`}
+                  type="button"
+                  className={`home-track-archive__dot${index === currentSlide ? ' home-track-archive__dot--active' : ''}`}
+                  aria-label={`${index + 1}번 슬라이드로 이동`}
+                  onClick={() => moveToSlide(index)}
+                />
+              ))}
+            </div>
+
+            <div className="home-track-archive__edition">
+              {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+            </div>
           </div>
 
           <button
