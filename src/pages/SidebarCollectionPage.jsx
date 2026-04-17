@@ -503,7 +503,7 @@ export default function SidebarCollectionPage({
                                   aria-pressed={true}
                                   onClick={() => dispatch(toggleFavoriteVideoId(item.id))}
                                 >
-                                  LIKED
+                                  REMOVE
                                 </button>
                               </div>
                             </article>
