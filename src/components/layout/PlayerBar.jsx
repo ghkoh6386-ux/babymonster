@@ -1,7 +1,5 @@
 ﻿import React, { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-
 import Icon from '../Icon';
 import {
   closeCollectionPanel,
@@ -272,7 +270,7 @@ export default function PlayerBar() {
       </audio>
 
       {previewItem ? (
-        <Link to={`/detail/${previewItem.id}`} className={styles.trackMeta}>
+        <div className={styles.trackMeta}>
           <div className={styles.artwork}>
             <img
               src={previewItem.footerArtwork ?? previewItem.image}
@@ -283,7 +281,7 @@ export default function PlayerBar() {
             <div className={styles.eyebrow}>{hasActiveTrack ? 'CURRENT ALBUM' : 'UP NEXT'}</div>
             <div className={styles.filename}>{previewItem.title}.ALBUM</div>
           </div>
-        </Link>
+        </div>
       ) : (
         <div className={`${styles.trackMeta} ${styles.trackMetaEmpty}`} aria-hidden="true">
           <div className={`${styles.artwork} ${styles.artworkEmpty}`}>

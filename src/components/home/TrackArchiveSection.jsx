@@ -24,6 +24,7 @@ export default function TrackArchiveSection() {
   const [isCompactCarousel, setIsCompactCarousel] = useState(false);
   const [slideMotionDirection, setSlideMotionDirection] = useState('next');
   const [viewportMinHeight, setViewportMinHeight] = useState(null);
+  const [favoriteInteractingId, setFavoriteInteractingId] = useState(null);
   const touchStartXRef = useRef(null);
   const slideRefs = useRef([]);
 
@@ -192,23 +193,10 @@ export default function TrackArchiveSection() {
 
                       return (
                         <div
-                          role="button"
-                          tabIndex={0}
                           key={item.id}
-                          className={`home-track-archive__row${isActive ? ' home-track-archive__row--active' : ''}`}
-                          onClick={(event) => {
-                            if (event.target.closest('button')) {
-                              return;
-                            }
-
-                            dispatch(setCurrentFeatureCardId(item.id));
-                          }}
-                          onKeyDown={(event) => {
-                            if (event.key === 'Enter' || event.key === ' ') {
-                              event.preventDefault();
-                              dispatch(setCurrentFeatureCardId(item.id));
-                            }
-                          }}
+                          className={`home-track-archive__row${isActive ? ' home-track-archive__row--active' : ''}${
+                            favoriteInteractingId === item.id ? ' home-track-archive__row--favorite-interacting' : ''
+                          }`}
                         >
                           {isActive ? <span className="home-track-archive__active-bar" /> : null}
                           <div className="home-track-archive__number">{String(globalIndex + 1).padStart(2, '0')}</div>
@@ -259,8 +247,23 @@ export default function TrackArchiveSection() {
                               }`}
                               aria-label={`${item.title} 좋아요`}
                               aria-pressed={isFavorited}
+                              onPointerEnter={() => setFavoriteInteractingId(item.id)}
+                              onPointerDown={(event) => {
+                                setFavoriteInteractingId(item.id);
+                                event.preventDefault();
+                                event.stopPropagation();
+                              }}
+                              onMouseDown={(event) => {
+                                setFavoriteInteractingId(item.id);
+                                event.preventDefault();
+                                event.stopPropagation();
+                              }}
+                              onPointerUp={() => setFavoriteInteractingId(item.id)}
+                              onPointerLeave={() => setFavoriteInteractingId(null)}
+                              onBlur={() => setFavoriteInteractingId(null)}
                               onClick={(event) => {
                                 event.nativeEvent.stopImmediatePropagation?.();
+                                event.preventDefault();
                                 event.stopPropagation();
                                 dispatch(toggleFavoriteMusicId(item.id));
                               }}
@@ -328,23 +331,10 @@ export default function TrackArchiveSection() {
 
                       return (
                         <div
-                          role="button"
-                          tabIndex={0}
                           key={item.id}
-                          className={`home-track-archive__row${isActive ? ' home-track-archive__row--active' : ''}`}
-                          onClick={(event) => {
-                            if (event.target.closest('button')) {
-                              return;
-                            }
-
-                            dispatch(setCurrentFeatureCardId(item.id));
-                          }}
-                          onKeyDown={(event) => {
-                            if (event.key === 'Enter' || event.key === ' ') {
-                              event.preventDefault();
-                              dispatch(setCurrentFeatureCardId(item.id));
-                            }
-                          }}
+                          className={`home-track-archive__row${isActive ? ' home-track-archive__row--active' : ''}${
+                            favoriteInteractingId === item.id ? ' home-track-archive__row--favorite-interacting' : ''
+                          }`}
                         >
                           {isActive ? <span className="home-track-archive__active-bar" /> : null}
                           <div className="home-track-archive__number">{String(globalIndex + 1).padStart(2, '0')}</div>
@@ -395,8 +385,23 @@ export default function TrackArchiveSection() {
                               }`}
                               aria-label={`${item.title} 좋아요`}
                               aria-pressed={isFavorited}
+                              onPointerEnter={() => setFavoriteInteractingId(item.id)}
+                              onPointerDown={(event) => {
+                                setFavoriteInteractingId(item.id);
+                                event.preventDefault();
+                                event.stopPropagation();
+                              }}
+                              onMouseDown={(event) => {
+                                setFavoriteInteractingId(item.id);
+                                event.preventDefault();
+                                event.stopPropagation();
+                              }}
+                              onPointerUp={() => setFavoriteInteractingId(item.id)}
+                              onPointerLeave={() => setFavoriteInteractingId(null)}
+                              onBlur={() => setFavoriteInteractingId(null)}
                               onClick={(event) => {
                                 event.nativeEvent.stopImmediatePropagation?.();
+                                event.preventDefault();
                                 event.stopPropagation();
                                 dispatch(toggleFavoriteMusicId(item.id));
                               }}

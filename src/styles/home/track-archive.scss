@@ -199,7 +199,7 @@
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
     #131313;
-  cursor: pointer;
+  cursor: default;
   transition:
     border-color 180ms ease,
     background 180ms ease,
@@ -212,7 +212,7 @@
   pointer-events: none;
 }
 
-.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) {
   transform: translateY(-3px);
   border-color: rgba(57, 255, 20, 0.22);
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
@@ -241,7 +241,7 @@
 }
 
 .home-track-archive__row--active .home-track-archive__number,
-.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__number {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__number {
   color: #39ff14;
 }
 
@@ -272,7 +272,7 @@
 }
 
 .home-track-archive__row--active .home-track-archive__main h4,
-.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__main h4 {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__main h4 {
   color: #39ff14;
 }
 
@@ -380,7 +380,7 @@
 }
 
 .home-track-archive__meta-icon--active,
-.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__meta-icon {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__meta-icon {
   color: #39ff14;
 }
 
@@ -392,9 +392,55 @@
 }
 
 .home-track-archive__duration--active,
-.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__duration {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__duration {
   color: #39ff14;
   font-weight: 700;
+}
+
+.home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) {
+  transform: none;
+  border-color: rgba(192, 192, 192, 0.14);
+  box-shadow: none;
+}
+
+.home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__number {
+  color: #c0c0c0;
+}
+
+.home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__main h4 {
+  color: #e5e2e1;
+}
+
+.home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__meta-icon {
+  color: rgba(57, 255, 20, 0);
+}
+
+.home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__duration {
+  color: #c0c0c0;
+  font-weight: 400;
+}
+
+.home-track-archive__row--favorite-interacting {
+  transform: none !important;
+  border-color: rgba(192, 192, 192, 0.14) !important;
+  box-shadow: none !important;
+}
+
+.home-track-archive__row--favorite-interacting .home-track-archive__number {
+  color: #c0c0c0 !important;
+}
+
+.home-track-archive__row--favorite-interacting .home-track-archive__main h4 {
+  color: #e5e2e1 !important;
+}
+
+.home-track-archive__row--favorite-interacting .home-track-archive__meta-icon {
+  color: rgba(57, 255, 20, 0) !important;
+}
+
+.home-track-archive__row--favorite-interacting .home-track-archive__duration {
+  color: #c0c0c0 !important;
+  font-weight: 400 !important;
 }
 
 @keyframes homeTrackArchiveSlideInNext {

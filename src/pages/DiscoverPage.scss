@@ -223,6 +223,12 @@
   cursor: pointer;
   text-align: left;
   transition: transform 220ms ease, box-shadow 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.browse-popular-card:focus,
+.browse-popular-card:focus-visible {
+  outline: none;
 }
 
 .browse-video-card:hover:not(:has(.browse-card-favorite:hover)),
@@ -278,6 +284,13 @@
   color: #f4efec;
   cursor: pointer;
   transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.browse-card-favorite:focus,
+.browse-card-favorite:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .browse-card-favorite .material-symbols-outlined {
@@ -555,6 +568,12 @@
   cursor: pointer;
   text-align: left;
   transition: transform 220ms ease, box-shadow 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.browse-video-card:focus,
+.browse-video-card:focus-visible {
+  outline: none;
 }
 
 .browse-video-card::after {

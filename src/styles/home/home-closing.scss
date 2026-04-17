@@ -66,6 +66,12 @@
   color: inherit;
   cursor: pointer;
   text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-closing__card:focus,
+.home-closing__card:focus-visible {
+  outline: none;
 }
 
 .home-closing__poster {
@@ -116,6 +122,13 @@
   cursor: pointer;
   transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
   backdrop-filter: blur(10px);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-closing__favorite:focus,
+.home-closing__favorite:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .home-closing__favorite .material-symbols-outlined {
