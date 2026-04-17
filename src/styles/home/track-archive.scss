@@ -53,6 +53,12 @@
   gap: 22px;
 }
 
+.home-track-archive__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .home-track-archive__frame {
   position: relative;
 }
@@ -113,6 +119,10 @@
   gap: 10px;
 }
 
+.home-track-archive__footer-nav {
+  display: none;
+}
+
 .home-track-archive__dot {
   width: 11px;
   height: 11px;
@@ -129,6 +139,9 @@
 
 .home-track-archive__viewport {
   overflow: hidden;
+  transition: height 320ms ease;
+  overscroll-behavior-x: contain;
+  touch-action: pan-y;
 }
 
 .home-track-archive__track {
@@ -142,6 +155,21 @@
   flex: 0 0 100%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  align-items: start;
+}
+
+.home-track-archive__slide--compact {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+}
+
+.home-track-archive__slide--next {
+  animation-name: homeTrackArchiveSlideInNext;
+}
+
+.home-track-archive__slide--prev {
+  animation-name: homeTrackArchiveSlideInPrev;
 }
 
 .home-track-archive__row {
@@ -161,6 +189,11 @@
     background 180ms ease,
     transform 180ms ease,
     box-shadow 180ms ease;
+}
+
+.home-track-archive__row--placeholder {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .home-track-archive__row:hover {
@@ -330,6 +363,30 @@
   font-weight: 700;
 }
 
+@keyframes homeTrackArchiveSlideInNext {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes homeTrackArchiveSlideInPrev {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 1080px) {
   .home-track-archive {
     margin: 20px auto 44px;
@@ -360,6 +417,10 @@
 
   .home-track-archive__row {
     min-height: auto;
+  }
+
+  .home-track-archive__row--placeholder {
+    display: none;
   }
 
   .home-track-archive__main h4 {
@@ -394,8 +455,35 @@
   }
 
   .home-track-archive__nav {
+    display: none;
+  }
+
+  .home-track-archive__footer {
+    gap: 14px;
+  }
+
+  .home-track-archive__footer-nav {
+    display: inline-flex;
     width: 38px;
     height: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #d0d0d0;
+  }
+
+  .home-track-archive__footer-nav .material-symbols-outlined {
+    font-size: 24px;
+    display: block;
+  }
+
+  .home-track-archive__footer-nav:disabled {
+    opacity: 0.28;
+  }
+
+  .home-track-archive__footer-nav:not(:disabled):hover {
+    color: #39ff14;
   }
 
   .home-track-archive__row {

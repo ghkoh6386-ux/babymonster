@@ -2911,37 +2911,9 @@ img {
     font-size: 18px;
   }
 
-  .now-playing-progress {
-    margin-bottom: 24px;
-  }
-
+  .now-playing-progress,
   .now-playing-controls {
-    gap: 12px;
-  }
-
-  .now-playing-controls > button,
-  .now-playing-controls > a {
-    width: 44px;
-    height: 44px;
-  }
-
-  .now-playing-controls__main {
-    width: 64px !important;
-    height: 64px !important;
-  }
-
-  .now-playing-controls__extra {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .now-playing-controls__volume {
-    flex: 1;
-  }
-
-  .now-playing-controls__volume-track {
-    width: 100%;
-    max-width: 160px;
+    display: none;
   }
 }
 

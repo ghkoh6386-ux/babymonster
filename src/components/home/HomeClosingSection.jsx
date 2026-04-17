@@ -1,5 +1,6 @@
-﻿import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import videoLibrary from '../../data/videoLibrary';
 import {
@@ -41,6 +42,9 @@ export default function HomeClosingSection() {
       <section className="home-closing" aria-label="홈 비디오 카드">
         <div className="home-closing__header">
           <span className="home-closing__eyebrow">VIDEO CUTS</span>
+          <Link to="/video" className="home-closing__more">
+            MORE
+          </Link>
         </div>
 
         <div className="home-closing__grid">

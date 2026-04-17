@@ -25,7 +25,9 @@ export default function DiscoverPage() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeVideo, setActiveVideo] = useState(null);
   const [isCompactCarousel, setIsCompactCarousel] = useState(false);
+  const [slideMotionDirection, setSlideMotionDirection] = useState('next');
   const slideRefs = useRef([]);
+  const touchStartXRef = useRef(null);
   const [viewportHeight, setViewportHeight] = useState(null);
 
   useEffect(() => {
@@ -149,6 +151,14 @@ export default function DiscoverPage() {
   }, [activeSlide, slides]);
 
   const currentSortLabel = sortOptions.find((item) => item.id === sortBy)?.label ?? '최신순';
+  const moveToSlide = (nextIndex) => {
+    setActiveSlide((prev) => {
+      const clampedIndex = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      setSlideMotionDirection(clampedIndex >= prev ? 'next' : 'prev');
+      return clampedIndex;
+    });
+  };
+
   const openVideo = (item) => {
     dispatch(setPlayerPlaying(false));
     setSortMenuOpen(false);
@@ -382,7 +392,7 @@ export default function DiscoverPage() {
                   <button
                     type="button"
                     className="browse-carousel__nav"
-                    onClick={() => setActiveSlide((prev) => Math.max(0, prev - 1))}
+                    onClick={() => moveToSlide(activeSlide - 1)}
                     disabled={activeSlide === 0}
                     aria-label="이전 슬라이드"
                   >
@@ -394,13 +404,32 @@ export default function DiscoverPage() {
                   <div
                     className="browse-carousel__viewport"
                     style={!isCompactCarousel && viewportHeight ? { height: `${viewportHeight}px` } : undefined}
+                    onTouchStart={(event) => {
+                      touchStartXRef.current = event.touches[0]?.clientX ?? null;
+                    }}
+                    onTouchEnd={(event) => {
+                      if (touchStartXRef.current === null || slides.length <= 1) {
+                        touchStartXRef.current = null;
+                        return;
+                      }
+
+                      const touchEndX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+                      const deltaX = touchStartXRef.current - touchEndX;
+
+                      if (Math.abs(deltaX) > 40) {
+                        moveToSlide(activeSlide + (deltaX > 0 ? 1 : -1));
+                      }
+
+                      touchStartXRef.current = null;
+                    }}
                   >
                     {isCompactCarousel ? (
                       <div
-                        className="browse-carousel__grid"
+                        className={`browse-carousel__grid browse-carousel__grid--compact browse-carousel__grid--${slideMotionDirection}`}
                         ref={(node) => {
                           slideRefs.current[activeSlide] = node;
                         }}
+                        key={`compact-slide-${activeSlide}`}
                       >
                         {renderSlideItems(slides[activeSlide] ?? [], activeSlide)}
                       </div>
@@ -427,7 +456,7 @@ export default function DiscoverPage() {
                   <button
                     type="button"
                     className="browse-carousel__nav"
-                    onClick={() => setActiveSlide((prev) => Math.min(slides.length - 1, prev + 1))}
+                    onClick={() => moveToSlide(activeSlide + 1)}
                     disabled={activeSlide >= slides.length - 1}
                     aria-label="다음 슬라이드"
                   >
@@ -438,20 +467,45 @@ export default function DiscoverPage() {
                 </div>
 
                 <div className="browse-carousel__footer">
+                  <button
+                    type="button"
+                    className="browse-carousel__footer-nav"
+                    onClick={() => moveToSlide(activeSlide - 1)}
+                    disabled={activeSlide === 0}
+                    aria-label="이전 슬라이드"
+                  >
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      west
+                    </span>
+                  </button>
+
                   <div className="browse-carousel__dots" aria-label="슬라이드 페이지네이션">
                     {slides.map((_, index) => (
                       <button
                         key={`slide-${index}`}
                         type="button"
                         className={`browse-carousel__dot${index === activeSlide ? ' is-active' : ''}`}
-                        onClick={() => setActiveSlide(index)}
+                        onClick={() => moveToSlide(index)}
                         aria-label={`${index + 1}번 슬라이드`}
                       />
                     ))}
                   </div>
+
                   <span>
                     {String(activeSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
                   </span>
+
+                  <button
+                    type="button"
+                    className="browse-carousel__footer-nav"
+                    onClick={() => moveToSlide(activeSlide + 1)}
+                    disabled={activeSlide >= slides.length - 1}
+                    aria-label="다음 슬라이드"
+                  >
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      east
+                    </span>
+                  </button>
                 </div>
               </>
             ) : (
