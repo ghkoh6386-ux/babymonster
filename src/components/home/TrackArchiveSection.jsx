@@ -188,7 +188,7 @@ export default function TrackArchiveSection() {
                       const globalIndex = currentSlide * itemsPerSlide + index;
                       const isActive = playlistIds.length > 0 && currentCardId === item.id;
                       const isQueued = playlistIds.includes(item.id);
-                      const isFavorited = favoriteMusicIds.includes(item.id);
+                      const isFavorited = favoriteMusicIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
                       return (
                         <div
@@ -196,7 +196,13 @@ export default function TrackArchiveSection() {
                           tabIndex={0}
                           key={item.id}
                           className={`home-track-archive__row${isActive ? ' home-track-archive__row--active' : ''}`}
-                          onClick={() => dispatch(setCurrentFeatureCardId(item.id))}
+                          onClick={(event) => {
+                            if (event.target.closest('button')) {
+                              return;
+                            }
+
+                            dispatch(setCurrentFeatureCardId(item.id));
+                          }}
                           onKeyDown={(event) => {
                             if (event.key === 'Enter' || event.key === ' ') {
                               event.preventDefault();
@@ -252,13 +258,15 @@ export default function TrackArchiveSection() {
                                 isFavorited ? ' home-track-archive__action-button--favorite' : ''
                               }`}
                               aria-label={`${item.title} 좋아요`}
+                              aria-pressed={isFavorited}
                               onClick={(event) => {
+                                event.nativeEvent.stopImmediatePropagation?.();
                                 event.stopPropagation();
                                 dispatch(toggleFavoriteMusicId(item.id));
                               }}
                             >
                               <span className="material-symbols-outlined" aria-hidden="true">
-                                favorite
+                                {isFavorited ? 'favorite' : 'favorite_border'}
                               </span>
                             </button>
                           </div>
@@ -316,7 +324,7 @@ export default function TrackArchiveSection() {
                       const globalIndex = slideIndex * itemsPerSlide + index;
                       const isActive = playlistIds.length > 0 && currentCardId === item.id;
                       const isQueued = playlistIds.includes(item.id);
-                      const isFavorited = favoriteMusicIds.includes(item.id);
+                      const isFavorited = favoriteMusicIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
                       return (
                         <div
@@ -324,7 +332,13 @@ export default function TrackArchiveSection() {
                           tabIndex={0}
                           key={item.id}
                           className={`home-track-archive__row${isActive ? ' home-track-archive__row--active' : ''}`}
-                          onClick={() => dispatch(setCurrentFeatureCardId(item.id))}
+                          onClick={(event) => {
+                            if (event.target.closest('button')) {
+                              return;
+                            }
+
+                            dispatch(setCurrentFeatureCardId(item.id));
+                          }}
                           onKeyDown={(event) => {
                             if (event.key === 'Enter' || event.key === ' ') {
                               event.preventDefault();
@@ -380,13 +394,15 @@ export default function TrackArchiveSection() {
                                 isFavorited ? ' home-track-archive__action-button--favorite' : ''
                               }`}
                               aria-label={`${item.title} 좋아요`}
+                              aria-pressed={isFavorited}
                               onClick={(event) => {
+                                event.nativeEvent.stopImmediatePropagation?.();
                                 event.stopPropagation();
                                 dispatch(toggleFavoriteMusicId(item.id));
                               }}
                             >
                               <span className="material-symbols-outlined" aria-hidden="true">
-                                favorite
+                                {isFavorited ? 'favorite' : 'favorite_border'}
                               </span>
                             </button>
                           </div>

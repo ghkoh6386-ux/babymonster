@@ -500,9 +500,10 @@ export default function SidebarCollectionPage({
                                 <button
                                   type="button"
                                   className="sidebar-collection-page__favorite-like"
+                                  aria-pressed={true}
                                   onClick={() => dispatch(toggleFavoriteVideoId(item.id))}
                                 >
-                                  REMOVE
+                                  LIKED
                                 </button>
                               </div>
                             </article>

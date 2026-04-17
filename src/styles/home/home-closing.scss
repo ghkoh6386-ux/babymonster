@@ -122,10 +122,21 @@
   font-size: 24px;
 }
 
-.home-closing__favorite.is-active,
 .home-closing__favorite:hover {
-  background: rgba(198, 40, 40, 0.22);
-  color: #ff6b6b;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.home-closing__favorite.is-active {
+  background: rgba(198, 40, 40, 0.3);
+  color: #ff4d6d;
+  transform: translateY(-1px);
+}
+
+.home-closing__favorite.is-active:hover {
+  background: rgba(198, 40, 40, 0.38);
+  color: #ff4d6d;
   transform: translateY(-1px);
 }
 
@@ -159,12 +170,12 @@
   letter-spacing: 0.04em;
 }
 
-.home-closing__card:hover .home-closing__poster {
+.home-closing__card:hover:not(:has(.home-closing__favorite:hover)) .home-closing__poster {
   transform: scale(1.05);
   filter: saturate(1.08);
 }
 
-.home-closing__card:hover .home-closing__play {
+.home-closing__card:hover:not(:has(.home-closing__favorite:hover)) .home-closing__play {
   border-color: rgba(106, 240, 90, 0.72);
   color: #6af05a;
 }

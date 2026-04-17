@@ -19,6 +19,8 @@ const initialState = {
   seekTarget: null,
 };
 
+const normalizeId = (value) => String(value);
+
 const featureSlice = createSlice({
   name: 'feature',
   initialState,
@@ -62,26 +64,20 @@ const featureSlice = createSlice({
       state.isPlaylistPanelOpen = !state.isPlaylistPanelOpen;
     },
     toggleFavoriteMusicId(state, action) {
-      const id = action.payload;
-      const existingIndex = state.favoriteMusicIds.findIndex((item) => item === id);
+      const id = normalizeId(action.payload);
+      const nextIds = state.favoriteMusicIds.map(normalizeId);
 
-      if (existingIndex >= 0) {
-        state.favoriteMusicIds.splice(existingIndex, 1);
-        return;
-      }
-
-      state.favoriteMusicIds.push(id);
+      state.favoriteMusicIds = nextIds.includes(id)
+        ? nextIds.filter((item) => item !== id)
+        : [...nextIds, id];
     },
     toggleFavoriteVideoId(state, action) {
-      const id = action.payload;
-      const existingIndex = state.favoriteVideoIds.findIndex((item) => item === id);
+      const id = normalizeId(action.payload);
+      const nextIds = state.favoriteVideoIds.map(normalizeId);
 
-      if (existingIndex >= 0) {
-        state.favoriteVideoIds.splice(existingIndex, 1);
-        return;
-      }
-
-      state.favoriteVideoIds.push(id);
+      state.favoriteVideoIds = nextIds.includes(id)
+        ? nextIds.filter((item) => item !== id)
+        : [...nextIds, id];
     },
     setCollectionPanel(state, action) {
       state.activeCollectionPanel = action.payload;

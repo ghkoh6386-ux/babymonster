@@ -194,6 +194,7 @@ export default function DiscoverPage() {
   };
 
   const toggleVideoFavorite = (event, id) => {
+    event.nativeEvent.stopImmediatePropagation?.();
     event.stopPropagation();
     dispatch(toggleFavoriteVideoId(id));
   };
@@ -213,13 +214,19 @@ export default function DiscoverPage() {
         );
       }
 
-      const isFavorited = favoriteVideoIds.includes(item.id);
+      const isFavorited = favoriteVideoIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
       return (
         <article
           key={item.id}
           className="browse-video-card"
-          onClick={() => openVideo(item)}
+          onClick={(event) => {
+            if (event.target.closest('button')) {
+              return;
+            }
+
+            openVideo(item);
+          }}
           onKeyDown={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
               event.preventDefault();
@@ -236,10 +243,11 @@ export default function DiscoverPage() {
               type="button"
               className={`browse-card-favorite${isFavorited ? ' is-active' : ''}`}
               aria-label={`${item.title} 좋아요`}
+              aria-pressed={isFavorited}
               onClick={(event) => toggleVideoFavorite(event, item.id)}
             >
               <span className="material-symbols-outlined" aria-hidden="true">
-                favorite
+                {isFavorited ? 'favorite' : 'favorite_border'}
               </span>
             </button>
           </div>
@@ -305,13 +313,19 @@ export default function DiscoverPage() {
 
             <div className="browse-popular__grid">
               {featuredPopularVideos.map((item, index) => {
-                const isFavorited = favoriteVideoIds.includes(item.id);
+                const isFavorited = favoriteVideoIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
                 return (
                   <article
                     key={item.id}
                     className="browse-popular-card"
-                    onClick={() => openVideo(item)}
+                    onClick={(event) => {
+                      if (event.target.closest('button')) {
+                        return;
+                      }
+
+                      openVideo(item);
+                    }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === ' ') {
                         event.preventDefault();
@@ -329,10 +343,11 @@ export default function DiscoverPage() {
                         type="button"
                         className={`browse-card-favorite${isFavorited ? ' is-active' : ''}`}
                         aria-label={`${item.title} 좋아요`}
+                        aria-pressed={isFavorited}
                         onClick={(event) => toggleVideoFavorite(event, item.id)}
                       >
                         <span className="material-symbols-outlined" aria-hidden="true">
-                          favorite
+                          {isFavorited ? 'favorite' : 'favorite_border'}
                         </span>
                       </button>
                     </div>

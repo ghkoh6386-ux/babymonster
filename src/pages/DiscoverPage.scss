@@ -225,8 +225,8 @@
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
-.browse-video-card:hover,
-.browse-popular-card:hover {
+.browse-video-card:hover:not(:has(.browse-card-favorite:hover)),
+.browse-popular-card:hover:not(:has(.browse-card-favorite:hover)) {
   transform: translateY(-6px);
   box-shadow:
     inset 0 0 0 1px rgba(57, 255, 20, 0.34),
@@ -284,10 +284,21 @@
   font-size: 22px;
 }
 
-.browse-card-favorite:hover,
+.browse-card-favorite:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
 .browse-card-favorite.is-active {
-  background: rgba(198, 40, 40, 0.22);
-  color: #ff6b6b;
+  background: rgba(198, 40, 40, 0.3);
+  color: #ff4d6d;
+  transform: translateY(-1px);
+}
+
+.browse-card-favorite.is-active:hover {
+  background: rgba(198, 40, 40, 0.38);
+  color: #ff4d6d;
   transform: translateY(-1px);
 }
 
@@ -565,7 +576,7 @@
   box-shadow: 0 24px 42px rgba(0, 0, 0, 0.22);
 }
 
-.browse-video-card:hover::after {
+.browse-video-card:hover:not(:has(.browse-card-favorite:hover))::after {
   border-color: rgba(57, 255, 20, 0.34);
 }
 

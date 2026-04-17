@@ -54,13 +54,19 @@ export default function HomeClosingSection() {
 
         <div className="home-closing__grid">
           {closingVideos.map((item) => {
-            const isFavorited = favoriteVideoIds.includes(item.id);
+            const isFavorited = favoriteVideoIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
             return (
               <article
                 key={item.id}
                 className="home-closing__card home-closing__card--video"
-                onClick={() => openVideo(item)}
+                onClick={(event) => {
+                  if (event.target.closest('button')) {
+                    return;
+                  }
+
+                  openVideo(item);
+                }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
@@ -78,13 +84,15 @@ export default function HomeClosingSection() {
                   type="button"
                   className={`home-closing__favorite${isFavorited ? ' is-active' : ''}`}
                   aria-label={`${item.title} 좋아요`}
+                  aria-pressed={isFavorited}
                   onClick={(event) => {
+                    event.nativeEvent.stopImmediatePropagation?.();
                     event.stopPropagation();
                     dispatch(toggleFavoriteVideoId(item.id));
                   }}
                 >
                   <span className="material-symbols-outlined" aria-hidden="true">
-                    favorite
+                    {isFavorited ? 'favorite' : 'favorite_border'}
                   </span>
                 </button>
 

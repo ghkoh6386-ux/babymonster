@@ -212,7 +212,7 @@
   pointer-events: none;
 }
 
-.home-track-archive__row:hover {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) {
   transform: translateY(-3px);
   border-color: rgba(57, 255, 20, 0.22);
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
@@ -241,7 +241,7 @@
 }
 
 .home-track-archive__row--active .home-track-archive__number,
-.home-track-archive__row:hover .home-track-archive__number {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__number {
   color: #39ff14;
 }
 
@@ -272,7 +272,7 @@
 }
 
 .home-track-archive__row--active .home-track-archive__main h4,
-.home-track-archive__row:hover .home-track-archive__main h4 {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__main h4 {
   color: #39ff14;
 }
 
@@ -335,16 +335,34 @@
 }
 
 .home-track-archive__action-button--favorite {
-  border-color: rgba(198, 40, 40, 0.24);
-  background: rgba(198, 40, 40, 0.14);
-  color: #f6ece8;
+  border-color: rgba(198, 40, 40, 0.34);
+  background: rgba(198, 40, 40, 0.22);
+  color: #ff4d6d;
 }
 
-.home-track-archive__action-button:hover {
+.home-track-archive__action-button:hover:not(.home-track-archive__action-button--favorite) {
   border-color: rgba(57, 255, 20, 0.34);
   background: rgba(57, 255, 20, 0.08);
   color: #39ff14;
   transform: translateY(-1px);
+}
+
+.home-track-archive__action-button:not(.home-track-archive__action-button--favorite):hover {
+  border-color: rgba(57, 255, 20, 0.34);
+  background: rgba(57, 255, 20, 0.08);
+  color: #39ff14;
+}
+
+.home-track-archive__action-button[aria-pressed='false']:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f1ef;
+}
+
+.home-track-archive__action-button--favorite:hover {
+  border-color: rgba(198, 40, 40, 0.42);
+  background: rgba(198, 40, 40, 0.28);
+  color: #ff4d6d;
 }
 
 .home-track-archive__meta {
@@ -362,7 +380,7 @@
 }
 
 .home-track-archive__meta-icon--active,
-.home-track-archive__row:hover .home-track-archive__meta-icon {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__meta-icon {
   color: #39ff14;
 }
 
@@ -374,7 +392,7 @@
 }
 
 .home-track-archive__duration--active,
-.home-track-archive__row:hover .home-track-archive__duration {
+.home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover)) .home-track-archive__duration {
   color: #39ff14;
   font-weight: 700;
 }

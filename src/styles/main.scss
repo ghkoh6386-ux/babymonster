@@ -1534,6 +1534,18 @@ img {
     color: $highlight;
   }
 
+  &__action--primary:hover {
+    border-color: transparent;
+    background: $primary-deep;
+    color: $text;
+  }
+
+  &__action--active:hover {
+    border-color: rgba(57, 255, 20, 0.36);
+    background: rgba(57, 255, 20, 0.12);
+    color: $highlight;
+  }
+
   &__stats {
     position: absolute;
     top: 50%;
