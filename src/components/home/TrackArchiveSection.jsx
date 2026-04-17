@@ -5,10 +5,12 @@ import {
   addPlaylistCard,
   insertPlaylistCardNext,
   selectCurrentFeatureCardId,
+  selectFavoriteMusicIds,
   selectFeatureCards,
   selectPlaylistIds,
   setPlayerPlaying,
   setCurrentFeatureCardId,
+  toggleFavoriteMusicId,
 } from '../../features/feature/featureSlice';
 import '../../styles/home/track-archive.scss';
 
@@ -17,6 +19,7 @@ export default function TrackArchiveSection() {
   const cards = useSelector(selectFeatureCards);
   const currentCardId = useSelector(selectCurrentFeatureCardId);
   const playlistIds = useSelector(selectPlaylistIds);
+  const favoriteMusicIds = useSelector(selectFavoriteMusicIds);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const archiveItems = ['batter-up', 'sheesh', 'drip', 'forever', 'we-go-up']
@@ -73,8 +76,9 @@ export default function TrackArchiveSection() {
                 <div className="home-track-archive__slide" key={`slide-${slideIndex}`}>
                   {slideItems.map((item, index) => {
                     const globalIndex = slideIndex * 3 + index;
-                    const isActive = currentCardId === item.id;
+                    const isActive = playlistIds.length > 0 && currentCardId === item.id;
                     const isQueued = playlistIds.includes(item.id);
+                    const isFavorited = favoriteMusicIds.includes(item.id);
 
                     return (
                       <div
@@ -132,6 +136,21 @@ export default function TrackArchiveSection() {
                               add
                             </span>
                           </button>
+                          <button
+                            type="button"
+                            className={`home-track-archive__action-button${
+                              isFavorited ? ' home-track-archive__action-button--favorite' : ''
+                            }`}
+                            aria-label={`${item.title} 좋아요`}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              dispatch(toggleFavoriteMusicId(item.id));
+                            }}
+                          >
+                            <span className="material-symbols-outlined" aria-hidden="true">
+                              favorite
+                            </span>
+                          </button>
                         </div>
                         <div className="home-track-archive__meta">
                           <span
@@ -142,7 +161,7 @@ export default function TrackArchiveSection() {
                           <span
                             className={`home-track-archive__duration${isActive ? ' home-track-archive__duration--active' : ''}`}
                           >
-                            {item.date ?? '2024'}
+                            {item.duration ?? '2024'}
                           </span>
                         </div>
                       </div>

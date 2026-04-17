@@ -1,22 +1,47 @@
 ﻿import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 import Icon from '../Icon';
 import {
+  closeCollectionPanel,
+  selectActiveCollectionPanel,
   selectPlaylistPanelOpen,
+  setCollectionPanel,
   togglePlaylistPanel,
 } from '../../features/feature/featureSlice';
 
 const sidebarItems = [
-  { label: 'PLAYLISTS', to: '/playlists', icon: 'queue_music', tone: 'track' },
-  { label: 'FAVORITES', to: '/favorites', icon: 'favorite', tone: 'save' },
-  { label: 'VISUAL CUTS', to: '/visual-cuts', icon: 'photo_library', tone: 'visual' },
+  { label: 'PLAYLISTS', panel: 'playlists', icon: 'queue_music', tone: 'track' },
+  { label: 'FAVORITES', panel: 'favorites', icon: 'favorite', tone: 'save' },
+  { label: 'VISUAL CUTS', panel: 'visual-cuts', icon: 'photo_library', tone: 'visual' },
 ];
 
 export default function SidebarPanel() {
   const dispatch = useDispatch();
   const isPlaylistPanelOpen = useSelector(selectPlaylistPanelOpen);
+  const activeCollectionPanel = useSelector(selectActiveCollectionPanel);
+
+  const handleToggleCollection = (panel) => {
+    if (panel === 'playlists') {
+      if (activeCollectionPanel) {
+        dispatch(closeCollectionPanel());
+      }
+
+      dispatch(togglePlaylistPanel());
+      return;
+    }
+
+    if (isPlaylistPanelOpen) {
+      dispatch(togglePlaylistPanel());
+    }
+
+    if (activeCollectionPanel === panel) {
+      dispatch(closeCollectionPanel());
+      return;
+    }
+
+    dispatch(setCollectionPanel(panel));
+  };
 
   return (
     <aside className="app-sidebar">
@@ -29,34 +54,17 @@ export default function SidebarPanel() {
 
           <nav className="app-sidebar__nav" aria-label="Sidebar menu">
             {sidebarItems.map((item) => {
-              if (item.label === 'PLAYLISTS') {
-                return (
-                  <button
-                    key={item.label}
-                    type="button"
-                    onClick={() => dispatch(togglePlaylistPanel())}
-                    className={
-                      isPlaylistPanelOpen
-                        ? `app-sidebar__item app-sidebar__item--active app-sidebar__item--${item.tone}`
-                        : `app-sidebar__item app-sidebar__item--${item.tone}`
-                    }
-                  >
-                    <span className="app-sidebar__icon-wrap" aria-hidden="true">
-                      <Icon name={item.icon} className="app-sidebar__icon" filled={item.tone === 'save'} />
-                    </span>
-                    <span className="app-sidebar__copy">
-                      <span className="app-sidebar__label">{item.label}</span>
-                    </span>
-                  </button>
-                );
-              }
+              const isActive =
+                item.panel === 'playlists'
+                  ? isPlaylistPanelOpen
+                  : activeCollectionPanel === item.panel;
 
               return (
-                <NavLink
+                <button
                   key={item.label}
-                  to={item.to}
-                  end
-                  className={({ isActive }) =>
+                  type="button"
+                  onClick={() => handleToggleCollection(item.panel)}
+                  className={
                     isActive
                       ? `app-sidebar__item app-sidebar__item--active app-sidebar__item--${item.tone}`
                       : `app-sidebar__item app-sidebar__item--${item.tone}`
@@ -68,7 +76,7 @@ export default function SidebarPanel() {
                   <span className="app-sidebar__copy">
                     <span className="app-sidebar__label">{item.label}</span>
                   </span>
-                </NavLink>
+                </button>
               );
             })}
           </nav>

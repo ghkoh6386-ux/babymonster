@@ -1,0 +1,461 @@
+﻿.chronicles-main--albums {
+  width: min(100%, 1560px);
+  margin: 0 auto;
+  padding: 46px 48px 148px;
+}
+
+.chronicles-album-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.chronicles-album-hero__lede,
+.chronicles-album-hero__board,
+.chronicles-album-library {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+    #111;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+.chronicles-album-hero__lede {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 38px;
+}
+
+.chronicles-album-hero__lede::before {
+  content: none;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(198, 40, 40, 0.24), rgba(198, 40, 40, 0));
+}
+
+.chronicles-album-hero__board {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 22px;
+  padding: 30px;
+}
+
+.chronicles-album-hero__board::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(135deg, rgba(198, 40, 40, 0.08), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.chronicles-album-hero__copy,
+.chronicles-album-hero__spotlight,
+.chronicles-album-hero__board-header,
+.chronicles-album-hero__stack,
+.chronicles-album-hero__meta,
+.chronicles-album-hero__cta {
+  position: relative;
+  z-index: 1;
+}
+
+.chronicles-album-hero__copy {
+  max-width: 520px;
+}
+
+.chronicles-album-hero__copy span,
+.chronicles-album-library__heading span,
+.chronicles-album-card__copy span,
+.chronicles-album-hero__board-header span,
+.chronicles-album-hero__stack-copy span {
+  display: inline-block;
+  color: #c62828;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.chronicles-album-hero__meta span,
+.chronicles-album-card__copy em,
+.chronicles-album-hero__spotlight-copy em {
+  color: rgba(232, 225, 221, 0.52);
+}
+
+.chronicles-album-hero__copy h1,
+.chronicles-album-library__heading h2 {
+  margin: 16px 0 0;
+  color: #f5efeb;
+  font-family: 'Anton', sans-serif;
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+}
+
+.chronicles-album-hero__copy h1 {
+  font-size: clamp(4rem, 9vw, 7.8rem);
+}
+
+.chronicles-album-hero__copy p,
+.chronicles-album-library__heading p,
+.chronicles-album-card__copy p,
+.chronicles-album-hero__board-header p,
+.chronicles-album-hero__spotlight-copy p,
+.chronicles-album-hero__stack-copy p {
+  color: rgba(232, 225, 221, 0.74);
+  line-height: 1.8;
+}
+
+.chronicles-album-hero__copy p {
+  max-width: 430px;
+  margin: 22px 0 0;
+  font-size: 16px;
+}
+
+.chronicles-album-hero__spotlight {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 20px;
+  align-items: end;
+  margin-top: 34px;
+  padding: 18px;
+  border-radius: 0;
+  border-left: 1px solid rgba(192, 192, 192, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.chronicles-album-hero__spotlight-cover {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.chronicles-album-hero__spotlight-cover img,
+.chronicles-album-card__image img,
+.chronicles-album-hero__stack-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chronicles-album-hero__spotlight-copy em {
+  color: rgba(232, 225, 221, 0.52);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.chronicles-album-hero__spotlight-copy strong,
+.chronicles-album-hero__stack-copy strong {
+  display: block;
+  margin-top: 10px;
+  color: #f7f2ef;
+  font-family: 'Oswald', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.chronicles-album-hero__spotlight-copy p {
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+
+.chronicles-album-hero__board-header p {
+  max-width: 360px;
+  margin: 12px 0 0;
+}
+
+.chronicles-album-hero__stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.chronicles-album-hero__stack-card {
+  overflow: hidden;
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
+    rgba(255, 255, 255, 0.03);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
+}
+
+.chronicles-album-hero__stack-image {
+  height: 250px;
+  overflow: hidden;
+}
+
+.chronicles-album-hero__stack-copy {
+  padding: 18px 18px 20px;
+}
+
+.chronicles-album-hero__stack-copy p {
+  margin: 10px 0 0;
+  color: rgba(232, 225, 221, 0.62);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.chronicles-album-hero__meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.chronicles-album-hero__meta div {
+  min-height: 108px;
+  padding: 18px 18px 16px;
+  border-radius: 0;
+  background: rgba(10, 10, 10, 0.5);
+  border-top: 1px solid rgba(192, 192, 192, 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.chronicles-album-hero__meta span {
+  display: block;
+  color: rgba(232, 225, 221, 0.56);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.chronicles-album-hero__meta strong {
+  display: block;
+  margin-top: 12px;
+  color: #f7f2ef;
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  line-height: 1.05;
+}
+
+.chronicles-album-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  margin-top: 6px;
+  min-height: 56px;
+  padding: 0 22px;
+  border-radius: 0;
+  background: rgba(198, 40, 40, 0.12);
+  color: #f6efeb;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chronicles-album-hero__cta:hover {
+  background: rgba(57, 255, 20, 0.1);
+  color: #39ff14;
+}
+
+.chronicles-album-library {
+  margin-top: 32px;
+  padding: 34px;
+  background:
+    linear-gradient(180deg, rgba(198, 40, 40, 0.04), rgba(255, 255, 255, 0.015)),
+    #141414;
+}
+
+.chronicles-album-library__heading {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.chronicles-album-library__heading h2 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.chronicles-album-library__heading p {
+  max-width: 420px;
+  margin: 0;
+  text-align: right;
+}
+
+.chronicles-album-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.chronicles-album-grid--expanded {
+  margin-top: 18px;
+}
+
+.chronicles-album-card {
+  overflow: hidden;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.03);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.chronicles-album-card--tone-1 {
+  background:
+    linear-gradient(180deg, rgba(198, 40, 40, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.chronicles-album-card--tone-2 {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.chronicles-album-card--tone-3 {
+  background:
+    linear-gradient(180deg, rgba(120, 120, 120, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.chronicles-album-card--tone-4 {
+  background:
+    linear-gradient(180deg, rgba(120, 24, 24, 0.1), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.chronicles-album-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.22);
+  outline: 1px solid rgba(57, 255, 20, 0.34);
+}
+
+.chronicles-album-card__image {
+  height: 260px;
+  overflow: hidden;
+}
+
+.chronicles-album-card__image img {
+  transition: transform 240ms ease;
+}
+
+.chronicles-album-card:hover .chronicles-album-card__image img {
+  transform: scale(1.04);
+}
+
+.chronicles-album-card__copy {
+  padding: 20px 20px 22px;
+}
+
+.chronicles-album-card__copy h3 {
+  margin: 10px 0 0;
+  color: #f6f0ed;
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.chronicles-album-card__copy p {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
+.chronicles-album-card__copy em {
+  display: block;
+  margin-top: 14px;
+  color: rgba(232, 225, 221, 0.5);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.chronicles-album-card--reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  animation: chroniclesAlbumReveal 520ms ease forwards;
+}
+
+.chronicles-album-library__more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-width: 188px;
+  min-height: 54px;
+  margin: 22px auto 0;
+  padding: 0 22px;
+  border-radius: 0;
+  background: rgba(198, 40, 40, 0.12);
+  color: #f8f0ed;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.chronicles-album-library__more:hover {
+  background: rgba(57, 255, 20, 0.1);
+  color: #39ff14;
+}
+
+@keyframes chroniclesAlbumReveal {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .chronicles-album-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .chronicles-album-hero__meta,
+  .chronicles-album-grid,
+  .chronicles-album-hero__stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chronicles-album-library__heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chronicles-album-library__heading p {
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .chronicles-main--albums {
+    padding: 20px 20px 148px;
+  }
+
+  .chronicles-album-hero__lede,
+  .chronicles-album-hero__board,
+  .chronicles-album-library {
+    padding: 22px;
+    border-radius: 0;
+  }
+
+  .chronicles-album-hero__copy {
+    max-width: 100%;
+  }
+
+  .chronicles-album-hero__spotlight,
+  .chronicles-album-hero__stack,
+  .chronicles-album-hero__meta,
+  .chronicles-album-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chronicles-album-hero__stack-image,
+  .chronicles-album-card__image {
+    height: 220px;
+  }
+}
+
+
+

@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import Header from '../components/layout/Header';
 import PlayerBar from '../components/layout/PlayerBar';
@@ -8,6 +8,8 @@ import SidebarPanel from '../components/layout/SidebarPanel';
 import NowPlayingPage from '../pages/NowPlayingPage';
 import SidebarCollectionPage from '../pages/SidebarCollectionPage';
 import {
+  closeCollectionPanel,
+  selectActiveCollectionPanel,
   selectNowPlayingOpen,
   selectPlaylistPanelOpen,
   setNowPlayingOpen,
@@ -16,12 +18,23 @@ import {
 
 export default function MainLayout() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const isPlaylistPanelOpen = useSelector(selectPlaylistPanelOpen);
+  const activeCollectionPanel = useSelector(selectActiveCollectionPanel);
   const isNowPlayingOpen = useSelector(selectNowPlayingOpen);
   const [shouldRenderPlaylistPanel, setShouldRenderPlaylistPanel] = useState(isPlaylistPanelOpen);
   const [isPlaylistPanelClosing, setIsPlaylistPanelClosing] = useState(false);
+  const [renderedCollectionPanel, setRenderedCollectionPanel] = useState(activeCollectionPanel);
+  const [isCollectionPanelClosing, setIsCollectionPanelClosing] = useState(false);
   const [shouldRenderNowPlaying, setShouldRenderNowPlaying] = useState(isNowPlayingOpen);
   const [isNowPlayingClosing, setIsNowPlayingClosing] = useState(false);
+  const hasBlockingOverlay =
+    shouldRenderNowPlaying || shouldRenderPlaylistPanel || Boolean(renderedCollectionPanel);
+
+  useEffect(() => {
+    dispatch(setPlaylistPanelOpen(false));
+    dispatch(closeCollectionPanel());
+  }, [dispatch, location.pathname]);
 
   useEffect(() => {
     if (isPlaylistPanelOpen) {
@@ -46,6 +59,28 @@ export default function MainLayout() {
   }, [isPlaylistPanelOpen, shouldRenderPlaylistPanel]);
 
   useEffect(() => {
+    if (activeCollectionPanel) {
+      setRenderedCollectionPanel(activeCollectionPanel);
+      setIsCollectionPanelClosing(false);
+      return undefined;
+    }
+
+    if (!renderedCollectionPanel) {
+      return undefined;
+    }
+
+    setIsCollectionPanelClosing(true);
+    const timeoutId = window.setTimeout(() => {
+      setRenderedCollectionPanel(null);
+      setIsCollectionPanelClosing(false);
+    }, 320);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [activeCollectionPanel, renderedCollectionPanel]);
+
+  useEffect(() => {
     if (isNowPlayingOpen) {
       setShouldRenderNowPlaying(true);
       setIsNowPlayingClosing(false);
@@ -68,7 +103,7 @@ export default function MainLayout() {
   }, [isNowPlayingOpen, shouldRenderNowPlaying]);
 
   useEffect(() => {
-    if (!isNowPlayingOpen) {
+    if (!hasBlockingOverlay) {
       document.body.style.overflow = '';
       const layoutContent = document.querySelector('.main-layout__content');
 
@@ -93,7 +128,7 @@ export default function MainLayout() {
         layoutContent.style.overflow = '';
       }
     };
-  }, [isNowPlayingOpen]);
+  }, [hasBlockingOverlay]);
 
   return (
     <div className="main-layout">
@@ -113,6 +148,20 @@ export default function MainLayout() {
           overlay
           closing={isPlaylistPanelClosing}
           onClose={() => dispatch(setPlaylistPanelOpen(false))}
+        />
+      ) : null}
+      {renderedCollectionPanel ? (
+        <SidebarCollectionPage
+          kind={renderedCollectionPanel}
+          title={renderedCollectionPanel === 'favorites' ? 'FAVORITES' : 'VISUAL CUTS'}
+          description={
+            renderedCollectionPanel === 'favorites'
+              ? '좋아요로 모아둔 음악과 비디오를 한 번에 꺼내보는 개인 컬렉션입니다.'
+              : 'BABYMONSTER의 무드와 표정을 이미지 중심으로 빠르게 훑는 비주얼 보드입니다.'
+          }
+          overlay
+          closing={isCollectionPanelClosing}
+          onClose={() => dispatch(closeCollectionPanel())}
         />
       ) : null}
       {shouldRenderNowPlaying ? (

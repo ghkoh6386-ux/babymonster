@@ -1,37 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+﻿import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { images, videos } from '../../assets/media';
-import { setPlayerPlaying } from '../../features/feature/featureSlice';
+import videoLibrary from '../../data/videoLibrary';
+import {
+  selectFavoriteVideoIds,
+  setPlayerPlaying,
+  toggleFavoriteVideoId,
+} from '../../features/feature/featureSlice';
 import '../../styles/home/home-closing.scss';
-
-const closingVideos = [
-  {
-    id: 'sheesh-video',
-    title: 'SHEESH',
-    label: 'Title Video',
-    poster: images.sheesh,
-    src: videos.sheesh,
-  },
-  {
-    id: 'drip-video',
-    title: 'DRIP',
-    label: 'Performance Film',
-    poster: images.drip,
-    src: videos.drip,
-  },
-  {
-    id: 'forever-video',
-    title: 'FOREVER',
-    label: 'Mood Visual',
-    poster: images.forever,
-    src: videos.forever,
-  },
-];
 
 export default function HomeClosingSection() {
   const dispatch = useDispatch();
+  const favoriteVideoIds = useSelector(selectFavoriteVideoIds);
   const [activeVideo, setActiveVideo] = useState(null);
+  const closingVideos = useMemo(
+    () => videoLibrary.filter((item) => ['sheesh-main', 'drip-main', 'forever-film'].includes(item.id)),
+    []
+  );
 
   useEffect(() => {
     if (!activeVideo) {
@@ -53,33 +38,58 @@ export default function HomeClosingSection() {
 
   return (
     <>
-      <section className="home-closing" aria-label="Ȩ �ϴ� ���� ����">
+      <section className="home-closing" aria-label="홈 비디오 카드">
         <div className="home-closing__header">
           <span className="home-closing__eyebrow">VIDEO CUTS</span>
         </div>
 
         <div className="home-closing__grid">
-          {closingVideos.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className="home-closing__card home-closing__card--video"
-              onClick={() => setActiveVideo(item)}
-              aria-label={`${item.title} ���� ����`}
-            >
-              <img src={item.poster} alt={`${item.title} �����`} className="home-closing__poster" />
-              <div className="home-closing__overlay" />
+          {closingVideos.map((item) => {
+            const isFavorited = favoriteVideoIds.includes(item.id);
 
-              <div className="home-closing__play" aria-hidden="true">
-                <span className="material-symbols-outlined">play_arrow</span>
-              </div>
+            return (
+              <article
+                key={item.id}
+                className="home-closing__card home-closing__card--video"
+                onClick={() => setActiveVideo(item)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setActiveVideo(item);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`${item.title} 영상 재생`}
+              >
+                <img src={item.poster} alt={`${item.title} poster`} className="home-closing__poster" />
+                <div className="home-closing__overlay" />
 
-              <div className="home-closing__card-copy">
-                <span className="home-closing__card-label">{item.label}</span>
-                <strong className="home-closing__card-title">{item.title}</strong>
-              </div>
-            </button>
-          ))}
+                <button
+                  type="button"
+                  className={`home-closing__favorite${isFavorited ? ' is-active' : ''}`}
+                  aria-label={`${item.title} 좋아요`}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    dispatch(toggleFavoriteVideoId(item.id));
+                  }}
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">
+                    favorite
+                  </span>
+                </button>
+
+                <div className="home-closing__play" aria-hidden="true">
+                  <span className="material-symbols-outlined">play_arrow</span>
+                </div>
+
+                <div className="home-closing__card-copy">
+                  <span className="home-closing__card-label">{item.subtitle}</span>
+                  <strong className="home-closing__card-title">{item.title}</strong>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -88,7 +98,7 @@ export default function HomeClosingSection() {
           className="home-closing__modal"
           role="dialog"
           aria-modal="true"
-          aria-label={`${activeVideo.title} ���� ���`}
+          aria-label={`${activeVideo.title} 영상 재생`}
           onClick={() => setActiveVideo(null)}
         >
           <div className="home-closing__modal-panel" onClick={(event) => event.stopPropagation()}>
@@ -96,7 +106,7 @@ export default function HomeClosingSection() {
               type="button"
               className="home-closing__modal-close"
               onClick={() => setActiveVideo(null)}
-              aria-label="���� �ݱ�"
+              aria-label="영상 닫기"
             >
               <span className="material-symbols-outlined" aria-hidden="true">
                 close
@@ -104,7 +114,7 @@ export default function HomeClosingSection() {
             </button>
 
             <div className="home-closing__modal-copy">
-              <span>{activeVideo.label}</span>
+              <span>{activeVideo.subtitle}</span>
               <strong>{activeVideo.title}</strong>
             </div>
 

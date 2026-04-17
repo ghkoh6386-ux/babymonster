@@ -8,15 +8,12 @@ import FooterShowcasePage from './pages/FooterShowcasePage';
 import HomePage from './pages/HomePage';
 import MusicDetailPage from './pages/MusicDetailPage';
 import SearchIntroPage from './pages/SearchIntroPage';
-import SidebarCollectionPage from './pages/SidebarCollectionPage';
 
 function getPageTitle(pathname) {
   if (pathname === '/') return 'Home';
   if (pathname.startsWith('/browse')) return 'Browse';
   if (pathname.startsWith('/library')) return 'Archive';
   if (pathname.startsWith('/search')) return 'Intro';
-  if (pathname.startsWith('/favorites')) return 'Favorites';
-  if (pathname.startsWith('/visual-cuts')) return 'Visual Cuts';
   if (pathname.startsWith('/detail')) return 'Detail';
   if (pathname.startsWith('/footer')) return 'Footer';
   return 'Home';
@@ -60,24 +57,8 @@ export default function App() {
           <Route path="browse" element={<DiscoverPage />} />
           <Route path="library" element={<EditorialChroniclesPage />} />
           <Route path="search" element={<SearchIntroPage />} />
-          <Route
-            path="favorites"
-            element={
-              <SidebarCollectionPage
-                title="FAVORITES"
-                description="좋아하는 무드와 장면을 따로 모아두는 공간으로 이어질 즐겨찾기 패널입니다."
-              />
-            }
-          />
-          <Route
-            path="visual-cuts"
-            element={
-              <SidebarCollectionPage
-                title="VISUAL CUTS"
-                description="이미지와 비주얼 중심으로 따로 큐레이션될 사이드 컬렉션 공간입니다."
-              />
-            }
-          />
+          <Route path="favorites" element={<Navigate to="/" replace />} />
+          <Route path="visual-cuts" element={<Navigate to="/" replace />} />
           <Route path="detail/:id" element={<MusicDetailPage />} />
           <Route path="footer" element={<FooterShowcasePage />} />
         </Route>

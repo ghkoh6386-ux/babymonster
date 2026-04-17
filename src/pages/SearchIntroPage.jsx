@@ -1,19 +1,15 @@
-import React from 'react';
+﻿import React from 'react';
 
-import ahyeonImage from '../assets/img/ahyeon.jpg';
+import { images } from '../assets/media';
 import batterupImage from '../assets/img/batterup.jpg';
 import dripImage from '../assets/img/drip.jpg';
-import foreverImage from '../assets/img/forever.jpg';
-import heroImage from '../assets/img/hero.jpg';
 import sheeshImage from '../assets/img/sheesh.jpg';
-import visualImage from '../assets/img/visual.jpg';
-import wegoupImage from '../assets/img/wegoup.jpg';
 
 const heroTags = ['YG NEW WAVE', '7 MEMBERS', 'BOLD VISUAL'];
 
 const introCards = [
   { label: 'Energy', value: 'Hard-hitting stage mood' },
-  { label: 'Tone', value: 'Gloss + shadow + green' },
+  { label: 'Tone', value: 'Gloss + shadow + tension' },
   { label: 'Read', value: 'Sharp, young, fearless' },
 ];
 
@@ -36,13 +32,13 @@ const eraCards = [
 ];
 
 const featureMembers = [
-  { name: 'RUKA', image: batterupImage },
-  { name: 'PHARITA', image: visualImage },
-  { name: 'ASA', image: dripImage },
-  { name: 'AHYEON', image: ahyeonImage },
-  { name: 'RAMI', image: foreverImage },
-  { name: 'RORA', image: sheeshImage },
-  { name: 'CHIQUITA', image: wegoupImage },
+  { name: 'RUKA', image: images.luka },
+  { name: 'PHARITA', image: images.pharita },
+  { name: 'ASA', image: images.asa },
+  { name: 'AHYEON', image: images.ahyeon },
+  { name: 'RAMI', image: images.rami },
+  { name: 'RORA', image: images.rora },
+  { name: 'CHIQUITA', image: images.chiquita },
 ];
 
 export default function SearchIntroPage() {
@@ -63,7 +59,7 @@ export default function SearchIntroPage() {
             <span className="intro-remix-hero__eyebrow">BABYMONSTER INTRO</span>
             <h1>BABY MONSTER</h1>
             <p>
-              강한 무대 에너지와 글로시한 비주얼 무드로 읽히는 팀.
+              무대에서 먼저 존재감을 남기고, 비주얼로 오래 기억되는 팀의 첫인상을 담았습니다.
             </p>
 
             <div className="intro-remix-hero__pulse" aria-hidden="true">
@@ -93,11 +89,8 @@ export default function SearchIntroPage() {
             <div className="intro-remix-hero__note">
               <span>About BM</span>
               <p>
-                BABYMONSTER는 강한 퍼포먼스와 또렷한 비주얼 무드를 함께 끌고 가는 팀입니다.
-                한 번의 장면이나 한 곡의 인상으로 끝나기보다, 무대의 에너지와 팀의 분위기,
-                멤버별 존재감이 함께 쌓이면서 더 선명하게 읽히는 그룹이라는 점이 이 인트로
-                페이지의 핵심입니다. 그래서 이 페이지도 긴 설명을 늘어놓기보다, 강한 무드와
-                이미지, 그리고 짧지만 또렷한 키워드들이 자연스럽게 이어지도록 구성했습니다.
+                BABYMONSTER는 퍼포먼스, 스타일링, 팀의 분위기로 빠르게 강한 인상을 남깁니다.
+                이 페이지는 그 첫인상을 멤버별 이미지와 비주얼 중심 흐름으로 자연스럽게 소개하는 구성입니다.
               </p>
             </div>
 
@@ -107,7 +100,7 @@ export default function SearchIntroPage() {
           </div>
 
           <div className="intro-remix-hero__visual">
-            <img src={heroImage} alt="BABYMONSTER group visual" />
+            <img src={images.aboutHero} alt="BABYMONSTER group visual" />
             <div className="intro-remix-hero__overlay" />
             <div className="intro-remix-hero__stamp">
               <span>Core Mood</span>
@@ -119,7 +112,7 @@ export default function SearchIntroPage() {
         <section className="intro-remix-strip" aria-label="BABYMONSTER quick intro">
           <article className="intro-remix-strip__lead">
             <span>Essence</span>
-            <h2>무대에서 먼저 각인되고 비주얼로 오래 남는 팀.</h2>
+            <h2>First remembered on stage, then sealed by visual impact.</h2>
           </article>
 
           <div className="intro-remix-strip__era">
@@ -135,7 +128,7 @@ export default function SearchIntroPage() {
         <section className="intro-remix-members" aria-label="BABYMONSTER featured members">
           <div className="intro-remix-members__heading">
             <span>Visual Cuts</span>
-            <h2>짧게 봐도 무드가 보이는 멤버 컷.</h2>
+            <h2>MEMBERS</h2>
           </div>
 
           <div className="intro-remix-members__grid">
@@ -150,8 +143,6 @@ export default function SearchIntroPage() {
             ))}
           </div>
         </section>
-
-        
       </main>
     </div>
   );

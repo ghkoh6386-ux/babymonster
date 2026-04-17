@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import featureCards from '../../data/featureCards';
+import videoLibrary from '../../data/videoLibrary';
 
 const initialState = {
   cards: featureCards,
@@ -7,6 +8,9 @@ const initialState = {
   isPlaying: false,
   playlistIds: [],
   isPlaylistPanelOpen: false,
+  activeCollectionPanel: null,
+  favoriteMusicIds: [],
+  favoriteVideoIds: [],
   isNowPlayingOpen: false,
   repeatMode: 'sequence',
   playerVolume: 0.66,
@@ -57,6 +61,34 @@ const featureSlice = createSlice({
     togglePlaylistPanel(state) {
       state.isPlaylistPanelOpen = !state.isPlaylistPanelOpen;
     },
+    toggleFavoriteMusicId(state, action) {
+      const id = action.payload;
+      const existingIndex = state.favoriteMusicIds.findIndex((item) => item === id);
+
+      if (existingIndex >= 0) {
+        state.favoriteMusicIds.splice(existingIndex, 1);
+        return;
+      }
+
+      state.favoriteMusicIds.push(id);
+    },
+    toggleFavoriteVideoId(state, action) {
+      const id = action.payload;
+      const existingIndex = state.favoriteVideoIds.findIndex((item) => item === id);
+
+      if (existingIndex >= 0) {
+        state.favoriteVideoIds.splice(existingIndex, 1);
+        return;
+      }
+
+      state.favoriteVideoIds.push(id);
+    },
+    setCollectionPanel(state, action) {
+      state.activeCollectionPanel = action.payload;
+    },
+    closeCollectionPanel(state) {
+      state.activeCollectionPanel = null;
+    },
     setNowPlayingOpen(state, action) {
       state.isNowPlayingOpen = action.payload;
     },
@@ -101,6 +133,9 @@ export const selectCurrentFeatureCardId = (state) => selectFeatureState(state).c
 export const selectPlayerPlaying = (state) => selectFeatureState(state).isPlaying;
 export const selectPlaylistIds = (state) => selectFeatureState(state).playlistIds;
 export const selectPlaylistPanelOpen = (state) => selectFeatureState(state).isPlaylistPanelOpen;
+export const selectActiveCollectionPanel = (state) => selectFeatureState(state).activeCollectionPanel;
+export const selectFavoriteMusicIds = (state) => selectFeatureState(state).favoriteMusicIds;
+export const selectFavoriteVideoIds = (state) => selectFeatureState(state).favoriteVideoIds;
 export const selectNowPlayingOpen = (state) => selectFeatureState(state).isNowPlayingOpen;
 export const selectRepeatMode = (state) => selectFeatureState(state).repeatMode;
 export const selectPlayerVolume = (state) => selectFeatureState(state).playerVolume;
@@ -129,6 +164,18 @@ export const selectPlaylistCards = (state) => {
     .filter(Boolean);
 };
 
+export const selectFavoriteMusicCards = (state) => {
+  const cards = selectFeatureCards(state);
+  return selectFavoriteMusicIds(state)
+    .map((id) => cards.find((card) => String(card.id) === String(id)) ?? null)
+    .filter(Boolean);
+};
+
+export const selectFavoriteVideoCards = (state) =>
+  selectFavoriteVideoIds(state)
+    .map((id) => videoLibrary.find((video) => String(video.id) === String(id)) ?? null)
+    .filter(Boolean);
+
 export const {
   setCurrentFeatureCardId,
   setPlayerPlaying,
@@ -138,6 +185,10 @@ export const {
   clearPlaylist,
   setPlaylistPanelOpen,
   togglePlaylistPanel,
+  toggleFavoriteMusicId,
+  toggleFavoriteVideoId,
+  setCollectionPanel,
+  closeCollectionPanel,
   setNowPlayingOpen,
   toggleNowPlaying,
   cycleRepeatMode,

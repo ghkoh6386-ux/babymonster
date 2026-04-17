@@ -1,181 +1,418 @@
-﻿import React from 'react';
-import { Link } from 'react-router-dom';
+﻿import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { images } from '../assets/media';
+import videoLibrary from '../data/videoLibrary';
+import {
+  selectFavoriteVideoIds,
+  setPlayerPlaying,
+  toggleFavoriteVideoId,
+} from '../features/feature/featureSlice';
+import './DiscoverPage.scss';
 
-const collections = [
-  [
-    '01',
-    'SHEESH // 메인 무대 컷',
-    'BABYMONSTER / 타이틀곡 중심 / 대표 파일',
-    '/detail/sheesh-command',
-  ],
-  [
-    '02',
-    'DRIP // 플로어 캠 컷',
-    'BABYMONSTER 퍼포먼스 팀 / 무대 아카이브 / 퍼포먼스 필름',
-    '/detail/drip-floor-cut',
-  ],
-  [
-    '03',
-    'RUKA // 미드나이트 런웨이',
-    'BABYMONSTER 비주얼 유닛 / 멤버 포커스 / 비주얼 파일',
-    '/detail/ruka-midnight-runway',
-  ],
-  [
-    '04',
-    'FOREVER // 레드 룸',
-    'BABYMONSTER 필름 유닛 / 소프트 글로시 컷 / 비주얼 챕터',
-    '/detail/forever-red-room',
-  ],
-];
-
-const discoveryTags = [
-  '연도: 2024',
-  '무드: 다크 글로시',
-  '형식: 무대 파일',
-  '구성: 컴백 하이라이트',
-];
-
-const discoverControls = [
-  ['정렬', '최신순'],
-  ['유형', '트랙 / 퍼포먼스 / 비주얼'],
-  ['시기', '2024 컴백'],
-  ['톤', '블랙 크롬'],
+const sortOptions = [
+  { id: 'latest', label: '최신순' },
+  { id: 'popular', label: '인기순' },
+  { id: 'oldest', label: '오래된순' },
 ];
 
 export default function DiscoverPage() {
+  const dispatch = useDispatch();
+  const favoriteVideoIds = useSelector(selectFavoriteVideoIds);
+  const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState('latest');
+  const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [activeVideo, setActiveVideo] = useState(null);
+
+  useEffect(() => {
+    if (!activeVideo) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setActiveVideo(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeVideo]);
+
+  const filteredVideos = useMemo(() => {
+    const keyword = query.trim().toLowerCase();
+    const nextVideos = keyword
+      ? videoLibrary.filter((item) => {
+          const searchTarget = [item.title, item.subtitle, item.description, item.accent, ...item.tags]
+            .join(' ')
+            .toLowerCase();
+
+          return searchTarget.includes(keyword);
+        })
+      : [...videoLibrary];
+
+    nextVideos.sort((a, b) => {
+      if (sortBy === 'popular') {
+        return b.popularity - a.popularity;
+      }
+
+      if (sortBy === 'oldest') {
+        return new Date(a.releasedAt).getTime() - new Date(b.releasedAt).getTime();
+      }
+
+      return new Date(b.releasedAt).getTime() - new Date(a.releasedAt).getTime();
+    });
+
+    return nextVideos;
+  }, [query, sortBy]);
+
+  const slides = useMemo(() => {
+    const nextSlides = [];
+
+    for (let index = 0; index < filteredVideos.length; index += 4) {
+      nextSlides.push(filteredVideos.slice(index, index + 4));
+    }
+
+    return nextSlides;
+  }, [filteredVideos]);
+
+  const featuredPopularVideos = useMemo(
+    () => [...videoLibrary].sort((a, b) => b.popularity - a.popularity).slice(0, 4),
+    []
+  );
+
+  useEffect(() => {
+    if (activeSlide > slides.length - 1) {
+      setActiveSlide(0);
+    }
+  }, [activeSlide, slides.length]);
+
+  const currentSortLabel = sortOptions.find((item) => item.id === sortBy)?.label ?? '최신순';
+  const openVideo = (item) => {
+    dispatch(setPlayerPlaying(false));
+    setSortMenuOpen(false);
+    setActiveVideo(item);
+  };
+
+  const toggleVideoFavorite = (event, id) => {
+    event.stopPropagation();
+    dispatch(toggleFavoriteVideoId(id));
+  };
+
   return (
-    <div className="discover-page">
-      <main className="discover-main">
-        <section className="discover-hero">
-          <div className="discover-hero__intro">
-            <span>둘러보기 모드</span>
-            <h2>둘러보기</h2>
-            <p className="discover-hero__lead">
-              타이틀곡, 퍼포먼스, 비주얼 파일을 빠르게 둘러보는 공간.
-            </p>
-            <div className="discover-hero__quote">
+    <>
+      <div className="discover-page">
+        <main className="discover-main discover-main--cinematic">
+          <section className="browse-hero">
+            <div className="browse-hero__media">
+              <img src={images.stageHero} alt="BABYMONSTER stage hero" />
+              <div className="browse-hero__overlay" />
+            </div>
+
+            <div className="browse-hero__copy">
+              <span className="browse-hero__eyebrow">BROWSE STAGE</span>
+              <h1>STAGE FILES</h1>
+              <p className="browse-hero__kicker">무대 위, 가장 강렬한 순간들을 한 화면에서 빠르게 만나보고 바로 감상해보세요.</p>
+            </div>
+
+            <div className="browse-hero__note browse-hero__note--left">
+              <strong>LIVE FOCUS</strong>
+              <p>분위기를 먼저 느끼고, 원하는 퍼포먼스를 직접 골라 지금 바로 이어서 즐겨보세요.</p>
+            </div>
+
+            <div className="browse-hero__note browse-hero__note--right">
+              <strong>CLICK TO PLAY</strong>
+              <p>지금, 베이비몬스터의 무대를 끊김 없이 이어서 감상하며 몰입을 이어가보세요.</p>
+            </div>
+            <div className="browse-hero__metrics">
+              <div>
+                <span>DEFAULT SORT</span>
+                <strong>NEWEST</strong>
+              </div>
+              <div>
+                <span>MAIN MOOD</span>
+                <strong>PERFORM</strong>
+              </div>
+            </div>
+          </section>
+
+          <section className="browse-popular" aria-label="인기 영상">
+            <div className="browse-section-heading">
+              <div>
+                <span>POPULAR VIDEOS</span>
+                <h2>HOT PICKS</h2>
+              </div>
+
+            </div>
+
+            <div className="browse-popular__grid">
+              {featuredPopularVideos.map((item, index) => {
+                const isFavorited = favoriteVideoIds.includes(item.id);
+
+                return (
+                  <article
+                    key={item.id}
+                    className="browse-popular-card"
+                    onClick={() => openVideo(item)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openVideo(item);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${item.title} 인기 영상 재생`}
+                  >
+                    <div className="browse-popular-card__media">
+                      <img src={item.poster} alt={`${item.title} poster`} />
+                      <div className="browse-popular-card__rank">0{index + 1}</div>
+                      <button
+                        type="button"
+                        className={`browse-card-favorite${isFavorited ? ' is-active' : ''}`}
+                        aria-label={`${item.title} 좋아요`}
+                        onClick={(event) => toggleVideoFavorite(event, item.id)}
+                      >
+                        <span className="material-symbols-outlined" aria-hidden="true">
+                          favorite
+                        </span>
+                      </button>
+                    </div>
+                    <div className="browse-popular-card__body">
+                      <span>{item.accent}</span>
+                      <h3>{item.title}</h3>
+                      <p>{item.subtitle}</p>
+                      <strong>{item.duration} </strong>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="browse-search" aria-label="브라우저 검색 및 정렬">
+            <div className="browse-search__intro">
+              <span>BROWSE CONTROL</span>
+              <h2>SEARCH THE CUT</h2>
+              <p>제목, 무드, 태그 기준으로 영상을 빠르게 찾고 정렬 순서도 바로 바꿀 수 있습니다.</p>
+            </div>
+
+            <div className="browse-search__bar">
+              <label className="browse-search__field" htmlFor="browse-video-search">
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  search
+                </span>
+                <input
+                  id="browse-video-search"
+                  type="search"
+                  placeholder="Search stage, title, mood"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+              </label>
+
+              <div className="browse-search__sort">
+                <button
+                  type="button"
+                  className={`browse-search__sort-button${sortMenuOpen ? ' is-open' : ''}`}
+                  onClick={() => setSortMenuOpen((prev) => !prev)}
+                  aria-haspopup="listbox"
+                  aria-expanded={sortMenuOpen}
+                >
+                  <strong>{currentSortLabel}</strong>
+                  <span className="material-symbols-outlined" aria-hidden="true">
+                    expand_more
+                  </span>
+                </button>
+
+                {sortMenuOpen ? (
+                  <div className="browse-search__sort-menu" role="listbox" aria-label="정렬 선택">
+                    {sortOptions.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        className={`browse-search__sort-option${sortBy === option.id ? ' is-active' : ''}`}
+                        onClick={() => {
+                          setSortBy(option.id);
+                          setSortMenuOpen(false);
+                        }}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="browse-search__status">
               <p>
-                "대표 트랙에서 시작해 무대와 비주얼로 넓혀보세요."
+                
+              </p>
+              
+            </div>
+          </section>
+
+          <section className="browse-carousel" aria-label="영상 리스트">
+            
+
+            {slides.length ? (
+              <>
+                <div className="browse-carousel__frame">
+                  <button
+                    type="button"
+                    className="browse-carousel__nav"
+                    onClick={() => setActiveSlide((prev) => Math.max(0, prev - 1))}
+                    disabled={activeSlide === 0}
+                    aria-label="이전 슬라이드"
+                  >
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      west
+                    </span>
+                  </button>
+
+                  <div className="browse-carousel__viewport">
+                    <div
+                      className="browse-carousel__track"
+                      style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                    >
+                      {slides.map((slideItems, slideIndex) => (
+                        <div key={`slide-panel-${slideIndex}`} className="browse-carousel__grid">
+                          {slideItems.map((item) => {
+                            const isFavorited = favoriteVideoIds.includes(item.id);
+
+                            return (
+                              <article
+                                key={item.id}
+                                className="browse-video-card"
+                                onClick={() => openVideo(item)}
+                                onKeyDown={(event) => {
+                                  if (event.key === 'Enter' || event.key === ' ') {
+                                    event.preventDefault();
+                                    openVideo(item);
+                                  }
+                                }}
+                                role="button"
+                                tabIndex={0}
+                                aria-label={`${item.title} 영상 재생`}
+                              >
+                                <div className="browse-video-card__media">
+                                  <img src={item.poster} alt={`${item.title} poster`} />
+                                  <button
+                                    type="button"
+                                    className={`browse-card-favorite${isFavorited ? ' is-active' : ''}`}
+                                    aria-label={`${item.title} 좋아요`}
+                                    onClick={(event) => toggleVideoFavorite(event, item.id)}
+                                  >
+                                    <span className="material-symbols-outlined" aria-hidden="true">
+                                      favorite
+                                    </span>
+                                  </button>
+                                </div>
+                                <div className="browse-video-card__body">
+                                  <span>{item.accent}</span>
+                                  <h3>{item.title}</h3>
+                                  <strong>{item.subtitle}</strong>
+                                  <p>{item.description}</p>
+                                  <div className="browse-video-card__meta">
+                                    <em>{item.duration}</em>
+                                    <em>{item.popularity} POINTS</em>
+                                  </div>
+                                </div>
+                              </article>
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="browse-carousel__nav"
+                    onClick={() => setActiveSlide((prev) => Math.min(slides.length - 1, prev + 1))}
+                    disabled={activeSlide >= slides.length - 1}
+                    aria-label="다음 슬라이드"
+                  >
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      east
+                    </span>
+                  </button>
+                </div>
+
+                <div className="browse-carousel__footer">
+                  <div className="browse-carousel__dots" aria-label="슬라이드 페이지네이션">
+                    {slides.map((_, index) => (
+                      <button
+                        key={`slide-${index}`}
+                        type="button"
+                        className={`browse-carousel__dot${index === activeSlide ? ' is-active' : ''}`}
+                        onClick={() => setActiveSlide(index)}
+                        aria-label={`${index + 1}번 슬라이드`}
+                      />
+                    ))}
+                  </div>
+                  <span>
+                    {String(activeSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <div className="browse-empty">
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  video_library
+                </span>
+                <strong>검색 결과가 없습니다</strong>
+                <p>다른 키워드를 입력하거나 정렬 기준을 바꿔서 다시 찾아보세요.</p>
+              </div>
+            )}
+          </section>
+        </main>
+      </div>
+
+      {activeVideo ? (
+        <div
+          className="browse-video-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeVideo.title} 영상 재생`}
+          onClick={() => setActiveVideo(null)}
+        >
+          <div className="browse-video-modal__panel" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="browse-video-modal__close"
+              onClick={() => setActiveVideo(null)}
+              aria-label="영상 닫기"
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">
+                close
+              </span>
+            </button>
+
+            <div className="browse-video-modal__copy">
+              <strong>{activeVideo.title}</strong>
+              <span>{activeVideo.accent}</span>
+              <p>
+                {activeVideo.subtitle} · {activeVideo.description}
               </p>
             </div>
+
+            <video
+              className="browse-video-modal__player"
+              src={activeVideo.src}
+              poster={activeVideo.poster}
+              controls
+              autoPlay
+              playsInline
+            />
           </div>
-
-          <div className="discover-hero__visual discover-hero__visual--one">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJTfINDBU8N03T1oO3ZUwEiXuIUELYeKV1HFhswbKCRitS39XQMMyOID-6kkwUfBDHXKmvlAOJ3_9xBJ-Cf4qZOf1b-6NXw_Uc1fxGwDyEFwFamojhPqhz0oUzUlLqjBfuLquJTZSoJtftTBAAVb8E-bN-IlKqVqL65GIpyy666CD0V8Dx6D4WKXu36-Hm2CABAOI2onlVsSo36pgEwdYYr-SzRwSC0fri9EREn3vMtHbpZTWBCj0r-XakF0KKdYbv1GDVPgOIZ8dR" alt="Visual 1" />
-          </div>
-          <div className="discover-hero__visual discover-hero__visual--two">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmQPzJMNp3XBswJZkTP3cJbhIroLYnfQvd1NnEq48lWJCWpRAD-mhp5yo0_gk4PqvRyjqN7lal1sUy1CrtPqelwlYSD4U5PK55rTqURNpKQejNOm-iYm5JEuc_oSD9wU9YpcEk1HdAtPNqM9SQ5mQCP3xw0QW1PuabN7gNoNcKnuABhwEXW7mM4TfNFWUVULZlATSGvQF5KQgoNky9OOtr_pWVn32Sd98Imj-PL1dxGVBhiIj0aGwJMFIoYFJApLs1nafOEgSMWhVN" alt="Visual 2" />
-          </div>
-          <div className="discover-hero__visual discover-hero__visual--three">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcv0LoN8WHynPj4VpkJGrtKlVfamNj1SMTPb_ugSaV-yVyomK_Gu6ilSgCzL1vdlxbKu11fC6wJxFWAnH-7dWJvY-kmg8mPziccyqh4YAL8ihF5AcOoSH-vhaMtAgvKQaMrHzMxgwwl_y0x0HlRarLkSS5WzkUSwa3_3PcKfdj_h4tj5yL7FqbHCUQQ4rgPCEfG5FIUaarV-P1kK2m_Sb46aFBMjsmgplwaOOodue56PdbGgT1GhFjTPpLH4R7LTd0KNsUvuITzjmk" alt="Visual 3" />
-          </div>
-
-          <div className="discover-filters">
-            <div>
-              <span>정렬</span>
-              <strong>최신순</strong>
-            </div>
-            <div>
-              <span>에너지</span>
-              <strong>강한 무대감</strong>
-            </div>
-            <div>
-              <span>구성</span>
-              <strong>트랙 + 무대</strong>
-            </div>
-          </div>
-        </section>
-
-        <section className="discover-toolbar" aria-label="둘러보기 정보">
-          <div className="discover-toolbar__summary">
-            <span>현재 보기</span>
-            <p>파일 4개 / 정적 미리보기</p>
-          </div>
-          <div className="discover-toolbar__tags">
-            {discoveryTags.map((tag) => (
-              <span key={tag}>{tag}</span>
-            ))}
-          </div>
-        </section>
-
-        <section className="discover-controls" aria-label="정적 둘러보기 제어">
-          {discoverControls.map(([label, value]) => (
-            <button key={label} type="button" className="discover-controls__chip">
-              <span>{label}</span>
-              <strong>{value}</strong>
-            </button>
-          ))}
-        </section>
-
-        <section className="discover-categories">
-          <div className="discover-categories__left">
-            <h3>둘러보기 라인</h3>
-            <p className="discover-categories__hint">
-              트랙, 무대, 멤버 포인트 중심으로 빠르게 이동.
-            </p>
-            <ul>
-              <li>타이틀곡</li>
-              <li className="is-highlighted">무대 중심</li>
-              <li>멤버 비주얼</li>
-              <li>필름 컷</li>
-            </ul>
-          </div>
-
-          <div className="discover-categories__right">
-            <h3>주요 파일</h3>
-            <p className="discover-categories__summary">
-              바로 Detail로 이어지는 메인 파일 모음.
-            </p>
-
-            {collections.map(([index, title, meta, to]) => (
-              <article key={index} className="discover-collection">
-                <div className="discover-collection__main">
-                  <span>{index}</span>
-                  <div>
-                    <h4>{title}</h4>
-                    <p>{meta}</p>
-                  </div>
-                </div>
-                <Link to={to} className="discover-collection__cta">
-                  파일 열기
-                </Link>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="discover-gallery">
-          <Link to="/detail/sheesh-command" className="discover-gallery__large">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwPpFiexjmDaaMNo_JIfcfMOh-YAlNvh0JzFZn3SqfliIRaFp5KNx362mb4cpbyLN4edAWdX332uBbsC6oMD-Q8ROLYneZkwnGdTycGCYTczr2aS3-kI7I7S3wwmCWqtIetYGiC0MdTdRkV99eRnv2QLUDzWjzUqOf1OVrYCLTNqKDcibwvamMw9-G0mg7anqC-6C0dgECgaA3M6EdD0p3S7H_lLsMbnX7zBlbq9kNWr-pIW6uUVJTU69djdI1XGqIVzmj2xqxsNsx" alt="Gallery 1" />
-            <div className="discover-gallery__feature-copy">
-              <span>대표 타이틀곡</span>
-              <h4>SHEESH</h4>
-              <p>메인 타이틀곡부터 바로 확인.</p>
-            </div>
-          </Link>
-
-          <div className="discover-gallery__stack">
-            <article className="discover-gallery__essay">
-              <span>무대 노트</span>
-              <h5>무대의 힘과 무드가 어떻게 바뀌는지 한눈에.</h5>
-              <p>짧게 보고 바로 넘어갈 수 있는 메모.</p>
-              <Link to="/library" className="discover-gallery__essay-link">
-                저장 파일 보기
-              </Link>
-            </article>
-
-            <Link to="/detail/drip-floor-cut" className="discover-gallery__image">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwb_YC1dAzOmzsPfOJcPPGhh9DribJ39EvgOau_LlrhFlqnX8LCmPbZU7sJOTJtdFfNT3RrMLAZhoYELdCYDqJveFLJr4PRx5SFOUKhcfSDdVn_tD77WYXjvOty8ZX4sUP-robzRTwfnHTK8oAKBqZPiRK8Fs6fdCklFj4elfTaXxIh97pMYbW51w7Z5kJOE_6a_gArRK7XN0MN_u-scc9SX1w3k4YB10RM51jXIlh2GiD2-r8zDSKQZqA97czbGWUUtUZoa0lvOiw" alt="Ambience" />
-              <div className="discover-gallery__secondary-copy">
-                <span>두 번째 추천</span>
-                <strong>DRIP</strong>
-              </div>
-            </Link>
-          </div>
-        </section>
-      </main>
-
-    </div>
+        </div>
+      ) : null}
+    </>
   );
 }

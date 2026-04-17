@@ -1,20 +1,46 @@
-﻿import React from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+﻿import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  addPlaylistCard,
+  selectFavoriteMusicIds,
   selectFeatureCardById,
   selectFeatureCards,
+  selectPlaylistIds,
+  setCurrentFeatureCardId,
+  setPlayerPlaying,
+  toggleFavoriteMusicId,
 } from '../features/feature/featureSlice';
 
 export default function MusicDetailPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { id } = useParams();
-  const canGoBack = Boolean(location.key && location.key !== 'default');
+  const [videoOpen, setVideoOpen] = useState(false);
 
   const cards = useSelector(selectFeatureCards);
   const detailItem = useSelector(selectFeatureCardById(id));
+  const playlistIds = useSelector(selectPlaylistIds);
+  const favoriteMusicIds = useSelector(selectFavoriteMusicIds);
+
+  useEffect(() => {
+    if (!videoOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setVideoOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [videoOpen]);
 
   if (!detailItem) {
     return (
@@ -49,10 +75,11 @@ export default function MusicDetailPage() {
             </div>
           </section>
         </main>
-
       </div>
     );
   }
+
+  const isFavorited = favoriteMusicIds.some((itemId) => String(itemId) === String(detailItem.id));
 
   const stats = detailItem.stats ?? [
     ['9.4k', '반응 수치'],
@@ -83,36 +110,29 @@ export default function MusicDetailPage() {
   ];
 
   const relatedItems = cards
-    .filter((item) => String(item.id) !== String(detailItem.id))
+    .filter(
+      (item) =>
+        String(item.id) !== String(detailItem.id) &&
+        Boolean(item.audio) &&
+        Boolean(item.video)
+    )
     .slice(0, 3);
 
-  const currentIndex = cards.findIndex(
-    (item) => String(item.id) === String(detailItem.id)
-  );
+  const handlePlayMusic = () => {
+    const hasInPlaylist = playlistIds.some((itemId) => String(itemId) === String(detailItem.id));
 
-  const prevItem = currentIndex > 0 ? cards[currentIndex - 1] : null;
-  const nextItem = currentIndex < cards.length - 1 ? cards[currentIndex + 1] : null;
+    if (!hasInPlaylist) {
+      dispatch(addPlaylistCard(detailItem.id));
+    }
+
+    dispatch(setCurrentFeatureCardId(detailItem.id));
+    dispatch(setPlayerPlaying(true));
+  };
 
   return (
     <div className="music-detail-page">
       <main className="music-detail-main">
         <section className="music-detail-hero">
-          <div className="music-detail-hero__back-wrap">
-            <button
-              type="button"
-              className="music-detail-hero__back"
-              onClick={() => {
-                if (canGoBack) {
-                  navigate(-1);
-                  return;
-                }
-                navigate('/browse');
-              }}
-            >
-              이전 페이지
-            </button>
-          </div>
-
           <img
             src={detailItem.heroImage ?? detailItem.image}
             alt={detailItem.title}
@@ -121,10 +141,6 @@ export default function MusicDetailPage() {
           <div className="music-detail-hero__overlay" />
 
           <div className="music-detail-hero__content">
-            <span className="music-detail-hero__eyebrow">
-              {detailItem.eyebrow ?? '대표 트랙 상세'}
-            </span>
-
             <p>{detailItem.author ?? '아티스트 정보 없음'}</p>
 
             <h1>{detailItem.title}</h1>
@@ -136,31 +152,20 @@ export default function MusicDetailPage() {
             <div className="music-detail-hero__actions">
               <button
                 type="button"
-                className="music-detail-hero__action music-detail-hero__action--primary"
+                className={`music-detail-hero__action music-detail-hero__action--primary${
+                  isFavorited ? ' music-detail-hero__action--active' : ''
+                }`}
+                onClick={() => {
+                  if (detailItem.audio) {
+                    dispatch(toggleFavoriteMusicId(detailItem.id));
+                  }
+                }}
               >
-                저장하기
+                {isFavorited ? 'LIKED' : 'LIKE'}
               </button>
               <button type="button" className="music-detail-hero__action">
-                공유
+                SHARE
               </button>
-              <button type="button" className="music-detail-hero__action">
-                다음 재생
-              </button>
-            </div>
-          </div>
-
-          <div className="music-detail-hero__stats">
-            <div>
-              <span>속도</span>
-              <strong>{detailItem.tempo ?? '64 BPM'}</strong>
-            </div>
-            <div>
-              <span>조성</span>
-              <strong>{detailItem.harmonic ?? 'D minor'}</strong>
-            </div>
-            <div>
-              <span>주파수</span>
-              <strong>{detailItem.frequency ?? '432 Hz'}</strong>
             </div>
           </div>
 
@@ -212,15 +217,25 @@ export default function MusicDetailPage() {
             </div>
 
             <div className="music-detail-story__actions">
-              <Link
-                to="/library"
+              <button
+                type="button"
                 className="music-detail-story__action music-detail-story__action--primary"
+                onClick={handlePlayMusic}
               >
-                저장 파일 보기
-              </Link>
-              <Link to="/search" className="music-detail-story__action">
-                관련 결과 보기
-              </Link>
+                MUSIC
+              </button>
+              <button
+                type="button"
+                className="music-detail-story__action"
+                onClick={() => {
+                  if (detailItem.video) {
+                    setVideoOpen(true);
+                  }
+                }}
+                disabled={!detailItem.video}
+              >
+                VIDEO
+              </button>
             </div>
           </div>
         </section>
@@ -267,7 +282,7 @@ export default function MusicDetailPage() {
         <section className="music-detail-related">
           <div className="music-detail-related__intro">
             <span>다음 흐름</span>
-            <h3>이어 볼 파일</h3>
+            <h3>More Releases</h3>
             <p>
               관련 트랙을 열거나 연결된 비주얼을 보고, 다음 무대로 자연스럽게 이동할 수 있습니다.
             </p>
@@ -280,45 +295,64 @@ export default function MusicDetailPage() {
                 to={`/detail/${item.id}`}
                 className="music-detail-related__card"
               >
-                <strong>{item.title}</strong>
-                <p>{item.subtitle}</p>
-                <span>자세히 보기</span>
+                <div className="music-detail-related__card-image">
+                  <img src={item.image} alt={item.title} />
+                </div>
+                <div className="music-detail-related__card-copy">
+                  <span>{item.collection ?? 'ALBUM FILE'}</span>
+                  <strong>{item.title}</strong>
+                  <p>{item.description ?? item.subtitle}</p>
+                  <em>{item.subtitle}</em>
+                </div>
               </Link>
             ))}
           </div>
         </section>
 
         <section className="music-detail-pagination">
-          {prevItem ? (
-            <Link to={`/detail/${prevItem.id}`} className="music-detail-pagination__card">
-              <span>이전 콘텐츠</span>
-              <strong>{prevItem.title}</strong>
-              <p>{prevItem.subtitle}</p>
-            </Link>
-          ) : (
-            <div className="music-detail-pagination__card is-disabled">
-              <span>이전 콘텐츠</span>
-              <strong>아카이브 시작점</strong>
-              <p>이전으로 이동할 항목이 없습니다.</p>
-            </div>
-          )}
-
-          {nextItem ? (
-            <Link to={`/detail/${nextItem.id}`} className="music-detail-pagination__card">
-              <span>다음 콘텐츠</span>
-              <strong>{nextItem.title}</strong>
-              <p>{nextItem.subtitle}</p>
-            </Link>
-          ) : (
-            <div className="music-detail-pagination__card is-disabled">
-              <span>다음 콘텐츠</span>
-              <strong>아카이브 끝</strong>
-              <p>더 이동할 항목이 없습니다.</p>
-            </div>
-          )}
+          <Link to="/library" className="music-detail-pagination__link">
+            BACK TO LIBRARY
+          </Link>
         </section>
       </main>
 
+      {videoOpen && detailItem.video ? (
+        <div
+          className="music-detail-video-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${detailItem.title} 영상 재생`}
+          onClick={() => setVideoOpen(false)}
+        >
+          <div className="music-detail-video-modal__panel" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="music-detail-video-modal__close"
+              onClick={() => setVideoOpen(false)}
+              aria-label="영상 닫기"
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">
+                close
+              </span>
+            </button>
+
+            <div className="music-detail-video-modal__copy">
+              <span>{detailItem.collection ?? 'VIDEO FILE'}</span>
+              <strong>{detailItem.title}</strong>
+              <p>{detailItem.description ?? detailItem.subtitle}</p>
+            </div>
+
+            <video
+              className="music-detail-video-modal__player"
+              src={detailItem.video}
+              poster={detailItem.image}
+              controls
+              autoPlay
+              playsInline
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

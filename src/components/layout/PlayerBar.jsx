@@ -68,6 +68,9 @@ export default function PlayerBar() {
 
   const activeQueue = playlistCards;
   const activeTrackIndex = playlistTrackIndex;
+  const hasQueue = activeQueue.length > 0;
+  const hasActiveTrack = Boolean(currentItem?.audio) && activeTrackIndex >= 0;
+  const previewItem = hasActiveTrack ? currentItem : activeQueue[0] ?? null;
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -82,7 +85,12 @@ export default function PlayerBar() {
   useEffect(() => {
     const audio = audioRef.current;
 
-    if (!audio || !currentItem?.audio) {
+    if (!audio || !hasActiveTrack || !currentItem?.audio) {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
       dispatch(setPlayerPlaying(false));
       dispatch(setPlaybackTime(0));
       dispatch(setPlaybackDuration(0));
@@ -91,7 +99,7 @@ export default function PlayerBar() {
 
     audio.load();
     dispatch(setPlaybackTime(0));
-  }, [currentItem, dispatch]);
+  }, [currentItem, dispatch, hasActiveTrack]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -187,7 +195,13 @@ export default function PlayerBar() {
   };
 
   const handleTogglePlay = () => {
-    if (!currentItem?.audio) {
+    if (!hasQueue) {
+      return;
+    }
+
+    if (!hasActiveTrack && activeQueue[0]?.id) {
+      dispatch(setCurrentFeatureCardId(activeQueue[0].id));
+      dispatch(setPlayerPlaying(true));
       return;
     }
 
@@ -228,28 +242,38 @@ export default function PlayerBar() {
     dispatch(setPlayerPlaying(true));
   };
 
-  if (!currentItem?.audio || activeTrackIndex < 0 || !activeQueue.length) {
-    return null;
-  }
-
   return (
     <footer className={styles.playerBar}>
       <audio ref={audioRef} preload="metadata">
-        <source src={currentItem.audio} type="audio/mpeg" />
+        {hasActiveTrack ? <source src={currentItem.audio} type="audio/mpeg" /> : null}
       </audio>
 
-      <Link to={`/detail/${currentItem.id}`} className={styles.trackMeta}>
-        <div className={styles.artwork}>
-          <img
-            src={currentItem.footerArtwork ?? currentItem.image}
-            alt="Current track artwork"
-          />
+      {previewItem ? (
+        <Link to={`/detail/${previewItem.id}`} className={styles.trackMeta}>
+          <div className={styles.artwork}>
+            <img
+              src={previewItem.footerArtwork ?? previewItem.image}
+              alt="Current track artwork"
+            />
+          </div>
+          <div className={styles.trackText}>
+            <div className={styles.eyebrow}>{hasActiveTrack ? 'CURRENT ALBUM' : 'UP NEXT'}</div>
+            <div className={styles.filename}>{previewItem.title}.ALBUM</div>
+          </div>
+        </Link>
+      ) : (
+        <div className={`${styles.trackMeta} ${styles.trackMetaEmpty}`} aria-hidden="true">
+          <div className={`${styles.artwork} ${styles.artworkEmpty}`}>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              music_note
+            </span>
+          </div>
+          <div className={styles.trackText}>
+            <div className={styles.eyebrow}>&nbsp;</div>
+            <div className={styles.filename}>&nbsp;</div>
+          </div>
         </div>
-        <div className={styles.trackText}>
-          <div className={styles.eyebrow}>CURRENT ALBUM</div>
-          <div className={styles.filename}>{currentItem.title}.ALBUM</div>
-        </div>
-      </Link>
+      )}
 
       <div className={styles.center}>
         <div className={styles.controls}>
@@ -259,6 +283,7 @@ export default function PlayerBar() {
             title={repeatModeMeta.label}
             onClick={() => dispatch(cycleRepeatMode())}
             className={`${styles.controlButton} ${styles.repeatButton} ${styles.repeatButtonActive}${repeatModeMeta.accent ? ` ${styles.repeatButtonAccent}` : ''}`}
+            disabled={!hasQueue}
           >
             <Icon name={repeatModeMeta.icon} className={styles.controlIcon} />
           </button>
@@ -266,16 +291,17 @@ export default function PlayerBar() {
             type="button"
             aria-label="Previous"
             onClick={() => handleStepTrack(-1)}
-            disabled={activeTrackIndex <= 0}
+            disabled={!hasActiveTrack || activeTrackIndex <= 0}
             className={styles.controlButton}
           >
             <Icon name="skip_previous" className={styles.controlIcon} />
           </button>
           <button
             type="button"
-            aria-label={isPlaying ? 'Pause' : 'Play'}
+            aria-label={!hasQueue ? 'Play' : isPlaying ? 'Pause' : 'Play'}
             className={styles.playButton}
             onClick={handleTogglePlay}
+            disabled={!hasQueue}
           >
             <Icon
               name={isPlaying ? 'pause' : 'play_arrow'}
@@ -287,7 +313,7 @@ export default function PlayerBar() {
             type="button"
             aria-label="Next"
             onClick={() => handleStepTrack(1)}
-            disabled={activeTrackIndex === -1 || activeTrackIndex >= activeQueue.length - 1}
+            disabled={!hasActiveTrack || activeTrackIndex >= activeQueue.length - 1}
             className={styles.controlButton}
           >
             <Icon name="skip_next" className={styles.controlIcon} />
@@ -302,7 +328,7 @@ export default function PlayerBar() {
         <div className={styles.progressHitbox}>
           <div
             className={styles.progressTrack}
-            onClick={handleSeek}
+            onClick={hasActiveTrack ? handleSeek : undefined}
             role="progressbar"
             aria-label="Playback progress"
             aria-valuemin={0}
@@ -318,7 +344,7 @@ export default function PlayerBar() {
         <div className={styles.volume}>
           <Icon name="volume_up" className={styles.volumeIcon} />
           <div className={styles.volumeHitbox}>
-            <div className={styles.volumeTrack} onClick={handleVolumeChange}>
+            <div className={styles.volumeTrack} onClick={hasQueue ? handleVolumeChange : undefined}>
               <div className={styles.volumeFill} style={{ width: `${volume * 100}%` }} />
             </div>
           </div>
@@ -329,6 +355,7 @@ export default function PlayerBar() {
           aria-label={isNowPlayingOpen ? 'Close now playing' : 'Open now playing'}
           className={`${styles.expandButton}${isNowPlayingOpen ? ` ${styles.expandButtonActive}` : ''}`}
           onClick={() => dispatch(toggleNowPlaying())}
+          disabled={!hasQueue}
         >
           <Icon
             name={isNowPlayingOpen ? 'close_fullscreen' : 'open_in_full'}

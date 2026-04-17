@@ -26,7 +26,7 @@ const featureCards = [
     frequency: '440 Hz',
     tags: ['DEBUT', 'HIPHOP', 'YG'],
     kicker: 'DEBUT ALBUM',
-    duration: '2023 DROP',
+    duration: '2:58',
     type: 'primary',
   },
 
@@ -55,6 +55,7 @@ const featureCards = [
     frequency: '440 Hz',
     tags: ['ALBUM', 'TITLE', 'GLOSS'],
     indexLabel: '02',
+    duration: '3:11',
     type: 'secondary',
   },
 
@@ -132,6 +133,7 @@ const featureCards = [
     harmonic: 'D minor',
     frequency: '440 Hz',
     tags: ['SINGLE', 'FLOW', 'STYLE'],
+    duration: '3:19',
     type: 'secondary',
   },
 
@@ -186,6 +188,7 @@ const featureCards = [
     frequency: '440 Hz',
     tags: ['SINGLE', 'SOFT', 'GLOSS'],
     indexLabel: '04',
+    duration: '3:27',
     type: 'secondary',
   },
 
@@ -213,6 +216,7 @@ const featureCards = [
     harmonic: 'C minor',
     frequency: '440 Hz',
     tags: ['LIVE', 'TOUR', 'ENERGY'],
+    duration: '3:13',
     type: 'secondary',
   },
 ];
