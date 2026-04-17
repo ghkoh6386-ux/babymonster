@@ -807,10 +807,14 @@
 
   .browse-hero,
   .browse-popular,
-  .browse-search,
-  .browse-carousel,
   .browse-video-modal__panel {
     padding: 22px;
+    border-radius: 0;
+  }
+
+  .browse-search,
+  .browse-carousel {
+    padding: 22px 0;
     border-radius: 0;
   }
 
@@ -834,6 +838,11 @@
   .browse-carousel {
     margin-top: 2px;
     padding-top: 4px;
+  }
+
+  .browse-carousel__footer {
+    padding-right: 22px;
+    padding-left: 22px;
   }
 
   .browse-hero__copy {
@@ -911,6 +920,7 @@
 
   .browse-carousel__frame {
     display: block;
+    padding: 0;
   }
 
   .browse-carousel__nav {
