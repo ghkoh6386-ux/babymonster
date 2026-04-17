@@ -134,6 +134,13 @@ export default function DiscoverPage() {
 
   useEffect(() => {
     const updateViewportHeight = () => {
+      if (isCompactCarousel) {
+        const mobileCardHeight = 372;
+        const mobileSlideGap = 14 * Math.max(0, itemsPerSlide - 1);
+        setViewportMinHeight(mobileCardHeight * itemsPerSlide + mobileSlideGap);
+        return;
+      }
+
       const activeNode = slideRefs.current[activeSlide];
       const measuredHeights = slideRefs.current
         .filter(Boolean)
@@ -169,7 +176,7 @@ export default function DiscoverPage() {
       resizeObserver?.disconnect();
       window.removeEventListener('resize', updateViewportHeight);
     };
-  }, [activeSlide, slides]);
+  }, [activeSlide, isCompactCarousel, itemsPerSlide, slides]);
 
   const currentSortLabel = sortOptions.find((item) => item.id === sortBy)?.label ?? '최신순';
   const moveToSlide = (nextIndex) => {
