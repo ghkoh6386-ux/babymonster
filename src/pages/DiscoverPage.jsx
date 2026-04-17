@@ -134,22 +134,21 @@ export default function DiscoverPage() {
 
   useEffect(() => {
     const updateViewportHeight = () => {
-      if (isCompactCarousel) {
-        const mobileCardHeight = 372;
-        const mobileSlideGap = 14 * Math.max(0, itemsPerSlide - 1);
-        setViewportMinHeight(mobileCardHeight * itemsPerSlide + mobileSlideGap);
-        return;
-      }
-
       const activeNode = slideRefs.current[activeSlide];
-      const measuredHeights = slideRefs.current
-        .filter(Boolean)
-        .map((node) => Math.ceil(node.getBoundingClientRect().height));
 
       if (!activeNode) {
         setViewportMinHeight(null);
         return;
       }
+
+      if (isCompactCarousel) {
+        setViewportMinHeight(Math.ceil(activeNode.getBoundingClientRect().height));
+        return;
+      }
+
+      const measuredHeights = slideRefs.current
+        .filter(Boolean)
+        .map((node) => Math.ceil(node.getBoundingClientRect().height));
 
       setViewportMinHeight(measuredHeights.length ? Math.max(...measuredHeights) : null);
     };

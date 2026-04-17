@@ -1031,8 +1031,9 @@
   }
 
   .browse-video-card {
-    min-height: 372px;
-    grid-template-rows: 220px 152px;
+    min-height: 0;
+    height: auto;
+    grid-template-rows: 220px auto;
   }
 
   .browse-video-card__media {
@@ -1044,16 +1045,14 @@
   }
 
   .browse-video-card__body {
-    min-height: 152px;
+    min-height: 0;
     padding: 16px 16px 18px;
   }
 
   .browse-video-card__body h3 {
     font-size: 22px;
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .browse-video-card__body strong,
@@ -1063,10 +1062,8 @@
   }
 
   .browse-video-card__body strong {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .browse-popular-card__media {
@@ -1081,10 +1078,8 @@
 
   .browse-video-card__body p,
   .browse-popular-card__body p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .browse-video-modal__copy strong {
