@@ -37,6 +37,11 @@ export default function HomeClosingSection() {
     };
   }, [activeVideo]);
 
+  const openVideo = (item) => {
+    dispatch(setPlayerPlaying(false));
+    setActiveVideo(item);
+  };
+
   return (
     <>
       <section className="home-closing" aria-label="홈 비디오 카드">
@@ -55,11 +60,11 @@ export default function HomeClosingSection() {
               <article
                 key={item.id}
                 className="home-closing__card home-closing__card--video"
-                onClick={() => setActiveVideo(item)}
+                onClick={() => openVideo(item)}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
-                    setActiveVideo(item);
+                    openVideo(item);
                   }
                 }}
                 role="button"

@@ -129,6 +129,15 @@ export default function MusicDetailPage() {
     dispatch(setPlayerPlaying(true));
   };
 
+  const handleOpenVideo = () => {
+    if (!detailItem.video) {
+      return;
+    }
+
+    dispatch(setPlayerPlaying(false));
+    setVideoOpen(true);
+  };
+
   return (
     <div className="music-detail-page">
       <main className="music-detail-main">
@@ -227,11 +236,7 @@ export default function MusicDetailPage() {
               <button
                 type="button"
                 className="music-detail-story__action"
-                onClick={() => {
-                  if (detailItem.video) {
-                    setVideoOpen(true);
-                  }
-                }}
+                onClick={handleOpenVideo}
                 disabled={!detailItem.video}
               >
                 VIDEO
