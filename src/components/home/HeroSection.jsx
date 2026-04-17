@@ -36,6 +36,24 @@ export default function HeroSection() {
             </p>
           </div>
 
+          <div className="home-hero__detail-panel">
+            <div className="home-hero__detail-copy">
+              <span className="home-hero__detail-label">CURRENT FILE</span>
+              <strong>STAGE / VISUAL / TITLE TRACK</strong>
+              <p>무대 에너지, 대표 비주얼, 메인 트랙 흐름을 한 화면 안에서 빠르게 따라갈 수 있게 구성했습니다.</p>
+            </div>
+            <div className="home-hero__detail-stats" aria-hidden="true">
+              <div>
+                <span>FOCUS</span>
+                <strong>03</strong>
+              </div>
+              <div>
+                <span>MOOD</span>
+                <strong>LIVE</strong>
+              </div>
+            </div>
+          </div>
+
           <Link to="/browse" className="home-hero__cta">
             <span>무대 보러 가기</span>
             <span className="home-hero__cta-icon">arrow_right_alt</span>

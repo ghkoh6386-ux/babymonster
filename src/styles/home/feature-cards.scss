@@ -42,6 +42,10 @@
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
 }
 
 .home-feature-cards__card img {
@@ -370,6 +374,12 @@
   border-color: rgba(57, 255, 20, 0.45);
 }
 
+@media (min-width: 761px) {
+  .home-feature-cards__card:hover {
+    transform: translateY(-8px);
+  }
+}
+
 @media (max-width: 1200px) {
   .home-feature-cards {
     margin: 12px auto 68px;
@@ -517,4 +527,3 @@
     font-size: 42px;
   }
 }
-

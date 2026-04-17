@@ -23,23 +23,37 @@ export default function TrackArchiveSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isCompactCarousel, setIsCompactCarousel] = useState(false);
   const [slideMotionDirection, setSlideMotionDirection] = useState('next');
-  const [viewportHeight, setViewportHeight] = useState(null);
+  const [viewportMinHeight, setViewportMinHeight] = useState(null);
   const touchStartXRef = useRef(null);
   const slideRefs = useRef([]);
 
   const archiveItems = ['batter-up', 'sheesh', 'drip', 'forever', 'we-go-up']
     .map((id) => cards.find((card) => card.id === id))
     .filter(Boolean);
+  const itemsPerSlide = isCompactCarousel ? 2 : 3;
+  const visibleArchiveItems = useMemo(() => {
+    if (!isCompactCarousel) {
+      return archiveItems;
+    }
+
+    const hiddenItemCount = archiveItems.length % itemsPerSlide;
+
+    if (!hiddenItemCount || archiveItems.length <= itemsPerSlide) {
+      return archiveItems;
+    }
+
+    return archiveItems.slice(0, archiveItems.length - hiddenItemCount);
+  }, [archiveItems, isCompactCarousel, itemsPerSlide]);
 
   const slides = useMemo(() => {
     const chunked = [];
 
-    for (let index = 0; index < archiveItems.length; index += 3) {
-      chunked.push(archiveItems.slice(index, index + 3));
+    for (let index = 0; index < visibleArchiveItems.length; index += itemsPerSlide) {
+      chunked.push(visibleArchiveItems.slice(index, index + itemsPerSlide));
     }
 
     return chunked;
-  }, [archiveItems]);
+  }, [visibleArchiveItems, itemsPerSlide]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -74,13 +88,16 @@ export default function TrackArchiveSection() {
   useEffect(() => {
     const updateViewportHeight = () => {
       const activeNode = slideRefs.current[currentSlide];
+      const measuredHeights = slideRefs.current
+        .filter(Boolean)
+        .map((node) => Math.ceil(node.getBoundingClientRect().height));
 
       if (!activeNode) {
-        setViewportHeight(null);
+        setViewportMinHeight(null);
         return;
       }
 
-      setViewportHeight(activeNode.scrollHeight);
+      setViewportMinHeight(measuredHeights.length ? Math.max(...measuredHeights) : null);
     };
 
     const frameId = window.requestAnimationFrame(() => {
@@ -140,7 +157,7 @@ export default function TrackArchiveSection() {
 
           <div
             className="home-track-archive__viewport"
-            style={!isCompactCarousel && viewportHeight ? { height: `${viewportHeight}px` } : undefined}
+            style={viewportMinHeight ? { minHeight: `${viewportMinHeight}px` } : undefined}
             onTouchStart={(event) => {
               touchStartXRef.current = event.touches[0]?.clientX ?? null;
             }}
@@ -171,7 +188,7 @@ export default function TrackArchiveSection() {
                     key={`compact-slide-${currentSlide}`}
                   >
                     {slideItems.map((item, index) => {
-                      const globalIndex = currentSlide * 3 + index;
+                      const globalIndex = currentSlide * itemsPerSlide + index;
                       const isActive = playlistIds.length > 0 && currentCardId === item.id;
                       const isQueued = playlistIds.includes(item.id);
                       const isFavorited = favoriteMusicIds.includes(item.id);
@@ -274,7 +291,7 @@ export default function TrackArchiveSection() {
                 {slides.map((slideItems, slideIndex) => {
                 const filledItems = [
                   ...slideItems,
-                  ...Array.from({ length: Math.max(0, 3 - slideItems.length) }, (_, index) => ({
+                  ...Array.from({ length: Math.max(0, itemsPerSlide - slideItems.length) }, (_, index) => ({
                     id: `placeholder-${slideIndex}-${index}`,
                     isPlaceholder: true,
                   })),
@@ -299,7 +316,7 @@ export default function TrackArchiveSection() {
                         );
                       }
 
-                      const globalIndex = slideIndex * 3 + index;
+                      const globalIndex = slideIndex * itemsPerSlide + index;
                       const isActive = playlistIds.length > 0 && currentCardId === item.id;
                       const isQueued = playlistIds.includes(item.id);
                       const isFavorited = favoriteMusicIds.includes(item.id);

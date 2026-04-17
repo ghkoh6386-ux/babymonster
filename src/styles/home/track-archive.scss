@@ -139,27 +139,33 @@
 
 .home-track-archive__viewport {
   overflow: hidden;
-  transition: height 320ms ease;
+  min-width: 0;
+  transition:
+    height 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    min-height 520ms cubic-bezier(0.22, 1, 0.36, 1);
   overscroll-behavior-x: contain;
   touch-action: pan-y;
 }
 
 .home-track-archive__track {
   display: flex;
-  transition: transform 320ms ease;
+  align-items: flex-start;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .home-track-archive__slide {
   display: grid;
   flex: 0 0 100%;
+  min-width: 100%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   align-items: start;
+  align-content: start;
 }
 
 .home-track-archive__slide--compact {
-  animation-duration: 320ms;
+  animation-duration: 460ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   animation-fill-mode: both;
 }
@@ -365,25 +371,25 @@
 
 @keyframes homeTrackArchiveSlideInNext {
   from {
-    opacity: 0;
-    transform: translateX(28px);
+    opacity: 0.12;
+    transform: translate3d(34px, 0, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes homeTrackArchiveSlideInPrev {
   from {
-    opacity: 0;
-    transform: translateX(-28px);
+    opacity: 0.12;
+    transform: translate3d(-34px, 0, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -413,6 +419,7 @@
 
   .home-track-archive__slide {
     grid-template-columns: 1fr;
+    align-content: start;
   }
 
   .home-track-archive__row {

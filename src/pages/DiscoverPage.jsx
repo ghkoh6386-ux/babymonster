@@ -28,7 +28,7 @@ export default function DiscoverPage() {
   const [slideMotionDirection, setSlideMotionDirection] = useState('next');
   const slideRefs = useRef([]);
   const touchStartXRef = useRef(null);
-  const [viewportHeight, setViewportHeight] = useState(null);
+  const [viewportMinHeight, setViewportMinHeight] = useState(null);
 
   useEffect(() => {
     if (!activeVideo) {
@@ -92,16 +92,30 @@ export default function DiscoverPage() {
 
     return nextVideos;
   }, [query, sortBy]);
+  const itemsPerSlide = isCompactCarousel ? 3 : 4;
+  const visibleVideos = useMemo(() => {
+    if (!isCompactCarousel) {
+      return filteredVideos;
+    }
+
+    const hiddenItemCount = filteredVideos.length % itemsPerSlide;
+
+    if (!hiddenItemCount || filteredVideos.length <= itemsPerSlide) {
+      return filteredVideos;
+    }
+
+    return filteredVideos.slice(0, filteredVideos.length - hiddenItemCount);
+  }, [filteredVideos, isCompactCarousel, itemsPerSlide]);
 
   const slides = useMemo(() => {
     const nextSlides = [];
 
-    for (let index = 0; index < filteredVideos.length; index += 4) {
-      nextSlides.push(filteredVideos.slice(index, index + 4));
+    for (let index = 0; index < visibleVideos.length; index += itemsPerSlide) {
+      nextSlides.push(visibleVideos.slice(index, index + itemsPerSlide));
     }
 
     return nextSlides;
-  }, [filteredVideos]);
+  }, [visibleVideos, itemsPerSlide]);
 
   const featuredPopularVideos = useMemo(
     () => [...videoLibrary].sort((a, b) => b.popularity - a.popularity).slice(0, 4),
@@ -115,15 +129,22 @@ export default function DiscoverPage() {
   }, [activeSlide, slides.length]);
 
   useEffect(() => {
+    slideRefs.current = slideRefs.current.slice(0, slides.length);
+  }, [slides.length]);
+
+  useEffect(() => {
     const updateViewportHeight = () => {
       const activeNode = slideRefs.current[activeSlide];
+      const measuredHeights = slideRefs.current
+        .filter(Boolean)
+        .map((node) => Math.ceil(node.getBoundingClientRect().height));
 
       if (!activeNode) {
-        setViewportHeight(null);
+        setViewportMinHeight(null);
         return;
       }
 
-      setViewportHeight(activeNode.scrollHeight);
+      setViewportMinHeight(measuredHeights.length ? Math.max(...measuredHeights) : null);
     };
 
     const frameId = window.requestAnimationFrame(() => {
@@ -171,7 +192,7 @@ export default function DiscoverPage() {
   };
 
   const renderSlideItems = (slideItems, slideIndex) =>
-    [...slideItems, ...Array.from({ length: Math.max(0, 4 - slideItems.length) }, (_, index) => ({
+    [...slideItems, ...Array.from({ length: Math.max(0, itemsPerSlide - slideItems.length) }, (_, index) => ({
       id: `placeholder-${slideIndex}-${index}`,
       isPlaceholder: true,
     }))].map((item) => {
@@ -403,7 +424,13 @@ export default function DiscoverPage() {
 
                   <div
                     className="browse-carousel__viewport"
-                    style={!isCompactCarousel && viewportHeight ? { height: `${viewportHeight}px` } : undefined}
+                    style={
+                      viewportMinHeight
+                        ? {
+                            minHeight: `${viewportMinHeight}px`,
+                          }
+                        : undefined
+                    }
                     onTouchStart={(event) => {
                       touchStartXRef.current = event.touches[0]?.clientX ?? null;
                     }}

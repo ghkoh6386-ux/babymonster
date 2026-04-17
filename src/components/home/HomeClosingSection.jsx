@@ -42,7 +42,7 @@ export default function HomeClosingSection() {
       <section className="home-closing" aria-label="홈 비디오 카드">
         <div className="home-closing__header">
           <span className="home-closing__eyebrow">VIDEO CUTS</span>
-          <Link to="/video" className="home-closing__more">
+          <Link to="/browse" className="home-closing__more">
             MORE
           </Link>
         </div>
