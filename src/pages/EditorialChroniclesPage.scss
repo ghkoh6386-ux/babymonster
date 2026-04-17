@@ -464,6 +464,17 @@
   .chronicles-album-card__image {
     height: 220px;
   }
+
+  .chronicles-album-library__heading {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chronicles-album-library__heading h2 {
+    margin: 0;
+  }
 }
 
 

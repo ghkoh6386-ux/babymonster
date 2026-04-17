@@ -162,9 +162,8 @@ export default function EditorialChroniclesPage() {
 
         <section className="chronicles-album-library">
           <div className="chronicles-album-library__heading">
-            <span>ALBUM CARDS</span>
             <h2>COLLECTED ERAS</h2>
-            
+            <span>ALBUM CARDS</span>
           </div>
 
           <div className="chronicles-album-grid">
