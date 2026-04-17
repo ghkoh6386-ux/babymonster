@@ -159,11 +159,24 @@ export default function NowPlayingPage({ overlay = false, closing = false, onClo
                 <span>Playlist</span>
                 <strong>{String(currentIndex + 1).padStart(2, '0')} / {String(playlistCards.length).padStart(2, '0')}</strong>
               </div>
-              
+
               <div>
                 <span>Volume</span>
                 <strong>{Math.round(volume * 100)}%</strong>
               </div>
+
+              <Link
+                to={`/detail/${currentItem.id}`}
+                className="now-playing-data__detail"
+                aria-label={`Open detail for ${currentItem.title}`}
+                onClick={() => {
+                  if (onClose) {
+                    onClose();
+                  }
+                }}
+              >
+                DETAIL
+              </Link>
             </div>
 
             <div className="now-playing-progress">
@@ -236,17 +249,6 @@ export default function NowPlayingPage({ overlay = false, closing = false, onClo
                     <span style={{ width: `${volume * 100}%` }} />
                   </div>
                 </div>
-                <Link
-                  to={`/detail/${currentItem.id}`}
-                  aria-label={`Open detail for ${currentItem.title}`}
-                  onClick={() => {
-                    if (onClose) {
-                      onClose();
-                    }
-                  }}
-                >
-                  <Icon name="lyrics" />
-                </Link>
               </div>
             </div>
           </div>
