@@ -318,10 +318,15 @@
     padding: 22px 18px;
   }
 
+  .home-hero__title-wrap {
+    visibility: hidden;
+  }
+
   .home-hero__title {
     max-width: 6ch;
     font-size: clamp(3.2rem, 15vw, 5.4rem);
     line-height: 0.94;
+    visibility: hidden;
   }
 
   .home-hero__copy {

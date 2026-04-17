@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
-import Icon from '../Icon';
 import {
   closeCollectionPanel,
   setNowPlayingOpen,
@@ -43,8 +42,11 @@ export default function Header({
             onClick={onToggleMobileSidebar}
             aria-label="컬렉션 메뉴 열기"
           >
-            <Icon name={isMobileSidebarOpen ? 'close' : 'dashboard'} className="app-header__mobile-icon" />
-            <span>COLLECTION</span>
+            <span
+              className={`app-header__mobile-glyph app-header__mobile-glyph--collection${isMobileSidebarOpen ? ' app-header__mobile-glyph--active' : ''}`}
+              aria-hidden="true"
+            />
+            <span className="app-header__mobile-label">COLLECTION</span>
           </button>
 
           <NavLink
@@ -84,8 +86,11 @@ export default function Header({
             onClick={onToggleMobileNav}
             aria-label="네비게이션 열기"
           >
-            <Icon name={isMobileNavOpen ? 'close' : 'menu'} className="app-header__mobile-icon" />
-            <span>MENU</span>
+            <span
+              className={`app-header__mobile-glyph app-header__mobile-glyph--menu${isMobileNavOpen ? ' app-header__mobile-glyph--active' : ''}`}
+              aria-hidden="true"
+            />
+            <span className="app-header__mobile-label">MENU</span>
           </button>
         </div>
       </div>
