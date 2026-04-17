@@ -205,6 +205,7 @@
     background 180ms ease,
     transform 180ms ease,
     box-shadow 180ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .home-track-archive__row--placeholder {
@@ -220,9 +221,12 @@
 
 .home-track-archive__row--active {
   background:
-    linear-gradient(180deg, rgba(57, 255, 20, 0.08), rgba(255, 255, 255, 0.015)),
+    linear-gradient(180deg, rgba(57, 255, 20, 0.18), rgba(57, 255, 20, 0.06)),
     #131313;
-  border-color: rgba(57, 255, 20, 0.28);
+  border-color: rgba(57, 255, 20, 0.6);
+  box-shadow:
+    inset 0 0 0 1px rgba(57, 255, 20, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.22);
 }
 
 .home-track-archive__active-bar {
@@ -231,7 +235,8 @@
   right: 0;
   left: 0;
   height: 4px;
-  background: linear-gradient(90deg, #39ff14, rgba(57, 255, 20, 0));
+  background: linear-gradient(90deg, #39ff14, rgba(57, 255, 20, 0.08));
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.26);
 }
 
 .home-track-archive__number {
@@ -395,6 +400,23 @@
 .home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__duration {
   color: #39ff14;
   font-weight: 700;
+}
+
+.home-track-archive__row--active .home-track-archive__main p {
+  color: rgba(161, 255, 143, 0.8);
+}
+
+.home-track-archive__row--active .home-track-archive__badge {
+  border-color: rgba(57, 255, 20, 0.72);
+  color: #39ff14;
+  background: rgba(57, 255, 20, 0.06);
+}
+
+.home-track-archive__row--active .home-track-archive__action-button--play {
+  border-color: rgba(57, 255, 20, 0.44);
+  background: rgba(57, 255, 20, 0.14);
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.16);
 }
 
 .home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) {
@@ -570,6 +592,122 @@
   .home-track-archive__row {
     gap: 16px;
     padding: 20px 18px 18px;
+    pointer-events: none;
+  }
+
+  .home-track-archive__actions,
+  .home-track-archive__action-button {
+    pointer-events: auto;
+  }
+
+  .home-track-archive__row:hover,
+  .home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)),
+  .home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover),
+  .home-track-archive__row:active,
+  .home-track-archive__row:focus,
+  .home-track-archive__row:focus-visible,
+  .home-track-archive__row--favorite-interacting {
+    outline: none;
+    transform: none !important;
+    border-color: rgba(192, 192, 192, 0.14) !important;
+    box-shadow: none !important;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
+      #131313 !important;
+  }
+
+  .home-track-archive__row:hover .home-track-archive__number,
+  .home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__number,
+  .home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__number,
+  .home-track-archive__row:active .home-track-archive__number,
+  .home-track-archive__row:focus .home-track-archive__number,
+  .home-track-archive__row:focus-visible .home-track-archive__number,
+  .home-track-archive__row--favorite-interacting .home-track-archive__number {
+    color: #c0c0c0 !important;
+  }
+
+  .home-track-archive__row:hover .home-track-archive__main h4,
+  .home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__main h4,
+  .home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__main h4,
+  .home-track-archive__row:active .home-track-archive__main h4,
+  .home-track-archive__row:focus .home-track-archive__main h4,
+  .home-track-archive__row:focus-visible .home-track-archive__main h4,
+  .home-track-archive__row--favorite-interacting .home-track-archive__main h4 {
+    color: #e5e2e1 !important;
+  }
+
+  .home-track-archive__row:hover .home-track-archive__meta-icon,
+  .home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__meta-icon,
+  .home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__meta-icon,
+  .home-track-archive__row:active .home-track-archive__meta-icon,
+  .home-track-archive__row:focus .home-track-archive__meta-icon,
+  .home-track-archive__row:focus-visible .home-track-archive__meta-icon,
+  .home-track-archive__row--favorite-interacting .home-track-archive__meta-icon {
+    color: rgba(57, 255, 20, 0) !important;
+  }
+
+  .home-track-archive__row:hover .home-track-archive__duration,
+  .home-track-archive__row:hover:not(:has(.home-track-archive__action-button--favorite:hover, .home-track-archive__action-button--favorite:active, .home-track-archive__action-button--favorite:focus-visible)) .home-track-archive__duration,
+  .home-track-archive__row:hover:has(.home-track-archive__action-button--favorite:hover) .home-track-archive__duration,
+  .home-track-archive__row:active .home-track-archive__duration,
+  .home-track-archive__row:focus .home-track-archive__duration,
+  .home-track-archive__row:focus-visible .home-track-archive__duration,
+  .home-track-archive__row--favorite-interacting .home-track-archive__duration {
+    color: #c0c0c0 !important;
+    font-weight: 400 !important;
+  }
+
+  .home-track-archive__row--active,
+  .home-track-archive__row--active:hover,
+  .home-track-archive__row--active:active,
+  .home-track-archive__row--active:focus,
+  .home-track-archive__row--active:focus-visible {
+    border-color: rgba(57, 255, 20, 0.28) !important;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18) !important;
+    background:
+      linear-gradient(180deg, rgba(57, 255, 20, 0.08), rgba(255, 255, 255, 0.015)),
+      #131313 !important;
+  }
+
+  .home-track-archive__row--active .home-track-archive__number,
+  .home-track-archive__row--active:hover .home-track-archive__number,
+  .home-track-archive__row--active:active .home-track-archive__number,
+  .home-track-archive__row--active:focus .home-track-archive__number,
+  .home-track-archive__row--active:focus-visible .home-track-archive__number {
+    color: #39ff14 !important;
+  }
+
+  .home-track-archive__row--active .home-track-archive__main h4,
+  .home-track-archive__row--active:hover .home-track-archive__main h4,
+  .home-track-archive__row--active:active .home-track-archive__main h4,
+  .home-track-archive__row--active:focus .home-track-archive__main h4,
+  .home-track-archive__row--active:focus-visible .home-track-archive__main h4 {
+    color: #39ff14 !important;
+  }
+
+  .home-track-archive__row--active .home-track-archive__main p,
+  .home-track-archive__row--active:hover .home-track-archive__main p,
+  .home-track-archive__row--active:active .home-track-archive__main p,
+  .home-track-archive__row--active:focus .home-track-archive__main p,
+  .home-track-archive__row--active:focus-visible .home-track-archive__main p {
+    color: rgba(161, 255, 143, 0.78) !important;
+  }
+
+  .home-track-archive__row--active .home-track-archive__meta-icon,
+  .home-track-archive__row--active:hover .home-track-archive__meta-icon,
+  .home-track-archive__row--active:active .home-track-archive__meta-icon,
+  .home-track-archive__row--active:focus .home-track-archive__meta-icon,
+  .home-track-archive__row--active:focus-visible .home-track-archive__meta-icon {
+    color: #39ff14 !important;
+  }
+
+  .home-track-archive__row--active .home-track-archive__duration,
+  .home-track-archive__row--active:hover .home-track-archive__duration,
+  .home-track-archive__row--active:active .home-track-archive__duration,
+  .home-track-archive__row--active:focus .home-track-archive__duration,
+  .home-track-archive__row--active:focus-visible .home-track-archive__duration {
+    color: #39ff14 !important;
+    font-weight: 700 !important;
   }
 
   .home-track-archive__main h4 {

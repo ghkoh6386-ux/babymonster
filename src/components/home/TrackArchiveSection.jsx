@@ -187,7 +187,7 @@ export default function TrackArchiveSection() {
                   >
                     {slideItems.map((item, index) => {
                       const globalIndex = currentSlide * itemsPerSlide + index;
-                      const isActive = playlistIds.length > 0 && currentCardId === item.id;
+                      const isActive = String(currentCardId) === String(item.id);
                       const isQueued = playlistIds.includes(item.id);
                       const isFavorited = favoriteMusicIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
@@ -325,7 +325,7 @@ export default function TrackArchiveSection() {
                       }
 
                       const globalIndex = slideIndex * itemsPerSlide + index;
-                      const isActive = playlistIds.length > 0 && currentCardId === item.id;
+                      const isActive = String(currentCardId) === String(item.id);
                       const isQueued = playlistIds.includes(item.id);
                       const isFavorited = favoriteMusicIds.some((favoriteId) => String(favoriteId) === String(item.id));
 
